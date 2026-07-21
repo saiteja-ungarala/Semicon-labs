@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Private / authenticated areas
+Disallow: /dashboard
+Disallow: /my-purchases
+Disallow: /profile
+Disallow: /checkout
+Disallow: /payment/
+Disallow: /admin
+
+Sitemap: https://semiconlabs.com/sitemap.xml

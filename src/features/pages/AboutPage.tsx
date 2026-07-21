@@ -1,0 +1,93 @@
+import { Seo } from '@/components/seo/Seo';
+import { Section, SectionHead } from '@/components/ui/Section';
+import { PageHero } from '@/components/marketing/PageHero';
+import { Reveal, RevealGroup, RevealItem } from '@/components/motion/Reveal';
+import { FinalCta } from '@/features/home/sections/FinalCta';
+import { breadcrumbSchema } from '@/lib/seo';
+
+const audience = [
+  { title: 'Engineering students', copy: 'Preparing for a semiconductor career and want real exposure before day one.' },
+  { title: 'Recent graduates', copy: 'Seeking practical industry experience that coursework never provided.' },
+  { title: 'Career switchers', copy: 'Transitioning into Physical Design or Design Verification from an adjacent field.' },
+  { title: 'Working engineers', copy: 'Deepening expertise in specific domains and competencies on the job.' },
+];
+
+export default function AboutPage() {
+  return (
+    <>
+      <Seo
+        title="About"
+        description="Semicon Labs bridges the gap between knowing a flow and knowing how to solve a problem — building the world's most comprehensive collection of real semiconductor engineering challenges."
+        path="/about"
+        schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }])]}
+      />
+      <PageHero
+        eyebrow="about semicon labs"
+        title="The biggest gap in semiconductor learning isn't content. It's experience."
+        lede="Most engineers learn concepts, complete courses, and earn certifications — then join a project and meet a very different reality: failing regressions, timing violations, coverage gaps, and design challenges that demand investigation and judgment."
+        crumbs={[{ name: 'Home', to: '/' }, { name: 'About' }]}
+      />
+
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+          <Reveal>
+            <div className="space-y-5 text-pretty text-ink-dim">
+              <p className="text-lg text-ink">
+                Knowing a flow is not the same as knowing how to solve a problem. Semicon Labs was
+                built to bridge that gap.
+              </p>
+              <p>
+                Instead of learning through lectures and predefined exercises, learners develop
+                expertise by working through the kinds of problems engineers face every day during
+                chip development. Every experience follows one structured workflow —{' '}
+                <span className="font-mono text-ink">Problem → Investigation → Solution → Validation</span>{' '}
+                — because engineering capability is developed through problem solving, not content
+                consumption.
+              </p>
+              <p>
+                Every challenge is inspired by issues encountered during real semiconductor
+                development projects. Rather than simplified textbook examples, learners tackle
+                scenarios that reflect the complexity and ambiguity of actual engineering work — and
+                every solution is measured objectively against the expected engineering outcome.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal direction="left">
+            <div id="vision" className="gradient-border scroll-mt-28 rounded-2xl border border-transparent bg-panel/70 p-8">
+              <p className="eyebrow">our vision</p>
+              <p className="mt-4 text-pretty text-lg text-ink">
+                To build the world's most comprehensive collection of semiconductor engineering
+                challenges — a learning environment where engineers develop practical execution
+                capability through real-world problem solving.
+              </p>
+              <p className="mt-5 border-t border-line pt-5 font-mono text-sm text-ink-dim">
+                Because semiconductor engineering is not defined by the flows you know. It's defined
+                by the problems you can solve.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </Section>
+
+      <Section alt>
+        <SectionHead
+          eyebrow="who it's for"
+          title="Designed for engineers who want real project readiness."
+        />
+        <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
+          {audience.map((a) => (
+            <RevealItem key={a.title}>
+              <div className="h-full rounded-2xl border border-line bg-panel/60 p-6">
+                <h3 className="text-base font-semibold text-ink">{a.title}</h3>
+                <p className="mt-3 text-sm text-ink-dim">{a.copy}</p>
+              </div>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </Section>
+
+      <FinalCta />
+    </>
+  );
+}

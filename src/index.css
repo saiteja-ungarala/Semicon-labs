@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --header-h: 80px;
+  }
+
+  * {
+    @apply border-line;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-void text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    /* subtle silicon texture: fine indigo grid over a near-white wash */
+    background-image:
+      radial-gradient(circle at 50% -10%, rgba(46, 30, 224, 0.06), transparent 42%),
+      linear-gradient(rgba(46, 30, 224, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46, 30, 224, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 56px 56px, 56px 56px;
+    background-position: 0 0, 0 0, 0 0;
+    background-attachment: fixed, fixed, fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-bold tracking-tight text-balance;
+  }
+
+  ::selection {
+    background: rgba(46, 30, 224, 0.16);
+    color: #0c1230;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.blue.DEFAULT');
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* Custom scrollbar (desktop) */
+  @media (pointer: fine) {
+    ::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: theme('colors.void');
+    }
+    ::-webkit-scrollbar-thumb {
+      background: theme('colors.line-strong');
+      border: 3px solid theme('colors.void');
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: theme('colors.ink-faint');
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Glassmorphic surface used by nav, cards, popovers */
+  .glass {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+  }
+
+  /* Gradient-border card: 1px blue ring on a white panel */
+  .gradient-border {
+    position: relative;
+    isolation: isolate;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(140deg, rgba(46, 30, 224, 0.5), rgba(67, 97, 255, 0.3), transparent 62%);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, #2e1ee0 0%, #4361ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Odoo-style highlighter marker swash behind a keyword. */
+  .marker-hl {
+    position: relative;
+    white-space: nowrap;
+  }
+  .marker-hl::before {
+    content: '';
+    position: absolute;
+    left: -0.1em;
+    right: -0.1em;
+    top: 0.42em;
+    bottom: 0.02em;
+    background: linear-gradient(90deg, rgba(46, 30, 224, 0.18), rgba(67, 97, 255, 0.2));
+    border-radius: 0.16em;
+    transform: rotate(-1.4deg);
+    z-index: -1;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 font-mono text-xs font-medium uppercase tracking-[0.16em] text-navy;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  /* Fine indigo circuit grid used behind sections */
+  .bg-circuit {
+    background-image:
+      linear-gradient(rgba(46, 30, 224, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46, 30, 224, 0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
