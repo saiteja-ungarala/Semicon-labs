@@ -6,6 +6,7 @@ import { ProtectedRoute } from '@/components/routing/ProtectedRoute';
 
 // Marketing / public pages
 const AboutPage = lazy(() => import('@/features/pages/AboutPage'));
+const WhoWeServePage = lazy(() => import('@/features/pages/WhoWeServePage'));
 const CompetenciesPage = lazy(() => import('@/features/pages/CompetenciesPage'));
 const DomainsPage = lazy(() => import('@/features/pages/DomainsPage'));
 const DomainDetailPage = lazy(() => import('@/features/pages/DomainDetailPage'));
@@ -57,6 +58,7 @@ export const router = createBrowserRouter([
 
       // Public marketing
       { path: 'about', element: <AboutPage /> },
+      { path: 'who-we-serve', element: <WhoWeServePage /> },
       { path: 'competencies', element: <CompetenciesPage /> },
       { path: 'domains', element: <DomainsPage /> },
       { path: 'domains/:slug', element: <DomainDetailPage /> },

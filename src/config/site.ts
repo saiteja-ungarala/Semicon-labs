@@ -29,45 +29,74 @@ export const site = {
   },
 } as const;
 
+export interface NavChild {
+  label: string;
+  to: string;
+  description?: string;
+}
+
 export interface NavItem {
   label: string;
   to: string;
+  /** When present, the header item opens a dropdown of these links. */
+  children?: NavChild[];
 }
 
+// Header nav mirrors the client reference, with dropdowns for the two rich items.
 export const primaryNav: NavItem[] = [
-  { label: 'Modules', to: '/modules' },
-  { label: 'Competencies', to: '/competencies' },
-  { label: 'Domains', to: '/domains' },
-  { label: 'How It Works', to: '/#how' },
+  {
+    label: 'Who We Serve',
+    to: '/who-we-serve',
+    children: [
+      { label: 'Students & Freshers', to: '/who-we-serve#students-freshers', description: 'Get placement-ready before day one' },
+      { label: 'Working Engineers', to: '/who-we-serve#working-engineers', description: 'Deepen your PD or DV expertise' },
+      { label: 'Teams & Cohorts', to: '/who-we-serve#teams-cohorts', description: 'Train a group together · 5+ seats' },
+      { label: 'Enterprises & Universities', to: '/who-we-serve#enterprises-universities', description: 'Roll out at scale · 25+ seats' },
+    ],
+  },
+  {
+    // Curriculum hierarchy, top to bottom: Domains → Skills → Competencies → Modules → Test Cases.
+    label: 'Domains',
+    to: '/domains',
+    children: [
+      { label: 'Physical Design', to: '/domains/physical-design', description: 'Synthesis · PnR · CTS · STA · PV' },
+      { label: 'Design Verification', to: '/domains/design-verification', description: 'Functional · UVM · Coverage · Assertions' },
+      { label: 'Skills', to: '/domains', description: 'Specialized tracks within each domain' },
+      { label: 'Competencies', to: '/competencies', description: 'The exact capabilities you prove' },
+      { label: 'Modules', to: '/modules', description: 'Hands-on, buyable courses' },
+      { label: 'Test Cases', to: '/#challenges', description: 'Objective validation on every challenge' },
+    ],
+  },
   { label: 'Pricing', to: '/pricing' },
+  { label: 'Blog', to: '/blog' },
+  { label: 'About', to: '/about' },
 ];
 
 export const footerNav: { title: string; items: NavItem[] }[] = [
   {
     title: 'Platform',
     items: [
+      { label: 'Who We Serve', to: '/who-we-serve' },
+      { label: 'Curriculum', to: '/domains' },
+      { label: 'Courses', to: '/modules' },
       { label: 'Competencies', to: '/competencies' },
-      { label: 'Domains', to: '/domains' },
-      { label: 'How It Works', to: '/#how' },
       { label: 'Pricing', to: '/pricing' },
-      { label: 'FAQ', to: '/faq' },
     ],
   },
   {
     title: 'Company',
     items: [
       { label: 'About', to: '/about' },
-      { label: 'Our Vision', to: '/about#vision' },
       { label: 'Careers', to: '/careers' },
       { label: 'Blog', to: '/blog' },
       { label: 'Contact', to: '/contact' },
+      { label: 'FAQ', to: '/faq' },
     ],
   },
   {
     title: 'Resources',
     items: [
       { label: 'Resource Library', to: '/resources' },
-      { label: 'Help Center', to: '/faq' },
       { label: 'Refund Policy', to: '/refund' },
       { label: 'Privacy', to: '/privacy' },
       { label: 'Terms', to: '/terms' },

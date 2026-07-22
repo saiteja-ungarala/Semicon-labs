@@ -15,7 +15,7 @@ const HEADLINES = [
 ];
 
 const BACKGROUND_WORDS = [
-  "Freshers", "Placements", "Mentorship", "Tapeouts", "Physical Design", "Verification", "RTL", "Timing Closure", "UVM"
+  "Freshers", "Placements", "Mentorship", "Tapeouts", "Physical Design", "Verification", "RTL", "Timing Closure", "UVM", "Licensing Trust", "Certificates"
 ];
 
 export function Hero() {
@@ -61,7 +61,7 @@ export function Hero() {
           WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, black 15%, black 25%, transparent 42%, transparent 58%, black 75%, black 85%, transparent 100%)'
         }}
       >
-        <div className="flex w-max animate-marquee items-center gap-16 opacity-40 blur-[1px] transition-all duration-1000">
+        <div className="flex w-max animate-marquee items-center gap-16 opacity-40 blur-[1px] transition-all duration-1000 py-4">
           {scrollingWords.map((w, i) => (
             <span key={i} className="text-4xl sm:text-6xl font-display font-extrabold text-ink-faint/30 whitespace-nowrap">
               {w}
@@ -84,15 +84,15 @@ export function Hero() {
             className="font-display text-[clamp(2.2rem,4.5vw,4rem)] font-extrabold leading-[1.05] tracking-tight text-ink w-full"
           >
             Solve real chip problems with the industry's
-            <span className="relative block mt-1 sm:mt-2 mx-auto w-fit">
-              <span className="relative z-10 block h-[1.2em]">
+            <span className="relative block mt-1 sm:mt-2 mx-auto w-fit" style={{ perspective: '1200px' }}>
+              <span className="relative z-10 block h-[1.2em]" style={{ transformStyle: 'preserve-3d' }}>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={headlineIndex}
-                    initial={{ opacity: 0, y: 15, filter: 'blur(8px)' }}
-                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                    exit={{ opacity: 0, y: -15, filter: 'blur(8px)' }}
-                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    initial={{ opacity: 0, rotateX: -90, y: -20, filter: 'blur(2px)' }}
+                    animate={{ opacity: 1, rotateX: 0, y: 0, filter: 'blur(0px)' }}
+                    exit={{ opacity: 0, rotateX: 90, y: 20, filter: 'blur(2px)' }}
+                    transition={{ duration: 0.45, ease: 'easeOut' }}
                     className="absolute inset-0 flex items-center justify-center whitespace-nowrap bg-gradient-to-r from-blue via-[#7B61FF] to-blue bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient"
                   >
                     {HEADLINES[headlineIndex]}

@@ -1,21 +1,27 @@
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { useRef, useEffect } from 'react';
 
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { amount: 0.3 }); // Play when 30% visible
 
   useEffect(() => {
-    // Force playback on mount in case browser blocks declarative autoPlay
     if (videoRef.current) {
-      videoRef.current.play().catch(console.error);
+      if (isInView) {
+        videoRef.current.play().catch(console.error);
+      } else {
+        videoRef.current.pause();
+      }
     }
-  }, []);
+  }, [isInView]);
 
   return (
     <section className="relative -mt-6 sm:-mt-10 z-20 pb-16 sm:pb-24">
       <Container className="px-4 sm:px-6">
         <motion.div 
+          ref={containerRef}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
@@ -26,7 +32,7 @@ export function HeroVideo() {
             <video 
               ref={videoRef}
               src="/video/so_this_video_change_it_comple.mp4"
-              autoPlay 
+              controls
               muted 
               loop 
               playsInline

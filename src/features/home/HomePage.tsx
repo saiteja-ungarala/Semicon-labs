@@ -9,6 +9,7 @@ import { faqs } from '@/data/marketing';
 import { Hero } from './sections/Hero';
 import { HeroVideo } from './sections/HeroVideo';
 import { SkillsMarquee } from './sections/SkillsMarquee';
+import { PlatformModules } from './sections/PlatformModules';
 import { TrustStrip } from './sections/TrustStrip';
 import { WhySemicon } from './sections/WhySemicon';
 import { AiEra } from './sections/AiEra';
@@ -17,6 +18,7 @@ import { HowItWorks } from './sections/HowItWorks';
 import { SampleChallenges } from './sections/SampleChallenges';
 import { ProficiencyLevels } from './sections/ProficiencyLevels';
 import { JourneyToChips } from './sections/JourneyToChips';
+import { WhoWeServeSection } from './sections/WhoWeServeSection';
 import { PricingSection } from './sections/PricingSection';
 import { Testimonials } from './sections/Testimonials';
 import { FaqSection } from './sections/FaqSection';
@@ -42,6 +44,7 @@ export function HomePage() {
       <Hero />
       <HeroVideo />
       <SkillsMarquee />
+      <PlatformModules />
       <WhySemicon />
       <AiEra />
       <Domains />
@@ -49,6 +52,7 @@ export function HomePage() {
       <SampleChallenges />
       <ProficiencyLevels />
       <JourneyToChips />
+      <WhoWeServeSection />
       <TrustStrip />
       <PricingSection />
       <Testimonials />
