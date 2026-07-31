@@ -12,11 +12,11 @@ export function AiEra() {
     <Section alt>
       <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
         <Reveal>
-          <p className="eyebrow text-blue">build the skills ai can't replace</p>
+          <p className="eyebrow text-blue">the skills every semiconductor engineer needs</p>
           <h2 className="mt-4 text-display-md">
-            AI can generate solutions.
+            Learn the Skills That Matter
             <br />
-            <span className="text-gradient">Engineers must decide whether they're right.</span>
+            <span className="text-gradient">in Real Projects.</span>
           </h2>
           <p className="mt-6 text-pretty text-ink-dim leading-relaxed">
             AI can generate scripts, suggest fixes, and automate execution. But it cannot replace

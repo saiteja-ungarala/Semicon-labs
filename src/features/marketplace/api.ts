@@ -10,11 +10,13 @@ export interface CompetencyRef {
 export interface ModuleCard {
   id: string;
   slug: string;
+  externalId?: string | null;
   title: string;
   subtitle: string | null;
   thumbnailUrl: string | null;
   difficulty: 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
   level: 'BEGINNER' | 'SPECIALIST' | 'EXPERT';
+  toolVendor?: 'CADENCE' | 'SYNOPSYS' | 'SIEMENS' | null;
   durationMin: number;
   priceMinor: number;
   discountMinor: number;
@@ -22,7 +24,9 @@ export interface ModuleCard {
   ratingAvg: number;
   ratingCount: number;
   domain: { slug: string; name: string; code: string };
+  skill?: { slug: string; name: string } | null;
   competencies: CompetencyRef[];
+  testcaseCount?: number;
 }
 
 export interface ModuleDetail extends ModuleCard {
@@ -37,11 +41,14 @@ export interface ModuleDetail extends ModuleCard {
     user: { firstName: string | null; lastName: string | null; avatarUrl: string | null };
   }[];
   owned: boolean;
+  labMix?: Partial<Record<'GOLDEN' | 'BUGGY' | 'EXERCISE' | 'GUIDED' | 'CHALLENGE', number>>;
   _count?: { challenges: number };
 }
 
 export interface ModuleFilters {
   domain?: string;
+  skill?: string;
+  tool?: 'CADENCE' | 'SYNOPSYS' | 'SIEMENS';
   q?: string;
   difficulty?: ModuleCard['difficulty'];
   level?: ModuleCard['level'];

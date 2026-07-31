@@ -7,12 +7,64 @@ import { Badge } from '@/components/ui/Badge';
 import { RouteFallback } from '@/components/feedback/RouteFallback';
 import { formatMoney, netPriceMinor } from '@/lib/money';
 import { breadcrumbSchema, courseSchema } from '@/lib/seo';
+import { DifficultyDots, LabTypeBadge, ToolBadge } from '@/components/curriculum/CurriculumBits';
+import { useModuleTestcases, formatDuration, type Testcase } from '@/features/curriculum/api';
 import { useModule } from './api';
+
+/** How many testcases stay fully readable before the locked treatment. */
+const FREE_PREVIEW = 3;
+
+function TestcaseRow({
+  tc,
+  index,
+  locked,
+}: {
+  tc: Testcase;
+  index: number;
+  locked: boolean;
+}) {
+  return (
+    <li
+      className={
+        locked
+          ? 'relative select-none border-b border-line px-5 py-4 last:border-b-0'
+          : 'border-b border-line px-5 py-4 last:border-b-0'
+      }
+      aria-hidden={locked || undefined}
+    >
+      <div className={locked ? 'blur-[3px] opacity-60' : undefined}>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+          <span className="font-mono text-[11px] text-ink-faint">{String(index + 1).padStart(2, '0')}</span>
+          <span className="text-sm font-semibold text-ink">{tc.title}</span>
+          <LabTypeBadge type={tc.labType} />
+          {tc.verifiable && (
+            <span className="font-mono text-[10.5px] uppercase tracking-wide text-blue" title="Objectively validated">
+              ✓ verifiable
+            </span>
+          )}
+        </div>
+        <p className="mt-1.5 line-clamp-2 pl-7 text-[13px] leading-relaxed text-ink-dim">{tc.scenario}</p>
+        <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 pl-7">
+          <DifficultyDots level={tc.difficulty} />
+          <span className="font-mono text-[10.5px] uppercase tracking-wide text-ink-faint">
+            ~{formatDuration(tc.estimatedMin)}
+          </span>
+        </div>
+      </div>
+      {locked && (
+        <span aria-hidden className="absolute right-5 top-1/2 -translate-y-1/2 font-mono text-sm text-ink-faint">
+          🔒
+        </span>
+      )}
+    </li>
+  );
+}
 
 export default function ModuleDetailPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { data: module, isLoading, isError } = useModule(slug);
+  const { data: tcData } = useModuleTestcases(slug);
 
   if (isLoading) return <RouteFallback />;
   if (isError || !module) {
@@ -48,10 +100,20 @@ export default function ModuleDetailPage() {
         ]}
       />
       <PageHero
-        eyebrow={`${module.domain.name} · ${module.level}`}
+        eyebrow={`${module.domain.name}${module.skill ? ` · ${module.skill.name}` : ''} · ${module.level}`}
         title={module.title}
         lede={module.subtitle ?? undefined}
-        crumbs={[{ name: 'Home', to: '/' }, { name: 'Modules', to: '/modules' }, { name: module.title }]}
+        crumbs={
+          module.skill
+            ? [
+                { name: 'Home', to: '/' },
+                { name: 'Domains', to: '/domains' },
+                { name: module.domain.name, to: `/domains/${module.domain.slug}` },
+                { name: module.skill.name, to: `/domains/${module.domain.slug}/skills/${module.skill.slug}` },
+                { name: module.title },
+              ]
+            : [{ name: 'Home', to: '/' }, { name: 'Modules', to: '/modules' }, { name: module.title }]
+        }
       />
 
       <Section>
@@ -61,26 +123,74 @@ export default function ModuleDetailPage() {
             <div className="flex flex-wrap items-center gap-2">
               <Badge tone="blue">{module.difficulty}</Badge>
               <Badge tone="neutral">{Math.round(module.durationMin / 60)} hours</Badge>
-              {module._count && <Badge tone="sky">{module._count.challenges} challenges</Badge>}
+              {module._count && <Badge tone="sky">{module._count.challenges} lab testcases</Badge>}
+              <ToolBadge tool={module.toolVendor ?? null} />
             </div>
 
             <h2 className="mt-7 text-2xl font-bold">What you'll work on</h2>
             <p className="mt-3 text-pretty text-ink-dim">{module.description}</p>
 
-            <h2 className="mt-10 text-2xl font-bold">Competencies you'll build</h2>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              {module.competencies.map((c) => (
-                <div key={c.slug} className="rounded-xl border border-line bg-panel/60 p-5">
-                  <div className="flex items-center gap-2 text-sm font-semibold text-ink">
-                    <span aria-hidden className="font-mono text-sky">
-                      ›
+            {/* ---- The lab testcases: full inventory, locked until owned ---- */}
+            {tcData && tcData.testcases.length > 0 && (
+              <div className="mt-10">
+                <div className="flex flex-wrap items-baseline justify-between gap-3">
+                  <h2 className="text-2xl font-bold">
+                    Inside this module — {tcData.testcases.length} lab testcases
+                  </h2>
+                  {!module.owned && (
+                    <span className="font-mono text-[11px] uppercase tracking-wider text-ink-faint">
+                      Previewing {Math.min(FREE_PREVIEW, tcData.testcases.length)} of {tcData.testcases.length}
                     </span>
-                    {c.name}
-                  </div>
-                  {c.summary && <p className="mt-2 text-[13.5px] text-ink-dim">{c.summary}</p>}
+                  )}
                 </div>
-              ))}
-            </div>
+                <p className="mt-2 text-sm text-ink-dim">
+                  Every testcase is a real failure from a live flow — not a textbook exercise. You solve it in the
+                  actual tool, and the platform verifies your fix objectively.
+                </p>
+                <div className="relative mt-5 overflow-hidden rounded-2xl border border-line bg-panel">
+                  <ul>
+                    {tcData.testcases.map((tc, i) => (
+                      <TestcaseRow key={tc.slug} tc={tc} index={i} locked={!module.owned && i >= FREE_PREVIEW} />
+                    ))}
+                  </ul>
+                  {!module.owned && tcData.testcases.length > FREE_PREVIEW && (
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-44 items-end justify-center bg-gradient-to-t from-panel via-panel/90 to-transparent pb-6">
+                      <div className="pointer-events-auto text-center">
+                        <p className="text-sm font-bold text-ink">
+                          {tcData.testcases.length - FREE_PREVIEW} more testcases are waiting inside.
+                        </p>
+                        <Button
+                          onClick={() => navigate(`/checkout?module=${module.slug}`)}
+                          className="mt-3"
+                          arrow
+                        >
+                          Unlock all {tcData.testcases.length} labs — {formatMoney(net, module.currency)}
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {module.competencies.length > 0 && (
+              <>
+                <h2 className="mt-10 text-2xl font-bold">Competencies you'll build</h2>
+                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  {module.competencies.map((c) => (
+                    <div key={c.slug} className="rounded-xl border border-line bg-panel/60 p-5">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-ink">
+                        <span aria-hidden className="font-mono text-sky">
+                          ›
+                        </span>
+                        {c.name}
+                      </div>
+                      {c.summary && <p className="mt-2 text-[13.5px] text-ink-dim">{c.summary}</p>}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
 
             {module.reviews.length > 0 && (
               <>

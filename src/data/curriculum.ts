@@ -181,13 +181,13 @@ export const learningLoop = [
   },
 ] as const;
 
-/** Homepage trust-strip statistics, derived from the curriculum above. */
+/** Homepage trust-strip statistics (client-approved launch numbers). */
 export const platformStats = [
-  { value: '2', label: 'Engineering Domains' },
-  { value: '11', label: 'Skill Tracks' },
-  { value: '25', label: 'Competencies' },
+  { value: '3', label: 'Engineering Domains' },
   { value: '3', label: 'Proficiency Levels' },
-  { value: '2,300+', label: 'Active Learners' },
+  { value: '50+', label: 'Skill Tracks' },
+  { value: '100+', label: 'Competencies' },
+  { value: '1500+', label: 'Testcases Ready to Solve' },
 ];
 
 /** Traditional learning vs. Semicon Labs — the core positioning table. */

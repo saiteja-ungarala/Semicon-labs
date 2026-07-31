@@ -17,8 +17,6 @@ import { Domains } from './sections/Domains';
 import { HowItWorks } from './sections/HowItWorks';
 import { SampleChallenges } from './sections/SampleChallenges';
 import { ProficiencyLevels } from './sections/ProficiencyLevels';
-import { JourneyToChips } from './sections/JourneyToChips';
-import { WhoWeServeSection } from './sections/WhoWeServeSection';
 import { PricingSection } from './sections/PricingSection';
 import { Testimonials } from './sections/Testimonials';
 import { FaqSection } from './sections/FaqSection';
@@ -51,8 +49,6 @@ export function HomePage() {
       <HowItWorks />
       <SampleChallenges />
       <ProficiencyLevels />
-      <JourneyToChips />
-      <WhoWeServeSection />
       <TrustStrip />
       <PricingSection />
       <Testimonials />

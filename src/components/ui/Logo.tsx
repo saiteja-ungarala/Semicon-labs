@@ -6,34 +6,27 @@ interface LogoProps {
   className?: string;
   /** Wrap in a home link. */
   href?: string;
-  /** Show the "Semicon Labs" wordmark beside the SL monogram. */
+  /** Kept for API compatibility — the wordmark image always includes the name. */
   showWordmark?: boolean;
-  /** Rendered monogram height in px (width scales to the 2.15:1 mark ratio). */
+  /** Rendered logo height in px (width scales with the wordmark's ratio). */
   size?: number;
 }
 
 /**
- * Brand lockup: the SL monogram (cropped from the master art, transparent
- * background) beside a wordmark rendered in the display face. The full
- * vertical lockup already contains its own wordmark, so we use the monogram
- * for the horizontal nav to avoid a squashed, illegible stack.
+ * Brand lockup: the horizontal SEMICON LABS wordmark (client master art,
+ * transparent background) rendered as a single image.
  */
-export function Logo({ className, href = '/', showWordmark = true, size = 34 }: LogoProps) {
+export function Logo({ className, href = '/', size = 32 }: LogoProps) {
   const inner = (
-    <span className={cn('inline-flex items-center gap-2.5', className)}>
+    <span className={cn('inline-flex items-center', className)}>
       <img
-        src={site.logos.mark}
+        src={site.logos.wordmark}
         alt={`${site.name} logo`}
         style={{ height: size, width: 'auto' }}
         className="shrink-0 object-contain"
         loading="eager"
         decoding="async"
       />
-      {showWordmark && (
-        <span className="font-display text-[19px] font-extrabold uppercase tracking-tight text-ink">
-          Semicon<span className="text-blue"> Labs</span>
-        </span>
-      )}
     </span>
   );
 

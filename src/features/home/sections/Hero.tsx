@@ -129,8 +129,8 @@ export function Hero() {
 
           {/* CTAs */}
           <motion.div variants={item} className="mt-12 sm:mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-sm sm:max-w-none relative z-20">
-            <Button to="/modules" size="lg" arrow className="w-full sm:w-auto text-[15px] px-8 h-12 shadow-glow">
-              Explore Courses
+            <Button to="/domains" size="lg" arrow className="w-full sm:w-auto text-[15px] px-8 h-12 shadow-glow">
+              Explore Skills
             </Button>
             <Button to="/pricing" size="lg" variant="secondary" className="w-full sm:w-auto text-[15px] px-8 h-12 bg-white hover:bg-void-2">
               View Pricing

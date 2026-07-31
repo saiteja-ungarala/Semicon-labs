@@ -10,6 +10,7 @@ const WhoWeServePage = lazy(() => import('@/features/pages/WhoWeServePage'));
 const CompetenciesPage = lazy(() => import('@/features/pages/CompetenciesPage'));
 const DomainsPage = lazy(() => import('@/features/pages/DomainsPage'));
 const DomainDetailPage = lazy(() => import('@/features/pages/DomainDetailPage'));
+const SkillDetailPage = lazy(() => import('@/features/pages/SkillDetailPage'));
 const PricingPage = lazy(() => import('@/features/pages/PricingPage'));
 const FaqPage = lazy(() => import('@/features/pages/FaqPage'));
 const ContactPage = lazy(() => import('@/features/pages/ContactPage'));
@@ -62,6 +63,7 @@ export const router = createBrowserRouter([
       { path: 'competencies', element: <CompetenciesPage /> },
       { path: 'domains', element: <DomainsPage /> },
       { path: 'domains/:slug', element: <DomainDetailPage /> },
+      { path: 'domains/:slug/skills/:skillSlug', element: <SkillDetailPage /> },
       { path: 'pricing', element: <PricingPage /> },
       { path: 'faq', element: <FaqPage /> },
       { path: 'contact', element: <ContactPage /> },

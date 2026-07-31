@@ -19,7 +19,8 @@ export const site = {
     color: '/images/color-logo.png', // full vertical lockup (SL + wordmark)
     white: '/images/white-logo.png',
     black: '/images/black-logo.png',
-    mark: '/images/logo-mark.png', // SL monogram only (for the horizontal nav lockup)
+    mark: '/images/logo-mark.png', // SL monogram only
+    wordmark: '/images/main-logo.png', // horizontal SEMICON LABS wordmark (primary)
   },
   social: {
     linkedin: 'https://www.linkedin.com/company/semiconlabs',
@@ -55,16 +56,13 @@ export const primaryNav: NavItem[] = [
     ],
   },
   {
-    // Curriculum hierarchy, top to bottom: Domains → Skills → Competencies → Modules → Test Cases.
+    // Curriculum hierarchy, top to bottom: Domains → Skills → Modules → Test Cases.
     label: 'Domains',
     to: '/domains',
     children: [
       { label: 'Physical Design', to: '/domains/physical-design', description: 'Synthesis · PnR · CTS · STA · PV' },
-      { label: 'Design Verification', to: '/domains/design-verification', description: 'Functional · UVM · Coverage · Assertions' },
-      { label: 'Skills', to: '/domains', description: 'Specialized tracks within each domain' },
-      { label: 'Competencies', to: '/competencies', description: 'The exact capabilities you prove' },
-      { label: 'Modules', to: '/modules', description: 'Hands-on, buyable courses' },
-      { label: 'Test Cases', to: '/#challenges', description: 'Objective validation on every challenge' },
+      { label: 'Design Verification', to: '/domains/design-verification', description: 'Verilog · SV · UVM · Coverage' },
+      { label: 'Analog Layout', to: '/domains/analog-layout', description: 'Coming soon — join the waitlist' },
     ],
   },
   { label: 'Pricing', to: '/pricing' },

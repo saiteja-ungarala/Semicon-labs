@@ -7,8 +7,8 @@ export function PricingSection() {
     <Section id="pricing">
       <SectionHead
         eyebrow="founding learner pricing"
-        title="Start free. Upgrade the moment you're ready."
-        lede="Founding pricing is locked for as long as you stay subscribed — it only goes up from here."
+        title="Pricing for Everyone Building In VLSI."
+        lede="Big skills. Small price tags. Get access to professional EDA tools, hands-on VLSI labs, industry test cases and industry-recognized certifications at the lowest prices — designed for every learner, at every stage."
       />
       <Reveal>
         <PricingCards />
