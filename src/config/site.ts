@@ -49,10 +49,9 @@ export const primaryNav: NavItem[] = [
     label: 'Who We Serve',
     to: '/who-we-serve',
     children: [
-      { label: 'Students & Freshers', to: '/who-we-serve#students-freshers', description: 'Get placement-ready before day one' },
-      { label: 'Working Engineers', to: '/who-we-serve#working-engineers', description: 'Deepen your PD or DV expertise' },
-      { label: 'Teams & Cohorts', to: '/who-we-serve#teams-cohorts', description: 'Train a group together · 5+ seats' },
-      { label: 'Enterprises & Universities', to: '/who-we-serve#enterprises-universities', description: 'Roll out at scale · 25+ seats' },
+      { label: 'Individuals', to: '/who-we-serve/individuals', description: 'Freshers & working engineers — level up solo' },
+      { label: 'Teams', to: '/who-we-serve/teams', description: 'Fast-growing VLSI teams · 5+ seats' },
+      { label: 'Corporates', to: '/who-we-serve/corporates', description: 'Org-wide enablement · 25+ seats' },
     ],
   },
   {

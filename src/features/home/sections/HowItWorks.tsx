@@ -1,46 +1,118 @@
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Section, SectionHead } from '@/components/ui/Section';
-import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
-import { Card } from '@/components/ui/Card';
 import { learningLoop } from '@/data/curriculum';
-import { ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/cn';
 
+/**
+ * The learning workflow as a scroll story (Clear Street pattern): a sticky
+ * oversized step number rolls 01 → 04 while the steps scroll past, the active
+ * step in full ink and the rest receded.
+ */
 export function HowItWorks() {
+  const reduce = useReducedMotion();
+  const [active, setActive] = useState(0);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActive(Number((entry.target as HTMLElement).dataset.index));
+          }
+        }
+      },
+      // Exact center-line trigger: the step containing the viewport's vertical
+      // middle is active — two steps can never fight over it.
+      { rootMargin: '-50% 0px -50% 0px', threshold: 0 },
+    );
+    stepRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <Section id="how" className="bg-void-2 relative overflow-hidden">
+    // NOTE: no overflow-hidden on this Section — it would break the sticky number rail.
+    <Section id="how" className="relative bg-void-2">
       <SectionHead
         eyebrow="the learning workflow"
         title="Every challenge follows the same real-project loop."
         lede="Problem → Investigation → Solution → Validation. The same sequence you'd run on a live project."
       />
 
-      <RevealGroup className="mt-16 grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-8" stagger={0.15}>
-        {learningLoop.map((stage, i) => (
-          <RevealItem key={stage.step}>
-            <div className="relative group h-full">
-              {/* Clean Chevron Connector arrow between steps on desktop */}
-              {i < learningLoop.length - 1 && (
-                <div
-                  aria-hidden
-                  className="absolute -right-6 top-1/2 -translate-y-1/2 hidden lg:flex items-center justify-center w-12 h-12 rounded-full bg-white border border-line shadow-sm text-blue/40 z-30 group-hover:text-blue transition-colors duration-300"
+      <div className="grid gap-8 lg:grid-cols-[minmax(220px,320px)_1fr] lg:gap-16">
+        {/* Sticky rolling step number */}
+        <div className="hidden lg:block" aria-hidden>
+          <div className="sticky top-36">
+            {/* `relative` is load-bearing: popLayout's exiting digit is absolutely
+                positioned against the nearest positioned ancestor — without it,
+                ghost digits escape this masked box and float over the heading. */}
+            <div
+              className="relative overflow-hidden font-display font-bold leading-none text-blue"
+              style={{ fontSize: 'clamp(8rem, 16vw, 13rem)', height: '1em' }}
+            >
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.span
+                  key={active}
+                  className="block will-change-transform"
+                  initial={reduce ? { opacity: 0 } : { y: '1em', opacity: 0.4 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={reduce ? { opacity: 0 } : { y: '-1em', opacity: 0.4 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <ChevronRight className="w-6 h-6" />
-                </div>
-              )}
-              
-              <Card interactive className="h-full pt-10 px-8 pb-8 relative z-20 overflow-visible mt-4 border border-line-strong hover:border-blue/30 transition-all duration-300 hover:shadow-md">
-                <div className="absolute -top-6 left-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-white border border-line shadow-sm text-ink font-display text-xl font-bold group-hover:bg-blue group-hover:text-white group-hover:border-blue group-hover:shadow-glow transition-all duration-300">
-                  {i + 1}
-                </div>
-                <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-ink-dim mb-4 block transition-colors duration-300">
-                  {stage.step}
-                </span>
-                <h3 className="text-xl font-bold text-ink mb-3 transition-colors duration-300">{stage.title}</h3>
-                <p className="text-[15px] text-ink-faint leading-relaxed">{stage.description}</p>
-              </Card>
+                  {String(active + 1).padStart(2, '0')}
+                </motion.span>
+              </AnimatePresence>
             </div>
-          </RevealItem>
-        ))}
-      </RevealGroup>
+          </div>
+        </div>
+
+        {/* Steps */}
+        <div>
+          {learningLoop.map((stage, i) => (
+            <div
+              key={stage.step}
+              data-index={i}
+              ref={(el) => {
+                stepRefs.current[i] = el;
+              }}
+              className="grid gap-4 border-t border-line-strong/60 py-16 sm:grid-cols-[1fr_280px] sm:gap-10 lg:py-24"
+            >
+              <div>
+                {/* Inline number on small screens (sticky rail is desktop-only) */}
+                <span className="mb-3 block font-display text-4xl font-bold text-blue lg:hidden">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <p
+                  className={cn(
+                    'font-mono text-[11px] font-bold uppercase tracking-widest transition-colors duration-500',
+                    i === active ? 'text-blue' : 'text-ink-faint',
+                  )}
+                >
+                  {stage.step}
+                </p>
+                <h3
+                  className={cn(
+                    'mt-3 font-display text-3xl font-bold leading-tight transition-colors duration-500 sm:text-4xl',
+                    i === active ? 'text-ink' : 'text-ink-faint/50',
+                  )}
+                >
+                  {stage.title}
+                </h3>
+              </div>
+              <p
+                className={cn(
+                  'self-center text-[15px] leading-relaxed transition-colors duration-500',
+                  i === active ? 'text-ink-dim' : 'text-ink-faint/60',
+                )}
+              >
+                {stage.description}
+              </p>
+            </div>
+          ))}
+          <div className="border-t border-line-strong/60" />
+        </div>
+      </div>
     </Section>
   );
 }

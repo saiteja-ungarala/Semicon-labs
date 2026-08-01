@@ -2,6 +2,7 @@ import { Seo } from '@/components/seo/Seo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Reveal, RevealGroup, RevealItem } from '@/components/motion/Reveal';
+import { FoundersCarousel } from '@/components/marketing/FoundersCarousel';
 import { FinalCta } from '@/features/home/sections/FinalCta';
 import { breadcrumbSchema } from '@/lib/seo';
 
@@ -85,6 +86,16 @@ export default function AboutPage() {
             </RevealItem>
           ))}
         </RevealGroup>
+      </Section>
+
+      <Section>
+        <SectionHead
+          align="center"
+          eyebrow="the people behind semicon labs"
+          title="Built by engineers who shipped real silicon."
+          lede="Decades inside Qualcomm, Intel, NVIDIA, AMD, TI and Broadcom — distilled into the platform they wish they'd had."
+        />
+        <FoundersCarousel />
       </Section>
 
       <FinalCta />

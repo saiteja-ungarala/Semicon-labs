@@ -20,11 +20,19 @@ export function TrustStrip() {
       <Reveal>
         <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3 lg:grid-cols-5">
           {platformStats.map((stat) => (
-            <div key={stat.label} className="bg-panel p-7 text-center sm:p-8">
-              <div className="font-mono text-3xl font-bold text-gradient sm:text-4xl">
+            <div
+              key={stat.label}
+              className="group relative bg-panel p-7 text-center transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:shadow-card-hover sm:p-8"
+            >
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                style={{ background: 'radial-gradient(circle at 50% 0%, rgba(46,30,224,0.06), transparent 65%)' }}
+              />
+              <div className="relative font-mono text-3xl font-bold text-gradient transition-transform duration-300 group-hover:scale-110 sm:text-4xl">
                 <AnimatedCounter value={stat.value} />
               </div>
-              <div className="mt-2 text-[12px] uppercase tracking-wider text-ink-faint">
+              <div className="relative mt-2 text-[12px] uppercase tracking-wider text-ink-faint transition-colors duration-300 group-hover:text-ink-dim">
                 {stat.label}
               </div>
             </div>

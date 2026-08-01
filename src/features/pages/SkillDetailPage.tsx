@@ -7,7 +7,6 @@ import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import {
   DifficultyDots,
   LabMixBar,
-  OnlyHereStrip,
   ToolBadge,
 } from '@/components/curriculum/CurriculumBits';
 import {
@@ -153,10 +152,6 @@ export default function SkillDetailPage() {
             Modules for this skill are being finalized — check back shortly.
           </p>
         )}
-
-        <OnlyHereStrip className="mt-12">
-          {`${totalLabs} ${skill.name} testcases, distilled from real project debug — only on Semicon Labs.`}
-        </OnlyHereStrip>
 
         <div className="mt-10 text-center">
           <Button to={`/domains/${domain.slug}`} variant="secondary">

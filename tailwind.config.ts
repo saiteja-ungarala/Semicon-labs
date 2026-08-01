@@ -111,8 +111,17 @@ const config: Config = {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+        // Attention blink: fill flashes twice then holds (used on icon hover).
+        'icon-flash': {
+          '0%': { opacity: '0' },
+          '25%': { opacity: '1' },
+          '45%': { opacity: '0.25' },
+          '70%': { opacity: '1' },
+          '100%': { opacity: '1' },
+        },
       },
       animation: {
+        'icon-flash': 'icon-flash 0.55s ease-out forwards',
         'fade-up': 'fade-up 0.6s ease forwards',
         blink: 'blink 1s step-end infinite',
         sweep: 'sweep 5.5s ease-in-out infinite',

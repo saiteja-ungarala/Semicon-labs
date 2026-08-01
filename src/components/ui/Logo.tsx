@@ -32,7 +32,15 @@ export function Logo({ className, href = '/', size = 32 }: LogoProps) {
 
   if (!href) return inner;
   return (
-    <Link to={href} aria-label={`${site.name} home`} className="inline-flex items-center rounded-md">
+    <Link
+      to={href}
+      aria-label={`${site.name} home`}
+      className="inline-flex items-center rounded-md"
+      // Already on this page? Glide back to the top instead of a no-op.
+      onClick={() => {
+        if (window.location.pathname === href) window.scrollTo({ top: 0, behavior: 'smooth' });
+      }}
+    >
       {inner}
     </Link>
   );

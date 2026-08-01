@@ -5,10 +5,17 @@ import { PageHero } from '@/components/marketing/PageHero';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
-import { OnlyHereStrip } from '@/components/curriculum/CurriculumBits';
+import { SampleChallenges } from '@/features/home/sections/SampleChallenges';
 import { FinalCta } from '@/features/home/sections/FinalCta';
 import { useDomains, type DomainSummary } from '@/features/curriculum/api';
 import { breadcrumbSchema } from '@/lib/seo';
+
+// Per-domain chip artwork for the card banners (client-supplied chip imagery).
+const CARD_ART: Record<string, string> = {
+  'physical-design': '/images/chips/chip-neon.jpg',
+  'design-verification': '/images/chips/chip-neon2.jpg',
+  'analog-layout': '/images/chips/chip-macro.jpg',
+};
 
 /** Marketing proof-points per domain card (client-provided claims). */
 const proofRows = (d: DomainSummary) => [
@@ -21,50 +28,90 @@ const proofRows = (d: DomainSummary) => [
 
 function DomainBigCard({ domain }: { domain: DomainSummary }) {
   const soon = domain.comingSoon;
-  return (
-    <div
-      className={
-        soon
-          ? 'relative flex h-full flex-col rounded-3xl border-2 border-dashed border-line-strong bg-panel/40 p-8'
-          : 'gradient-border relative flex h-full flex-col rounded-3xl border border-transparent bg-panel p-8 shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover'
-      }
-    >
-      <div className="flex items-start justify-between gap-3">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-navy">{domain.pipeline}</p>
-        {soon ? (
-          <Badge tone="neutral">Coming soon</Badge>
-        ) : (
-          <Badge tone="blue">Enrolling now</Badge>
-        )}
-      </div>
-      <h3 className="mt-4 text-2xl font-bold text-ink">{domain.name}</h3>
-      <p className="mt-2 flex-1 text-sm text-ink-dim">{domain.tagline}</p>
-
-      {soon ? (
-        <div className="mt-8 rounded-2xl bg-void-2/70 p-6 text-center">
-          <p className="text-sm font-semibold text-ink">The next domain we open.</p>
-          <p className="mt-1 text-[13px] text-ink-dim">
-            Early registrants get first access — before public seats.
-          </p>
-          <Button to="/register" variant="secondary" className="mt-5 w-full">
+  if (soon) {
+    return (
+      <div className="group flex h-full flex-col overflow-hidden rounded-2xl border-2 border-dashed border-line-strong bg-panel/40">
+        <div className="relative h-32 overflow-hidden">
+          <img
+            src={CARD_ART[domain.slug]}
+            alt=""
+            aria-hidden
+            loading="lazy"
+            className="h-full w-full object-cover opacity-60 grayscale transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent" />
+        </div>
+        <div className="flex flex-1 flex-col p-7 pt-4">
+          <div className="flex items-start justify-between gap-3">
+            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-navy">{domain.pipeline}</p>
+            <Badge tone="neutral">Coming soon</Badge>
+          </div>
+          <h3 className="mt-3 text-xl font-bold text-ink">{domain.name}</h3>
+          <p className="mt-2 flex-1 text-sm text-ink-dim">{domain.tagline}</p>
+          <Button to="/register" variant="secondary" className="mt-6 w-full">
             Join the waitlist
           </Button>
         </div>
-      ) : (
-        <>
-          <ul className="mt-8 divide-y divide-line border-y border-line">
-            {proofRows(domain).map((row) => (
-              <li key={row.label} className="flex items-center justify-between gap-4 py-3">
-                <span className="font-mono text-[11px] uppercase tracking-wider text-ink-faint">{row.label}</span>
-                <span className="text-right text-sm font-bold text-ink">{row.value}</span>
-              </li>
-            ))}
-          </ul>
-          <Button to={`/domains/${domain.slug}`} arrow className="mt-7 w-full">
-            Explore {domain.code} — {domain.stats.testcases}+ labs inside
-          </Button>
-        </>
-      )}
+      </div>
+    );
+  }
+  return (
+    <div className="gradient-border group flex h-full flex-col overflow-hidden rounded-2xl border border-transparent bg-panel shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
+      {/* Chip artwork banner — slow zoom on hover, fading into the card body */}
+      <div className="relative h-32 overflow-hidden">
+        <img
+          src={CARD_ART[domain.slug]}
+          alt=""
+          aria-hidden
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-panel via-panel/25 to-transparent" />
+        <span className="absolute bottom-2 right-3 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-white/80">
+          {domain.code}
+        </span>
+      </div>
+      <div className="flex flex-1 flex-col p-7 pt-4">
+      <div className="flex items-start justify-between gap-3">
+        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-navy">{domain.pipeline}</p>
+        <Badge tone="blue">
+          <span className="relative mr-1.5 flex h-1.5 w-1.5" aria-hidden>
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue opacity-60" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue" />
+          </span>
+          Enrolling
+        </Badge>
+      </div>
+      <h3 className="mt-3 text-xl font-bold text-ink transition-colors duration-300 group-hover:text-blue-600">{domain.name}</h3>
+      <ul className="mt-5 flex-1 divide-y divide-line border-y border-line">
+        {proofRows(domain).map((row, i) => (
+          <li
+            key={row.label}
+            // Rows light up in a top-to-bottom wave while the card is hovered.
+            className="-mx-2 flex items-center justify-between gap-3 rounded-md px-2 py-2.5 transition-colors duration-300 group-hover:bg-blue/5"
+            style={{ transitionDelay: `${i * 45}ms` }}
+          >
+            <span className="font-mono text-[10.5px] uppercase tracking-wider text-ink-faint">{row.label}</span>
+            <span
+              className={
+                row.label === 'Real testcases'
+                  ? 'text-right text-[13.5px] font-bold text-blue transition-transform duration-300 group-hover:scale-110'
+                  : 'text-right text-[13.5px] font-bold text-ink'
+              }
+            >
+              {row.value}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <Button
+        to={`/domains/${domain.slug}`}
+        arrow
+        className="mt-6 w-full transition-transform duration-300 group-hover:-translate-y-0.5"
+      >
+        Explore {domain.code} — {domain.stats.testcases}+ labs inside
+      </Button>
+      </div>
     </div>
   );
 }
@@ -96,6 +143,8 @@ export default function DomainsPage() {
         eyebrow="engineering domains"
         title="Real challenges, straight from real projects."
         lede="Every domain is broken down the way real teams work: skills, lab modules, and the exact testcases engineers debug on live silicon. Pick your lane."
+        image="/images/chips/chip-neon.jpg"
+        imageAlt="Glowing chip on a circuit board"
         crumbs={[{ name: 'Home', to: '/' }, { name: 'Domains' }]}
       >
         {totals && (
@@ -138,13 +187,10 @@ export default function DomainsPage() {
               ))}
         </RevealGroup>
         <p className="mt-4 text-right font-mono text-[10.5px] text-ink-faint">¹ Data taken from Times of India</p>
-
-        <OnlyHereStrip className="mt-12">
-          {totals
-            ? `${totals.testcases}+ testcases distilled from real project failures — and they exist only here.`
-            : 'Testcases distilled from real project failures — and they exist only here.'}
-        </OnlyHereStrip>
       </Section>
+
+      {/* A taste of the actual challenges (moved here from the homepage). */}
+      <SampleChallenges />
 
       <FinalCta />
     </>

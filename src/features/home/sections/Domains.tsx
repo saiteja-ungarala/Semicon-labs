@@ -35,21 +35,44 @@ function HomeDomainCard({ domain }: { domain: DomainSummary }) {
     );
   }
   return (
-    <div className="gradient-border flex h-full flex-col rounded-2xl border border-transparent bg-panel p-7 shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover">
+    <div className="gradient-border group flex h-full flex-col rounded-2xl border border-transparent bg-panel p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
       <div className="flex items-start justify-between gap-3">
         <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-navy">{domain.pipeline}</p>
-        <Badge tone="blue">Enrolling</Badge>
+        <Badge tone="blue">
+          <span className="relative mr-1.5 flex h-1.5 w-1.5" aria-hidden>
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue opacity-60" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue" />
+          </span>
+          Enrolling
+        </Badge>
       </div>
-      <h3 className="mt-3 text-xl font-bold text-ink">{domain.name}</h3>
+      <h3 className="mt-3 text-xl font-bold text-ink transition-colors duration-300 group-hover:text-blue-600">{domain.name}</h3>
       <ul className="mt-5 flex-1 divide-y divide-line border-y border-line">
-        {claimRows(domain).map((row) => (
-          <li key={row.label} className="flex items-center justify-between gap-3 py-2.5">
+        {claimRows(domain).map((row, i) => (
+          <li
+            key={row.label}
+            // Rows light up in a top-to-bottom wave while the card is hovered.
+            className="-mx-2 flex items-center justify-between gap-3 rounded-md px-2 py-2.5 transition-colors duration-300 group-hover:bg-blue/5"
+            style={{ transitionDelay: `${i * 45}ms` }}
+          >
             <span className="font-mono text-[10.5px] uppercase tracking-wider text-ink-faint">{row.label}</span>
-            <span className="text-right text-[13.5px] font-bold text-ink">{row.value}</span>
+            <span
+              className={
+                row.label === 'Real testcases'
+                  ? 'text-right text-[13.5px] font-bold text-blue transition-transform duration-300 group-hover:scale-110'
+                  : 'text-right text-[13.5px] font-bold text-ink'
+              }
+            >
+              {row.value}
+            </span>
           </li>
         ))}
       </ul>
-      <Button to={`/domains/${domain.slug}`} arrow className="mt-6 w-full">
+      <Button
+        to={`/domains/${domain.slug}`}
+        arrow
+        className="mt-6 w-full transition-transform duration-300 group-hover:-translate-y-0.5"
+      >
         Get Started
       </Button>
     </div>
@@ -62,9 +85,9 @@ export function Domains() {
   return (
     <Section id="domains">
       <SectionHead
-        eyebrow="domains, skills & testcases"
+        eyebrow="the skills companies are hiring for — right now"
         title="Real challenges, straight from real projects."
-        lede="Pick a domain and drill all the way down — skill, module, testcase. Every count below is live from the catalog."
+        lede="This is the project experience interviews actually test — real failures, real tools, real testcases. Pick your domain and start building it today."
       />
       <RevealGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.1}>
         {isLoading

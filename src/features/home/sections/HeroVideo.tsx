@@ -20,11 +20,12 @@ export function HeroVideo() {
   return (
     <section className="relative -mt-6 sm:-mt-10 z-20 pb-16 sm:pb-24">
       <Container className="px-4 sm:px-6">
-        <motion.div 
+        <motion.div
           ref={containerRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 48, scale: 0.94 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-15% 0px' }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-5xl rounded-[1.5rem] sm:rounded-[2.5rem] bg-white p-2 sm:p-4 shadow-[0_24px_80px_-12px_rgba(28,20,120,0.15)] border border-line/40"
         >
           <div className="relative overflow-hidden rounded-[1rem] sm:rounded-[2rem] bg-void-2 aspect-video flex items-center justify-center group">

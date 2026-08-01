@@ -28,7 +28,7 @@ export const audiences: Audience[] = [
       'Placement-ready PD & DV competencies',
       'Objective validation you can point to',
     ],
-    cta: { label: 'Start free', to: '/register' },
+    cta: { label: 'For Individuals →', to: '/who-we-serve/individuals' },
   },
   {
     slug: 'working-engineers',
@@ -42,7 +42,7 @@ export const audiences: Audience[] = [
       'Self-paced, lifetime access to courses',
       'Verified competency certificates',
     ],
-    cta: { label: 'See plans', to: '/pricing' },
+    cta: { label: 'For Individuals →', to: '/who-we-serve/individuals' },
   },
   {
     slug: 'teams-cohorts',
@@ -56,7 +56,7 @@ export const audiences: Audience[] = [
       'All PD & DV domain modules',
       'Onboarding for training cohorts',
     ],
-    cta: { label: 'Talk to us', to: '/contact' },
+    cta: { label: 'For Teams →', to: '/who-we-serve/teams' },
   },
   {
     slug: 'enterprises-universities',
@@ -70,6 +70,6 @@ export const audiences: Audience[] = [
       'Custom rollout and billing terms',
       'Labs provisioned via tokens',
     ],
-    cta: { label: 'Contact sales', to: '/contact' },
+    cta: { label: 'For Corporates →', to: '/who-we-serve/corporates' },
   },
 ];

@@ -15,7 +15,6 @@ import { WhySemicon } from './sections/WhySemicon';
 import { AiEra } from './sections/AiEra';
 import { Domains } from './sections/Domains';
 import { HowItWorks } from './sections/HowItWorks';
-import { SampleChallenges } from './sections/SampleChallenges';
 import { ProficiencyLevels } from './sections/ProficiencyLevels';
 import { PricingSection } from './sections/PricingSection';
 import { Testimonials } from './sections/Testimonials';
@@ -42,14 +41,13 @@ export function HomePage() {
       <Hero />
       <HeroVideo />
       <SkillsMarquee />
+      <TrustStrip />
       <PlatformModules />
       <WhySemicon />
       <AiEra />
       <Domains />
       <HowItWorks />
-      <SampleChallenges />
       <ProficiencyLevels />
-      <TrustStrip />
       <PricingSection />
       <Testimonials />
       <FaqSection />

@@ -198,15 +198,15 @@ function NavDropdown({ item }: { item: NavItem }) {
 
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute left-1/2 top-full -translate-x-1/2 pt-3"
-            role="menu"
-          >
-            <div
+          /* Static wrapper owns the centering — framer's `y` animation would
+             otherwise overwrite the -translate-x-1/2 transform and shove the
+             panel off-center. */
+          <div className="absolute left-1/2 top-full -translate-x-1/2 pt-3" role="menu">
+            <motion.div
+              initial={{ opacity: 0, y: 8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.98 }}
+              transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
               className={cn(
                 'rounded-2xl border border-line bg-white p-2 shadow-[0_24px_60px_-20px_rgba(28,20,120,0.28)]',
                 wide ? 'grid w-[560px] grid-cols-2 gap-1' : 'w-[320px]',
@@ -217,14 +217,24 @@ function NavDropdown({ item }: { item: NavItem }) {
                   key={c.to + c.label}
                   to={c.to}
                   role="menuitem"
-                  className="flex flex-col rounded-xl px-4 py-2.5 transition-colors hover:bg-void-2"
+                  className="group/item flex items-center justify-between gap-3 rounded-xl px-4 py-3 transition-colors hover:bg-blue-soft"
                 >
-                  <span className="text-sm font-semibold text-ink">{c.label}</span>
-                  {c.description && <span className="mt-0.5 text-xs text-ink-dim">{c.description}</span>}
+                  <span className="flex min-w-0 flex-col">
+                    <span className="text-sm font-semibold text-ink transition-colors group-hover/item:text-blue-600">
+                      {c.label}
+                    </span>
+                    {c.description && <span className="mt-0.5 text-xs text-ink-dim">{c.description}</span>}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="-translate-x-1 text-sm font-semibold text-blue opacity-0 transition-all group-hover/item:translate-x-0 group-hover/item:opacity-100"
+                  >
+                    →
+                  </span>
                 </Link>
               ))}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>

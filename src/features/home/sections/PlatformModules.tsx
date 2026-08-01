@@ -1,31 +1,43 @@
+import { useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
+import { cn } from '@/lib/cn';
 
 /**
  * "Everything your VLSI Career needs. That no one ever provided till now" —
- * the eight launch benefits, each an icon card. FOMO framing is deliberate:
- * miss Semicon Labs, miss every one of these.
+ * the eight launch benefits as icon tiles. The toggle flips the grid into the
+ * "without Semicon Labs" world: everything greys out, scatters, and each tile
+ * shows the handwritten alternative you'd be stuck with.
  */
 
 const benefits = [
-  { icon: '/icons/placements.svg', title: 'Placement Community Access', copy: 'A 200+ recruiter network that sees your verified skills.' },
-  { icon: '/icons/ai.svg', title: 'AI Powered Learning', copy: 'Guidance that adapts to how you debug — not a fixed script.' },
-  { icon: '/icons/projects.svg', title: "Projects you haven't solved Before", copy: 'Real failures from real flows. Not textbook repeats.' },
-  { icon: '/icons/library.svg', title: 'Lifetime free VLSI premium Library', copy: 'The reference material stays yours, forever.' },
-  { icon: '/icons/hourly.svg', title: 'Hourly based sessions', copy: 'Industry EDA tools by the hour — pay for what you use.' },
-  { icon: '/icons/testcases.svg', title: '1500+ Testcases', copy: 'The largest solvable testcase bank in VLSI learning.' },
-  { icon: '/icons/progress.svg', title: 'Progress Tracking', copy: 'Every solve measured, every competency proven.' },
-  { icon: '/icons/affordable.svg', title: 'Affordable', copy: 'Priced for learners — not for corporate budgets.' },
+  { icon: '/icons/placements.svg', title: 'Placement Community Access', copy: 'A 200+ recruiter network that sees your verified skills.', without: 'cold-applying alone' },
+  { icon: '/icons/ai.svg', title: 'AI Powered Learning', copy: 'Guidance that adapts to how you debug — not a fixed script.', without: 'generic video courses' },
+  { icon: '/icons/projects.svg', title: "Projects you haven't solved Before", copy: 'Real failures from real flows. Not textbook repeats.', without: 'the same toy projects' },
+  { icon: '/icons/library.svg', title: 'Lifetime free VLSI premium Library', copy: 'The reference material stays yours, forever.', without: 'scattered PDFs' },
+  { icon: '/icons/hourly.svg', title: 'Hourly based sessions', copy: 'Industry EDA tools by the hour — pay for what you use.', without: 'lakhs for licenses' },
+  { icon: '/icons/testcases.svg', title: '1500+ Testcases', copy: 'The largest solvable testcase bank in VLSI learning.', without: 'a handful of demos' },
+  { icon: '/icons/progress.svg', title: 'Progress Tracking', copy: 'Every solve measured, every competency proven.', without: 'no proof of skill' },
+  { icon: '/icons/affordable.svg', title: 'Affordable', copy: 'Priced for learners — not for corporate budgets.', without: '₹2,00,000 fees' },
 ];
 
-function ConnectingLines() {
+// Deterministic scatter for the "without" world: [x, y, rotate].
+const scatter: [number, number, number][] = [
+  [-26, 14, -8], [18, -12, 6], [-14, 20, -5], [30, 10, 9],
+  [22, -16, 7], [-30, 8, -9], [12, 18, 5], [-18, -10, -6],
+];
+
+function ConnectingLines({ hidden }: { hidden: boolean }) {
   return (
     <svg
-      className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-100 hidden sm:block text-line"
+      className={cn(
+        'pointer-events-none absolute inset-0 z-0 hidden h-full w-full text-line transition-opacity duration-500 sm:block',
+        hidden ? 'opacity-0' : 'opacity-100',
+      )}
       viewBox="0 0 1000 300"
       preserveAspectRatio="none"
     >
-      {/* Curved connecting paths between module positions */}
       {[
         'M 125,80 C 250,40 300,40 375,80',
         'M 375,80 C 500,120 550,120 625,80',
@@ -34,20 +46,16 @@ function ConnectingLines() {
         'M 375,220 C 500,260 550,260 625,220',
         'M 625,220 C 750,180 800,180 875,220',
       ].map((d, i) => (
-        <path
-          key={i}
-          d={d}
-          stroke="currentColor"
-          strokeWidth="1.5"
-          fill="none"
-          strokeDasharray="6 6"
-        />
+        <path key={i} d={d} stroke="currentColor" strokeWidth="1.5" fill="none" strokeDasharray="6 6" />
       ))}
     </svg>
   );
 }
 
 export function PlatformModules() {
+  const reduce = useReducedMotion();
+  const [without, setWithout] = useState(false);
+
   return (
     <Section id="modules" className="overflow-hidden">
       <SectionHead
@@ -61,41 +69,114 @@ export function PlatformModules() {
         lede="Each of these exists on this platform and nowhere else — together, they're the reason early registrants don't wait."
       />
 
-      <div className="relative mx-auto max-w-5xl mt-16 px-4">
-        <ConnectingLines />
+      <div className="relative mx-auto mt-16 max-w-5xl px-4">
+        <ConnectingLines hidden={without} />
 
-        <RevealGroup className="grid grid-cols-2 sm:grid-cols-4 gap-y-16 gap-x-6 justify-items-center py-8 relative z-10" stagger={0.1}>
-          {benefits.map((b) => (
-            <RevealItem key={b.title} direction="down">
-              <div className="group relative flex flex-col items-center gap-4 cursor-pointer">
-                {/* Icon container */}
-                <div
-                  className="w-[72px] h-[72px] sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden bg-panel border border-line"
+        <RevealGroup
+          className="relative z-10 grid grid-cols-2 justify-items-center gap-x-6 gap-y-16 py-8 sm:grid-cols-4"
+          stagger={0.1}
+        >
+          {benefits.map((b, i) => {
+            const [sx, sy, sr] = scatter[i % scatter.length];
+            return (
+              <RevealItem key={b.title} direction="down">
+                <motion.div
+                  animate={
+                    reduce
+                      ? undefined
+                      : without
+                        ? { x: sx, y: sy, rotate: sr, scale: 0.94 }
+                        : { x: 0, y: 0, rotate: 0, scale: 1 }
+                  }
+                  transition={{ type: 'spring', stiffness: 160, damping: 15 }}
+                  className="group relative flex cursor-pointer flex-col items-center gap-4"
                 >
+                  {/* Icon container */}
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{
-                      background: `radial-gradient(circle at 30% 30%, rgba(37, 99, 235, 0.05), transparent 70%)`,
-                    }}
-                  />
-                  <img src={b.icon} alt="" aria-hidden className="relative z-10 h-7 w-7 transition-transform duration-300 group-hover:scale-110" loading="lazy" />
-                </div>
+                    className={cn(
+                      'relative flex h-[72px] w-[72px] items-center justify-center overflow-hidden rounded-2xl border border-line bg-panel shadow-sm transition-all duration-500 sm:h-20 sm:w-20',
+                      without ? 'opacity-40 grayscale' : 'hover:shadow-md',
+                    )}
+                  >
+                    <div
+                      className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      style={{ background: 'radial-gradient(circle at 30% 30%, rgba(37, 99, 235, 0.05), transparent 70%)' }}
+                    />
+                    <img
+                      src={b.icon}
+                      alt=""
+                      aria-hidden
+                      className="relative z-10 h-7 w-7 transition-transform duration-300 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                  </div>
 
-                {/* Module name */}
-                <span className="text-[13px] sm:text-sm font-semibold text-ink text-center leading-tight max-w-[120px]">
-                  {b.title}
-                </span>
-
-                {/* Hover tagline tooltip */}
-                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-30 whitespace-nowrap hidden sm:block">
-                  <span className="text-[11px] text-ink-dim bg-panel backdrop-blur-sm px-2.5 py-1.5 rounded-lg shadow-sm border border-line">
-                    {b.copy}
+                  {/* Benefit name — struck through in the "without" world */}
+                  <span
+                    className={cn(
+                      'max-w-[130px] text-center text-[13px] font-semibold leading-tight transition-colors duration-500 sm:text-sm',
+                      without ? 'text-ink-faint line-through decoration-red-500/80 decoration-2' : 'text-ink',
+                    )}
+                  >
+                    {b.title}
                   </span>
-                </div>
-              </div>
-            </RevealItem>
-          ))}
+
+                  {/* The handwritten alternative you're left with */}
+                  <span
+                    aria-hidden={!without}
+                    className={cn(
+                      'pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap font-hand text-lg font-bold text-red-600 transition-all duration-500',
+                      without ? 'rotate-[-3deg] opacity-90' : 'opacity-0',
+                    )}
+                  >
+                    {b.without}
+                  </span>
+
+                  {/* Hover tagline tooltip (only in the "with" world) */}
+                  {!without && (
+                    <div className="pointer-events-none absolute -bottom-10 left-1/2 z-30 hidden -translate-x-1/2 whitespace-nowrap opacity-0 transition-all duration-300 group-hover:opacity-100 sm:block">
+                      <span className="rounded-lg border border-line bg-panel px-2.5 py-1.5 text-[11px] text-ink-dim shadow-sm backdrop-blur-sm">
+                        {b.copy}
+                      </span>
+                    </div>
+                  )}
+                </motion.div>
+              </RevealItem>
+            );
+          })}
         </RevealGroup>
+
+        {/* Toggle bar — flip between the two worlds */}
+        <div className="relative z-10 mt-14 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 sm:flex-row">
+          <button
+            type="button"
+            onClick={() => setWithout((v) => !v)}
+            className="group flex items-center gap-3"
+            aria-pressed={without}
+          >
+            <span className="text-blue transition-colors">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+                <path d="M12 2l1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2Z" />
+              </svg>
+            </span>
+            <span className={cn('relative h-7 w-12 rounded-full transition-colors', without ? 'bg-blue' : 'bg-line-strong')}>
+              <span className={cn('absolute top-1 h-5 w-5 rounded-full bg-white shadow transition-all', without ? 'left-6' : 'left-1')} />
+            </span>
+            {without ? (
+              <span className="text-sm font-bold text-ink">
+                Semicon Labs brings it all back — <span className="text-blue">every benefit, one platform.</span>
+              </span>
+            ) : (
+              <span className="font-hand text-xl font-bold text-ink">
+                Imagine <span className="text-blue">without</span> Semicon Labs…
+              </span>
+            )}
+          </button>
+
+          <a href="#pricing" className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue transition hover:gap-2.5">
+            Lock every benefit <span aria-hidden>→</span>
+          </a>
+        </div>
       </div>
     </Section>
   );

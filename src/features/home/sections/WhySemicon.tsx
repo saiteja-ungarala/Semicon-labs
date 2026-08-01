@@ -54,18 +54,44 @@ export function WhySemicon() {
 
       <InteractiveComparison />
 
+      <SectionHead
+        className="mt-24"
+        eyebrow="the skills every semiconductor engineer needs"
+        title={
+          <>
+            Learn the Skills That Matter
+            <br className="hidden sm:block" /> <span className="text-gradient">in Real Projects.</span>
+          </>
+        }
+      />
+
       {/* Company "products" icon grid, repurposed for the four learning pillars */}
-      <RevealGroup className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+      <RevealGroup className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
         {whyPillars.map((pillar) => (
-          <RevealItem key={pillar.title}>
-            <div className="group flex h-full flex-col bg-panel p-7 transition-colors hover:bg-panel-raised">
-              <span className="text-blue">
-                <PillarGlyph icon={pillar.icon} />
+          <RevealItem key={pillar.title} className="h-full">
+            <div className="group relative flex h-full flex-col overflow-hidden bg-panel p-7 transition-all duration-300 hover:z-10 hover:-translate-y-1.5 hover:bg-panel hover:shadow-card-hover">
+              {/* Soft brand glow that blooms on hover */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                style={{ background: 'radial-gradient(circle at 20% 0%, rgba(46,30,224,0.07), transparent 60%)' }}
+              />
+              {/* Icon flash-fills blue (two quick blinks) the moment the card is hovered */}
+              <span className="relative inline-flex h-16 w-16 items-center justify-center self-start rounded-2xl text-blue transition-all duration-300 group-hover:scale-110 group-hover:text-white">
+                <span aria-hidden className="absolute inset-0 rounded-2xl bg-blue opacity-0 group-hover:animate-icon-flash" />
+                <span className="relative">
+                  <PillarGlyph icon={pillar.icon} />
+                </span>
               </span>
-              <h3 className="mt-6 text-base font-semibold text-ink">{pillar.title}</h3>
-              <p className="mt-3 flex-1 text-sm text-ink-dim">{pillar.description}</p>
-              <p className="mt-6 border-t border-line pt-4 font-mono text-[11px] uppercase tracking-wider text-blue">
+              <h3 className="relative mt-6 text-base font-semibold text-ink transition-colors duration-300 group-hover:text-blue-600">
+                {pillar.title}
+              </h3>
+              <p className="relative mt-3 flex-1 text-sm text-ink-dim">{pillar.description}</p>
+              <p className="relative mt-6 flex items-center gap-1.5 border-t border-line pt-4 font-mono text-[11px] uppercase tracking-wider text-blue">
                 {pillar.spec}
+                <span aria-hidden className="-translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                  →
+                </span>
               </p>
             </div>
           </RevealItem>
