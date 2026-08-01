@@ -1,5 +1,5 @@
 /**
- * Recruiter band — "Partnered with 200+ Recruiters" over a continuous
+ * Recruiter band — "Partnered with 290+ Recruiters" over a continuous
  * marquee of the companies our placement network hires into.
  */
 
@@ -37,7 +37,7 @@ export function SkillsMarquee() {
     <div className="relative overflow-hidden border-t border-line/40 bg-white py-12">
       <div className="mx-auto mb-8 max-w-content px-5 sm:px-6 lg:px-8">
         <p className="text-center font-display text-[13px] font-bold uppercase tracking-[0.12em] text-ink-faint">
-          Partnered with <span className="text-blue">200+ Recruiters</span>
+          Partnered with <span className="text-blue">290+ Recruiters</span>
         </p>
       </div>
       <div
