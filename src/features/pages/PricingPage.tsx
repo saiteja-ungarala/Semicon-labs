@@ -1,7 +1,7 @@
 import { Seo } from '@/components/seo/Seo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
-import { PricingCards } from '@/components/marketing/PricingCards';
+import { PricingTabs } from '@/components/marketing/PricingTabs';
 import { ComparisonTable } from '@/components/marketing/ComparisonTable';
 import { FaqAccordion } from '@/components/marketing/FaqAccordion';
 import { Reveal } from '@/components/motion/Reveal';
@@ -23,18 +23,19 @@ export default function PricingPage() {
         ]}
       />
       <PageHero
-        eyebrow="founding learner pricing"
-        title="Pricing that scales with your ambition."
-        lede="Start free. Upgrade the moment you're ready for more. Founding pricing is locked for as long as you stay subscribed."
+        eyebrow="pricing, made simple"
+        title={
+          <>
+            Same labs. <span className="text-gradient">More power on Pro.</span>
+          </>
+        }
+        lede="Basic and Pro run identical labs, tools, and problem sets. Pro just hands you a bigger engine underneath — for the labs that need it."
         crumbs={[{ name: 'Home', to: '/' }, { name: 'Pricing' }]}
       />
       <Section>
         <Reveal>
-          <PricingCards />
+          <PricingTabs />
         </Reveal>
-        <p className="mt-8 text-center text-xs text-ink-faint">
-          7-day money-back guarantee on every paid plan · Cancel anytime · Prices in USD
-        </p>
       </Section>
 
       <Section alt>

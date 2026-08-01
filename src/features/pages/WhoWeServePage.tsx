@@ -2,7 +2,7 @@ import { Seo } from '@/components/seo/Seo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { WhoWeServe } from '@/components/marketing/WhoWeServe';
-import { PricingCards } from '@/components/marketing/PricingCards';
+import { PricingTabs } from '@/components/marketing/PricingTabs';
 import { Reveal } from '@/components/motion/Reveal';
 import { FinalCta } from '@/features/home/sections/FinalCta';
 import { breadcrumbSchema } from '@/lib/seo';
@@ -34,7 +34,7 @@ export default function WhoWeServePage() {
           lede="Start free, then pick the plan that matches how you learn — individual, team, or enterprise."
         />
         <Reveal>
-          <PricingCards />
+          <PricingTabs />
         </Reveal>
         <p className="mt-8 text-center text-sm text-ink-faint">
           Need team or enterprise seats?{' '}

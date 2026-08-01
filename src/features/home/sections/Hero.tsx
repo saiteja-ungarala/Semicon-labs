@@ -138,29 +138,13 @@ export function Hero() {
             </span>
           </motion.h1>
 
-          {/* 2 — Real tools, real logos */}
-          <motion.div variants={item} className="mt-8">
-            <p className="text-[15px] font-extrabold text-ink">Solve real industry projects using</p>
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-9 gap-y-3">
-              {TOOL_LOGOS.map((t) => (
-                <img
-                  key={t.name}
-                  src={t.src}
-                  alt={t.name}
-                  className={`${t.h} w-auto max-w-[150px] object-contain opacity-90`}
-                  loading="eager"
-                />
-              ))}
-            </div>
-          </motion.div>
-
-          {/* 3 — The rotating promise, one small line */}
+          {/* 2 — The rotating promise (bigger, right where the old intro line sat) */}
           <motion.div
             variants={item}
-            className="mt-8 flex flex-wrap items-baseline justify-center gap-x-2 text-[15px] font-semibold text-ink-dim sm:text-base"
+            className="mt-8 flex flex-wrap items-baseline justify-center gap-x-2.5 text-lg font-semibold text-ink-dim sm:text-xl"
           >
             <span>Solve real chip problems with the industry's</span>
-            <span className="relative inline-flex h-[1.4em] min-w-[15ch] overflow-hidden text-left" aria-live="polite">
+            <span className="relative inline-flex h-[1.4em] min-w-[14ch] overflow-hidden text-left" aria-live="polite">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
                   key={headlineIndex}
@@ -173,6 +157,60 @@ export function Hero() {
                   {HEADLINES[headlineIndex]}
                 </motion.span>
               </AnimatePresence>
+            </span>
+          </motion.div>
+
+          {/* 3 — Real tool logos */}
+          <motion.div variants={item} className="mt-7 flex flex-wrap items-center justify-center gap-x-9 gap-y-3">
+            {TOOL_LOGOS.map((t) => (
+              <img
+                key={t.name}
+                src={t.src}
+                alt={t.name}
+                className={`${t.h} w-auto max-w-[150px] object-contain opacity-90`}
+                loading="eager"
+              />
+            ))}
+          </motion.div>
+
+          {/* 4 — Hand-drawn trust line (back by request) */}
+          <motion.div
+            variants={item}
+            className="relative mt-8 font-hand text-[clamp(1.4rem,2.6vw,2rem)] leading-tight text-ink/80"
+          >
+            Practical, project-based, and{' '}
+            <span className="relative z-10 inline-block whitespace-nowrap px-1 font-bold text-ink">
+              highly trusted!
+              <svg
+                className="pointer-events-none absolute -bottom-1 left-0 w-full text-blue opacity-80"
+                viewBox="0 0 300 30"
+                preserveAspectRatio="none"
+                stroke="currentColor"
+                fill="none"
+                strokeWidth="5"
+                strokeLinecap="round"
+                aria-hidden
+              >
+                <path d="M5 20Q150 5 295 25" />
+              </svg>
+              <span className="absolute -bottom-16 right-0 hidden flex-col items-center gap-1 md:flex lg:-right-24 lg:-bottom-14">
+                <svg
+                  className="-ml-6 h-10 w-10 rotate-12 text-blue opacity-80"
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M80 80 Q 50 30 20 20" />
+                  <path d="M40 15 L 20 20 L 25 40" />
+                </svg>
+                <span className="-mt-2 rotate-6 whitespace-nowrap font-hand text-lg font-bold text-blue opacity-90">
+                  Trusted by 2,300+ engineers
+                </span>
+              </span>
             </span>
           </motion.div>
 
