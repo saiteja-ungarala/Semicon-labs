@@ -32,26 +32,24 @@ function Banner({ left, right }: { left: ReactNode; right: string }) {
 }
 
 /** The little "power level" dial from the client's design. */
-function PowerDial({ boosted, onDark }: { boosted?: boolean; onDark?: boolean }) {
-  const track = onDark ? 'rgba(255,255,255,0.22)' : '#E6E7F4';
-  const fill = onDark ? '#FFFFFF' : '#2E1EE0';
+function PowerDial({ boosted }: { boosted?: boolean }) {
   return (
     <div className="flex items-center gap-3.5">
       <svg width="64" height="40" viewBox="0 0 64 40" aria-hidden>
-        <path d="M4 36 A28 28 0 0 1 60 36" fill="none" stroke={track} strokeWidth="7" strokeLinecap="round" />
+        <path d="M4 36 A28 28 0 0 1 60 36" fill="none" stroke="#E6E7F4" strokeWidth="7" strokeLinecap="round" />
         <path
           d="M4 36 A28 28 0 0 1 60 36"
           fill="none"
-          stroke={fill}
+          stroke={boosted ? '#2E1EE0' : '#8A90B0'}
           strokeWidth="7"
           strokeLinecap="round"
           strokeDasharray="88"
           strokeDashoffset={boosted ? 9 : 53}
         />
       </svg>
-      <div className={cn('font-mono text-[10.5px] uppercase tracking-wide', onDark ? 'text-white/70' : 'text-ink-faint')}>
+      <div className="font-mono text-[10.5px] uppercase tracking-wide text-ink-faint">
         Power level
-        <b className={cn('mt-0.5 block font-display text-[13.5px] normal-case tracking-normal', onDark ? 'text-white' : 'text-ink')}>
+        <b className={cn('mt-0.5 block font-display text-[13.5px] normal-case tracking-normal', boosted ? 'text-blue-600' : 'text-ink')}>
           {boosted ? 'Boosted' : 'Standard'}
         </b>
       </div>
@@ -59,14 +57,14 @@ function PowerDial({ boosted, onDark }: { boosted?: boolean; onDark?: boolean })
   );
 }
 
-function Feat({ yes, children, onDark }: { yes: boolean; children: ReactNode; onDark?: boolean }) {
+function Feat({ yes, children }: { yes: boolean; children: ReactNode }) {
   return (
-    <li className={cn('flex items-start gap-2.5 text-[13.5px] leading-snug', yes ? (onDark ? 'text-white' : 'text-ink') : onDark ? 'text-white/50' : 'text-ink-faint')}>
+    <li className={cn('flex items-start gap-2.5 text-[13.5px] leading-snug', yes ? 'text-ink' : 'text-ink-faint')}>
       <span
         aria-hidden
         className={cn(
           'mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[10.5px] font-bold',
-          yes ? (onDark ? 'bg-white text-blue' : 'bg-blue text-white') : onDark ? 'bg-white/15 text-white/60' : 'bg-line text-ink-faint',
+          yes ? 'bg-blue-soft text-blue' : 'bg-line text-ink-faint',
         )}
       >
         {yes ? '✓' : '–'}
@@ -92,48 +90,49 @@ function TierCard({ pro, name, tag, badge, priceWas, price, priceSub, feats, cta
   return (
     <div
       className={cn(
-        'relative flex flex-col rounded-3xl border-[1.5px] p-7 transition-all duration-300 hover:-translate-y-1',
+        'relative flex flex-col overflow-hidden rounded-3xl bg-panel p-7 transition-all duration-300 hover:-translate-y-1',
         pro
-          ? 'border-blue bg-gradient-to-b from-blue to-blue-600 text-white shadow-glow'
-          : 'border-blue/15 bg-blue-soft/40 hover:border-blue/35',
+          ? 'gradient-border border border-transparent shadow-glow hover:shadow-card-hover'
+          : 'border border-line shadow-card hover:border-blue/40 hover:shadow-card-hover',
       )}
     >
-      <div className="flex items-center justify-between">
-        <span className={cn('font-display text-[21px] font-bold', pro ? 'text-white' : 'text-ink')}>{name}</span>
+      {/* Featured tier gets the same soft radial crown as the offer cards */}
+      {pro && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{ background: 'radial-gradient(120% 60% at 50% -12%, rgba(46,30,224,0.10), transparent 55%)' }}
+        />
+      )}
+      <div className="relative flex items-center justify-between">
+        <span className={cn('font-display text-[21px] font-bold', pro ? 'text-blue-600' : 'text-ink')}>{name}</span>
         {badge && (
-          <span className={cn('rounded-full px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide', pro ? 'bg-white text-blue' : 'bg-ink text-white')}>
+          <span className="rounded-full bg-blue px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide text-white shadow-sm">
             {badge}
           </span>
         )}
       </div>
-      <p className={cn('mt-0.5 text-[13px]', pro ? 'text-white/75' : 'text-ink-dim')}>{tag}</p>
+      <p className="relative mt-0.5 text-[13px] text-ink-dim">{tag}</p>
 
-      <div className="my-5">
-        <PowerDial boosted={pro} onDark={pro} />
+      <div className="relative my-5">
+        <PowerDial boosted={pro} />
       </div>
 
-      <div className="flex items-baseline gap-2.5">
-        {priceWas && (
-          <span className={cn('font-mono text-sm line-through', pro ? 'text-white/55' : 'text-ink-faint')}>{priceWas}</span>
-        )}
-        <span className="font-mono text-[32px] font-bold">{price}</span>
+      <div className="relative flex items-baseline gap-2.5">
+        {priceWas && <span className="font-mono text-sm text-ink-faint line-through">{priceWas}</span>}
+        <span className={cn('font-mono text-[32px] font-bold', pro ? 'text-blue-600' : 'text-ink')}>{price}</span>
       </div>
-      <p className={cn('mb-6 text-[12.5px]', pro ? 'text-white/70' : 'text-ink-dim')}>{priceSub}</p>
+      <p className="relative mb-6 text-[12.5px] text-ink-dim">{priceSub}</p>
 
-      <ul className="mb-7 flex-1 space-y-2.5">
+      <ul className="relative mb-7 flex-1 space-y-2.5 border-t border-line pt-5">
         {feats.map((f, i) => (
-          <Feat key={i} yes={f.yes} onDark={pro}>
+          <Feat key={i} yes={f.yes}>
             {f.text}
           </Feat>
         ))}
       </ul>
 
-      <Button
-        to={cta.to}
-        variant={pro ? 'secondary' : 'primary'}
-        className={cn('w-full', pro && 'border-0 bg-white text-blue-600 hover:bg-blue-50')}
-        arrow={pro}
-      >
+      <Button to={cta.to} variant={pro ? 'primary' : 'secondary'} arrow={pro} className="relative w-full">
         {cta.label}
       </Button>
     </div>
