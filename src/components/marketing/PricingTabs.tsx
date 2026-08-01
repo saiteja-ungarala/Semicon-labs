@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
+import { LaunchOfferCard } from './LaunchOfferCard';
 import { cn } from '@/lib/cn';
 
 /**
@@ -199,58 +200,50 @@ function IndividualPanel() {
   return (
     <>
       <Banner
-        left={<><b className="text-blue-600">🎉 First 100 hours, 50% off</b> — one-time welcome offer on either tier.</>}
-        right="Valid 2 months"
+        left={<><b className="text-blue-600">🔥 Limited launch offer</b> — pre-book today, pay the launch rate later.</>}
+        right="Only 1,000 seats"
       />
-      <div className="mx-auto mt-8 grid max-w-3xl gap-5 md:grid-cols-2">
-        <TierCard
-          name="Basic"
-          tag="For standard-complexity labs"
-          priceWas="₹9,000"
-          price="₹4,500"
-          priceSub="/ 100 hrs · first purchase · excl. GST"
-          feats={[
-            { yes: true, text: 'Full problem library, all domains' },
-            { yes: true, text: 'Standard-complexity labs' },
-            { yes: true, text: 'Automated practical evaluation' },
-            { yes: true, text: 'Domain-specific certifications' },
-            { yes: true, text: '2 hrs/month mentoring' },
-            { yes: false, text: 'Advanced / complex labs' },
-            { yes: false, text: 'Tool switching across EDA vendors' },
-          ]}
-          cta={{ label: 'Start on Basic', to: '/register?plan=individual-basic' }}
-        />
-        <TierCard
-          pro
-          name="Pro"
-          tag="For advanced, large-block labs"
-          badge="+20%"
-          priceWas="₹10,800"
-          price="₹5,400"
-          priceSub="/ 100 hrs · first purchase · excl. GST"
-          feats={[
-            { yes: true, text: 'Everything in Basic' },
-            { yes: true, text: 'Higher VM compute for large-block work' },
-            { yes: true, text: 'Advanced / complex / signoff-flow labs' },
-            { yes: true, text: 'Switch between EDA vendors mid-course' },
-            { yes: true, text: 'Built for physical design & large SoC work' },
-          ]}
-          cta={{ label: 'Go Pro', to: '/register?plan=individual-pro' }}
-        />
+      <div className="mx-auto mt-8 grid max-w-3xl items-stretch gap-5 md:grid-cols-2">
+        {/* The attention card: ₹99 pre-book */}
+        <LaunchOfferCard variant="full" />
+
+        {/* The quiet contrast: what everyone else pays */}
+        <div className="relative flex flex-col rounded-3xl border border-line bg-panel p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-blue/40 hover:shadow-card-hover">
+          <span className="font-display text-[21px] font-bold text-ink">After Launch</span>
+          <p className="mt-0.5 text-[13px] text-ink-dim">Pay-per-use rate · no bonus hours</p>
+
+          <ul className="mt-6 rounded-2xl border border-line bg-void px-5 py-1">
+            {[
+              ['100 hours', '₹9,000'],
+              ['200 hours', '₹18,000'],
+            ].map(([l, v]) => (
+              <li key={l} className="flex items-center justify-between gap-3 border-t border-line/70 py-3.5 first:border-t-0">
+                <span className="text-[13.5px] text-ink-dim">{l}</span>
+                <b className="font-mono text-[17px] text-ink">{v}</b>
+              </li>
+            ))}
+          </ul>
+
+          <ul className="mt-6 flex-1 space-y-2.5 border-t border-line pt-5">
+            <Feat yes>Same labs, same tools, same testcases</Feat>
+            <Feat yes>Basic & Pro compute tiers open at launch</Feat>
+            <Feat yes>Top-up packs available anytime</Feat>
+            <Feat yes={false}>100 bonus hours — pre-book exclusive</Feat>
+            <Feat yes={false}>Launch-rate lock — pre-book exclusive</Feat>
+          </ul>
+
+          <div className="mt-7">
+            <Button to="/register?plan=notify" variant="secondary" className="w-full">
+              Notify me at launch
+            </Button>
+            <p className="mt-2.5 text-center text-[11px] text-ink-faint">No bonus hours after the 1,000 seats fill.</p>
+          </div>
+        </div>
       </div>
 
-      <SubHead>Top-up packs · after your first subscription</SubHead>
-      <SpecTable
-        head={['Pack', 'Hours', 'Discount', 'Basic', 'Pro (+20%)', 'Validity']}
-        rows={[
-          ['Top-Up 50', <Num>50 hrs</Num>, <Num>—</Num>, <Num>₹4,500</Num>, <Num>₹5,400</Num>, '1 month'],
-          ['Top-Up 100', <Num>100 hrs</Num>, <Hl>25% off</Hl>, <Num>₹6,750</Num>, <Num>₹8,100</Num>, '2 months'],
-          ['Top-Up 200', <Num>200 hrs</Num>, <Hl>50% off</Hl>, <Num>₹9,000</Num>, <Num>₹10,800</Num>, '5 months'],
-        ]}
-      />
       <Note>
-        All prices exclude 18% GST. Hold both Basic and Pro hours at once — buy Pro only for the labs that
-        actually need it.
+        Reserve today and lock the launch rate — <b className="text-blue-600">200 hours for the price of 100</b>.
+        Once the 1,000 seats are gone, 100 hours cost ₹9,000 and 200 hours cost ₹18,000. All prices exclude 18% GST.
       </Note>
     </>
   );
@@ -343,7 +336,12 @@ function Dot({ yes }: { yes: boolean }) {
 function CorporatePanel() {
   return (
     <>
-      <div className="mx-auto mt-8 max-w-3xl rounded-3xl border-[1.5px] border-blue/15 bg-blue-soft/40 px-8 py-11 text-center">
+      <div className="relative mx-auto mt-8 max-w-3xl overflow-hidden rounded-3xl border border-line bg-panel px-8 py-11 text-center shadow-card">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{ background: 'radial-gradient(120% 70% at 50% -15%, rgba(46,30,224,0.08), transparent 55%)' }}
+        />
         <h3 className="font-display text-[26px] font-bold text-ink">Priced for your headcount, not a price list.</h3>
         <p className="mx-auto mt-3 max-w-md text-[14.5px] text-ink-dim">
           Corporate plans run on license volume and contract length — a quick chat with sales gets you a

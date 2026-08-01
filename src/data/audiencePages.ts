@@ -23,6 +23,8 @@ export interface AudiencePage {
   eyebrow: string;
   title: string;
   lede: string;
+  /** Hero visual (background-removed art) — drop files in web/public/images/audiences/ and set here. */
+  heroImage?: string;
   sectionEyebrow: string;
   sectionTitle: string;
   sectionLede: string;

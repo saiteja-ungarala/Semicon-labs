@@ -127,18 +127,32 @@ export function Hero() {
           className="mx-auto mt-4 flex max-w-4xl flex-col items-center text-center sm:mt-8"
         >
           {/* 1 — The main claim */}
-          <motion.h1
-            variants={item}
-            className="font-display text-[clamp(2.6rem,5.4vw,4.6rem)] font-extrabold leading-[1.04] tracking-tight text-ink"
-          >
-            The world's first
-            <br />
-            <span className="bg-gradient-to-r from-blue via-[#5B4DFF] to-sky bg-clip-text text-transparent">
-              cloud VLSI lab.
+          <motion.h1 variants={item} className="font-display font-extrabold tracking-tight text-ink">
+            <span className="block text-[clamp(2.5rem,5vw,4.2rem)] leading-[1.05]">
+              The world's first{' '}
+              <span className="bg-gradient-to-r from-blue via-[#5B4DFF] to-sky bg-clip-text text-transparent">
+                VLSI cloud labs
+              </span>
+            </span>
+            <span className="mt-3 block text-[clamp(1.25rem,2.4vw,1.9rem)] font-bold leading-snug text-ink/85">
+              for solving industry-grade projects on leading EDA tools.
             </span>
           </motion.h1>
 
-          {/* 2 — The rotating promise (bigger, right where the old intro line sat) */}
+          {/* 2 — Real tool logos */}
+          <motion.div variants={item} className="mt-9 flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
+            {TOOL_LOGOS.map((t) => (
+              <img
+                key={t.name}
+                src={t.src}
+                alt={t.name}
+                className={`${t.h} w-auto max-w-[150px] object-contain opacity-90`}
+                loading="eager"
+              />
+            ))}
+          </motion.div>
+
+          {/* 3 — The rotating promise */}
           <motion.div
             variants={item}
             className="mt-8 flex flex-wrap items-baseline justify-center gap-x-2.5 text-lg font-semibold text-ink-dim sm:text-xl"
@@ -157,60 +171,6 @@ export function Hero() {
                   {HEADLINES[headlineIndex]}
                 </motion.span>
               </AnimatePresence>
-            </span>
-          </motion.div>
-
-          {/* 3 — Real tool logos */}
-          <motion.div variants={item} className="mt-7 flex flex-wrap items-center justify-center gap-x-9 gap-y-3">
-            {TOOL_LOGOS.map((t) => (
-              <img
-                key={t.name}
-                src={t.src}
-                alt={t.name}
-                className={`${t.h} w-auto max-w-[150px] object-contain opacity-90`}
-                loading="eager"
-              />
-            ))}
-          </motion.div>
-
-          {/* 4 — Hand-drawn trust line (back by request) */}
-          <motion.div
-            variants={item}
-            className="relative mt-8 font-hand text-[clamp(1.4rem,2.6vw,2rem)] leading-tight text-ink/80"
-          >
-            Practical, project-based, and{' '}
-            <span className="relative z-10 inline-block whitespace-nowrap px-1 font-bold text-ink">
-              highly trusted!
-              <svg
-                className="pointer-events-none absolute -bottom-1 left-0 w-full text-blue opacity-80"
-                viewBox="0 0 300 30"
-                preserveAspectRatio="none"
-                stroke="currentColor"
-                fill="none"
-                strokeWidth="5"
-                strokeLinecap="round"
-                aria-hidden
-              >
-                <path d="M5 20Q150 5 295 25" />
-              </svg>
-              <span className="absolute -bottom-16 right-0 hidden flex-col items-center gap-1 md:flex lg:-right-24 lg:-bottom-14">
-                <svg
-                  className="-ml-6 h-10 w-10 rotate-12 text-blue opacity-80"
-                  viewBox="0 0 100 100"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden
-                >
-                  <path d="M80 80 Q 50 30 20 20" />
-                  <path d="M40 15 L 20 20 L 25 40" />
-                </svg>
-                <span className="-mt-2 rotate-6 whitespace-nowrap font-hand text-lg font-bold text-blue opacity-90">
-                  Trusted by 2,300+ engineers
-                </span>
-              </span>
             </span>
           </motion.div>
 
