@@ -6,24 +6,27 @@
 interface RecruiterLogo {
   name: string;
   src?: string; // absent → styled text badge (logo not yet supplied)
+  cls?: string; // per-logo max-height class for optical size consistency
 }
 
+// `cls` tunes each mark's height so every logo reads the SAME optical size
+// (source files have wildly different padding/aspect ratios).
 const recruiters: RecruiterLogo[] = [
-  { name: 'Intel', src: '/logos/intel.png' },
+  { name: 'Intel', src: '/logos/intel.png', cls: 'max-h-11' },
   { name: 'HCL' },
-  { name: 'AMD', src: '/logos/amd.png' },
-  { name: 'Synopsys', src: '/logos/synopsys.png' },
-  { name: 'NVIDIA', src: '/logos/nvidia.jpg' },
-  { name: 'Cyient', src: '/logos/cyient.png' },
-  { name: 'Cadence', src: '/logos/cadence.png' },
-  { name: 'Qualcomm', src: '/logos/qualcomm.png' },
-  { name: 'Siemens', src: '/logos/siemens.jpg' },
+  { name: 'AMD', src: '/logos/amd.png', cls: 'max-h-6' },
+  { name: 'Synopsys', src: '/logos/synopsys.png', cls: 'max-h-6' },
+  { name: 'NVIDIA', src: '/logos/nvidia.jpg', cls: 'max-h-12' },
+  { name: 'Cyient', src: '/logos/cyient.png', cls: 'max-h-6' },
+  { name: 'Cadence', src: '/logos/cadence.png', cls: 'max-h-7' },
+  { name: 'Qualcomm', src: '/logos/qualcomm.png', cls: 'max-h-7' },
+  { name: 'Siemens', src: '/logos/siemens.jpg', cls: 'max-h-7' },
   // Capgemini asset has a baked-in checkered background — text badge until a clean file arrives.
   { name: 'Capgemini' },
-  { name: 'Chipex', src: '/logos/chipex.jpg' },
+  { name: 'Chipex', src: '/logos/chipex.jpg', cls: 'max-h-9' },
   { name: 'Tessolve' },
-  { name: 'NXP', src: '/logos/nxp.avif' },
-  { name: 'Xilinx', src: '/logos/xilinx.png' },
+  { name: 'NXP', src: '/logos/nxp.avif', cls: 'max-h-6' },
+  { name: 'Xilinx', src: '/logos/xilinx.png', cls: 'max-h-7' },
 ];
 
 export function SkillsMarquee() {
@@ -58,7 +61,7 @@ export function SkillsMarquee() {
                   src={r.src}
                   alt={r.name}
                   loading="lazy"
-                  className="max-h-9 max-w-full object-contain opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0"
+                  className={`${r.cls ?? 'max-h-8'} max-w-full object-contain opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0`}
                 />
               ) : (
                 <span className="whitespace-nowrap font-display text-xl font-extrabold tracking-tight text-ink/40">

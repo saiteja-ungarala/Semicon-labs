@@ -10,7 +10,7 @@ import { Card } from '@/components/ui/Card';
 export function AiEra() {
   return (
     <Section alt>
-      <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+      <div className="grid gap-12 lg:grid-cols-[1fr_400px] lg:items-center lg:gap-16">
         <Reveal>
           <p className="eyebrow text-blue">build the skills ai can't replace</p>
           <h2 className="mt-4 text-display-md">
@@ -34,7 +34,7 @@ export function AiEra() {
         <Reveal direction="left">
           <Card gradient className="overflow-hidden p-0">
             {/* AI-over-silicon artwork crowns the demand list */}
-            <div className="relative h-40 overflow-hidden">
+            <div className="relative h-28 overflow-hidden">
               <img
                 src="/images/chips/chip-ai.jpg"
                 alt=""

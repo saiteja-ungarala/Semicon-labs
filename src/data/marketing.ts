@@ -1,7 +1,7 @@
 /** Pricing, testimonials, FAQs, and the "why traditional learning fails" copy. */
 
 export interface PricingPlan {
-  id: 'starter' | 'specialist' | 'career';
+  id: 'individual' | 'team' | 'corporate';
   name: string;
   priceMonthly: number;
   priceStrikeMonthly?: number;

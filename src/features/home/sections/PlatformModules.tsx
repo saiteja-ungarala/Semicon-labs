@@ -106,7 +106,7 @@ export function PlatformModules() {
                       src={b.icon}
                       alt=""
                       aria-hidden
-                      className="relative z-10 h-7 w-7 transition-transform duration-300 group-hover:scale-110"
+                      className="relative z-10 h-10 w-10 transition-transform duration-300 group-hover:scale-110 sm:h-11 sm:w-11"
                       loading="lazy"
                     />
                   </div>
