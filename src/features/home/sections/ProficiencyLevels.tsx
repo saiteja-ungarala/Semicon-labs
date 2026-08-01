@@ -10,7 +10,13 @@ export function ProficiencyLevels() {
     <Section>
       <SectionHead
         eyebrow="proficiency levels"
-        title="Guided, then independent, then assessed."
+        title={
+          <>
+            Guided, then independent,
+            <br className="hidden sm:block" />{' '}
+            <span className="text-gradient">then assessed.</span>
+          </>
+        }
         lede="Every competency moves you through the same progression a new hire goes through on a real team."
       />
       <RevealGroup className="grid gap-6 md:grid-cols-3" stagger={0.1}>

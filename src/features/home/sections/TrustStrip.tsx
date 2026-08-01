@@ -12,7 +12,9 @@ export function TrustStrip() {
     <Container className="py-16 sm:py-20">
       <Reveal>
         <p className="eyebrow justify-center">the platform in numbers</p>
-        <h2 className="mx-auto mt-3 text-center text-display-md">Structured, measured, and growing.</h2>
+        <h2 className="mx-auto mt-3 text-center text-display-md">
+          Structured, measured, and <span className="text-gradient">growing.</span>
+        </h2>
       </Reveal>
 
       <Reveal>

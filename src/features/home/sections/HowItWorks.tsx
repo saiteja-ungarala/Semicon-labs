@@ -36,7 +36,13 @@ export function HowItWorks() {
     <Section id="how" className="relative bg-void-2">
       <SectionHead
         eyebrow="the learning workflow"
-        title="Every challenge follows the same real-project loop."
+        title={
+          <>
+            Every challenge follows
+            <br className="hidden sm:block" />{' '}
+            <span className="text-gradient">the same real-project loop.</span>
+          </>
+        }
         lede="Problem → Investigation → Solution → Validation. The same sequence you'd run on a live project."
       />
 

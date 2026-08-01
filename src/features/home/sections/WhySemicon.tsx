@@ -46,7 +46,8 @@ export function WhySemicon() {
         title={
           <>
             Knowing a flow is not the same
-            <br className="hidden sm:block" /> as knowing how to solve a problem.
+            <br className="hidden sm:block" />{' '}
+            <span className="text-gradient">as knowing how to solve a problem.</span>
           </>
         }
         lede="Most platforms teach you to run a tool. Projects need you to fix what the tool can't. Here's the difference."

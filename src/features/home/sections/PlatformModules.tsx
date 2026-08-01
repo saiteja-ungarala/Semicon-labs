@@ -63,7 +63,8 @@ export function PlatformModules() {
         title={
           <>
             Everything your VLSI Career needs.
-            <br className="hidden sm:block" /> That no one ever provided till now.
+            <br className="hidden sm:block" />{' '}
+            <span className="text-gradient">That no one ever provided till now.</span>
           </>
         }
         lede="Each of these exists on this platform and nowhere else — together, they're the reason early registrants don't wait."

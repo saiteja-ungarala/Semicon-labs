@@ -11,7 +11,8 @@ export function PricingSection() {
         eyebrow="pricing, made simple"
         title={
           <>
-            Same labs. <span className="text-gradient">More power on Pro.</span>
+            Same labs.
+            <br className="hidden sm:block" /> <span className="text-gradient">More power on Pro.</span>
           </>
         }
         lede="Basic and Pro run identical labs, tools, and problem sets. Pro just hands you a bigger engine underneath — for the labs that need it."

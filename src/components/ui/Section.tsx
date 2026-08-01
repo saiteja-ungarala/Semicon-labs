@@ -47,12 +47,13 @@ export function SectionHead({ eyebrow, title, lede, align = 'split', className }
     );
   }
   return (
-    <div className={cn('mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end', className)}>
-      <div className="max-w-2xl">
+    <div className={cn('mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end', className)}>
+      {/* Wide enough that a two-line black→blue heading stays two lines. */}
+      <div className="min-w-0 max-w-4xl flex-1">
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <h2 className="mt-4 text-display-md">{title}</h2>
       </div>
-      {lede && <p className="max-w-sm text-pretty text-ink-dim md:text-right">{lede}</p>}
+      {lede && <p className="shrink-0 text-pretty text-ink-dim md:w-64 md:text-right">{lede}</p>}
     </div>
   );
 }

@@ -7,7 +7,13 @@ export function Testimonials() {
     <Section alt>
       <SectionHead
         eyebrow="from learners"
-        title="What changed once they started solving, not studying."
+        title={
+          <>
+            What changed once they started
+            <br className="hidden sm:block" />{' '}
+            <span className="text-gradient">solving, not studying.</span>
+          </>
+        }
       />
       <RevealGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
         {testimonials.slice(0, 3).map((t) => (

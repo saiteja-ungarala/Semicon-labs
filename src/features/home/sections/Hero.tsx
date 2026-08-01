@@ -48,8 +48,8 @@ function RegistrationsBar() {
   }, [inView, reduce]);
 
   return (
-    <div ref={ref} className="w-full max-w-md">
-      <div className="flex items-center justify-between font-mono text-[12px] text-ink-dim">
+    <div ref={ref} className="w-full flex-1 sm:min-w-[240px]">
+      <div className="flex items-center justify-between gap-3 whitespace-nowrap font-mono text-[11.5px] text-ink-dim">
         <span>Launch registrations</span>
         <span>
           <b className="text-blue">{count}</b> / {SEATS_TOTAL.toLocaleString('en-IN')} claimed
@@ -110,7 +110,7 @@ export function Hero() {
             'linear-gradient(90deg, transparent 0%, black 15%, black 25%, transparent 42%, transparent 58%, black 75%, black 85%, transparent 100%)',
         }}
       >
-        <div className="flex w-max animate-marquee items-center gap-16 py-4 opacity-40 blur-[1px]">
+        <div className="flex w-max animate-marquee items-center gap-16 py-4 opacity-25 blur-[1px]">
           {scrollingWords.map((w, i) => (
             <span key={i} className="whitespace-nowrap font-display text-4xl font-extrabold text-ink-faint/30 sm:text-6xl">
               {w}
@@ -124,49 +124,49 @@ export function Hero() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="mx-auto mt-4 flex max-w-4xl flex-col items-center text-center sm:mt-8"
+          className="mx-auto flex max-w-4xl flex-col items-center text-center"
         >
-          {/* 1 — The main claim */}
-          <motion.h1 variants={item} className="font-display font-extrabold tracking-tight text-ink">
+          {/* 1 — Anchor pill: gives the composition a top edge and states the urgency */}
+          <motion.div variants={item}>
+            <span className="inline-flex items-center gap-2 rounded-full border border-blue/20 bg-blue-soft px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-blue-600">
+              <span className="relative flex h-1.5 w-1.5" aria-hidden>
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue opacity-70" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue" />
+              </span>
+              Launching 15 August · first 1,000 seats
+            </span>
+          </motion.div>
+
+          {/* 2 — The main claim */}
+          <motion.h1 variants={item} className="mt-6 font-display font-extrabold tracking-tight text-ink">
             <span className="block text-[clamp(2.5rem,5vw,4.2rem)] leading-[1.05]">
               The world's first{' '}
               <span className="bg-gradient-to-r from-blue via-[#5B4DFF] to-sky bg-clip-text text-transparent">
                 VLSI cloud labs
               </span>
             </span>
-            <span className="mt-3 block text-[clamp(1.25rem,2.4vw,1.9rem)] font-bold leading-snug text-ink/85">
+            <span className="mx-auto mt-3 block max-w-3xl text-[clamp(1.2rem,2.2vw,1.75rem)] font-bold leading-snug text-ink/80">
               for solving industry-grade projects on leading EDA tools.
             </span>
           </motion.h1>
 
-          {/* 2 — Real tool logos */}
-          <motion.div variants={item} className="mt-9 flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
-            {TOOL_LOGOS.map((t) => (
-              <img
-                key={t.name}
-                src={t.src}
-                alt={t.name}
-                className={`${t.h} w-auto max-w-[150px] object-contain opacity-90`}
-                loading="eager"
-              />
-            ))}
-          </motion.div>
-
           {/* 3 — The rotating promise */}
           <motion.div
             variants={item}
-            className="mt-8 flex flex-wrap items-baseline justify-center gap-x-2.5 text-lg font-semibold text-ink-dim sm:text-xl"
+            className="mt-5 flex flex-wrap items-baseline justify-center gap-x-2.5 text-[17px] font-semibold text-ink-dim"
           >
             <span>Solve real chip problems with the industry's</span>
+            {/* popLayout (not "wait") so the outgoing word leaves while the next
+                one arrives — with "wait" there is a visibly empty gap. */}
             <span className="relative inline-flex h-[1.4em] min-w-[14ch] overflow-hidden text-left" aria-live="polite">
-              <AnimatePresence mode="wait" initial={false}>
+              <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span
                   key={headlineIndex}
                   initial={reduce ? { opacity: 0 } : { y: '1.1em', opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={reduce ? { opacity: 0 } : { y: '-1.1em', opacity: 0 }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="whitespace-nowrap font-bold text-blue"
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute left-0 top-0 whitespace-nowrap font-bold text-blue"
                 >
                   {HEADLINES[headlineIndex]}
                 </motion.span>
@@ -174,10 +174,10 @@ export function Hero() {
             </span>
           </motion.div>
 
-          {/* 4 — CTAs */}
+          {/* 4 — CTAs, kept close to the claim */}
           <motion.div
             variants={item}
-            className="relative z-20 mt-10 flex w-full max-w-sm flex-col items-center justify-center gap-4 sm:max-w-none sm:flex-row"
+            className="relative z-20 mt-8 flex w-full max-w-sm flex-col items-center justify-center gap-3.5 sm:max-w-none sm:flex-row"
           >
             <Button to="/domains" size="lg" arrow className="h-12 w-full px-8 text-[15px] shadow-glow sm:w-auto">
               Explore Skills
@@ -187,9 +187,28 @@ export function Hero() {
             </Button>
           </motion.div>
 
-          {/* 5 — Launch registrations (replaces the old start-free note) */}
-          <motion.div variants={item} className="relative z-20 mt-9 flex w-full justify-center">
-            <RegistrationsBar />
+          {/* 5 — One designed strip closes the hero: real tools + live seat count */}
+          <motion.div variants={item} className="relative z-20 mt-11 w-full">
+            <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 rounded-2xl border border-line bg-panel/70 px-8 py-6 shadow-card backdrop-blur-sm sm:flex-row sm:gap-10">
+              <div className="flex shrink-0 flex-col items-center gap-3 sm:items-start">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-ink-faint">
+                  Real tools, in your browser
+                </span>
+                <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2">
+                  {TOOL_LOGOS.map((t) => (
+                    <img
+                      key={t.name}
+                      src={t.src}
+                      alt={t.name}
+                      className={`${t.h} w-auto max-w-[130px] object-contain opacity-90`}
+                      loading="eager"
+                    />
+                  ))}
+                </div>
+              </div>
+              <div aria-hidden className="hidden h-14 w-px shrink-0 bg-line sm:block" />
+              <RegistrationsBar />
+            </div>
           </motion.div>
         </motion.div>
       </Container>

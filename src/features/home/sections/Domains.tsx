@@ -86,7 +86,13 @@ export function Domains() {
     <Section id="domains">
       <SectionHead
         eyebrow="the skills companies are hiring for — right now"
-        title="Real challenges, straight from real projects."
+        title={
+          <>
+            Real challenges,
+            <br className="hidden sm:block" />{' '}
+            <span className="text-gradient">straight from real projects.</span>
+          </>
+        }
         lede="This is the project experience interviews actually test — real failures, real tools, real testcases. Pick your domain and start building it today."
       />
       <RevealGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.1}>

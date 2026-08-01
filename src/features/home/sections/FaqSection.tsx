@@ -8,7 +8,16 @@ export function FaqSection() {
   return (
     <Section id="faq">
       <div className="mx-auto max-w-3xl">
-        <SectionHead eyebrow="questions" title="Before you start." align="center" />
+        <SectionHead
+          eyebrow="faq"
+          align="center"
+          title={
+            <>
+              Questions?
+              <br className="hidden sm:block" /> <span className="text-gradient">Before you start.</span>
+            </>
+          }
+        />
         <Reveal>
           <FaqAccordion items={faqs.slice(0, 5)} />
         </Reveal>
