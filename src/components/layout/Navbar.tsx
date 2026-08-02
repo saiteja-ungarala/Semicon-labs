@@ -77,7 +77,7 @@ export function Navbar() {
               >
                 Log in
               </Link>
-              <Button to="/register" size="md" arrow className="hidden sm:inline-flex shadow-sm">
+              <Button to="/pricing" size="md" arrow className="hidden sm:inline-flex shadow-sm">
                 Get Started
               </Button>
             </>
@@ -139,7 +139,7 @@ export function Navbar() {
                   </Button>
                 ) : (
                   <>
-                    <Button to="/register" size="lg" arrow className="w-full justify-center">
+                    <Button to="/pricing" size="lg" arrow className="w-full justify-center">
                       Get Started
                     </Button>
                     <Button to="/login" variant="secondary" size="lg" className="w-full justify-center">

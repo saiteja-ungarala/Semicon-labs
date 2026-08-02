@@ -18,9 +18,9 @@ export function StickyMobileCta() {
     >
       <div className="min-w-0">
         <p className="truncate text-sm font-semibold text-ink">Founding pricing is live</p>
-        <p className="truncate text-xs text-ink-dim">Up to 40% off Specialist &amp; Career</p>
+        <p className="truncate text-xs text-ink-dim">Pre-book ₹99 · 200 hours for the price of 100</p>
       </div>
-      <Button to="/register" size="sm" className="shrink-0">
+      <Button to="/pricing" size="sm" className="shrink-0">
         Get Started
       </Button>
     </div>

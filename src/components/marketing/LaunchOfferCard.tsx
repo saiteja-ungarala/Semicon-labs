@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { Button } from '@/components/ui/Button';
+import { usePlanHref } from '@/lib/checkoutPath';
 import { cn } from '@/lib/cn';
 
 /**
@@ -25,6 +26,7 @@ const BENEFITS: ReactNode[] = [
 
 export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail' }) {
   const rail = variant === 'rail';
+  const planHref = usePlanHref();
   return (
     <div
       className={cn(
@@ -82,7 +84,7 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
       </ul>
 
       <div className="relative mt-7">
-        <Button to="/register?plan=individual-launch" arrow className="w-full">
+        <Button to={planHref('/register?plan=individual-launch')} arrow className="w-full">
           Grab it for ₹99
         </Button>
       </div>

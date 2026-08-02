@@ -20,7 +20,7 @@ export function UrgencyBar() {
 
   return (
     <div className="relative z-[60] overflow-hidden bg-gradient-to-r from-blue-600 via-blue to-sky/80 text-white">
-      <Link to="/register" aria-label="Register before launch" className="block py-2">
+      <Link to="/pricing" aria-label="See launch pricing" className="block py-2">
         <div className="flex w-max animate-marquee items-center motion-reduce:w-full motion-reduce:animate-none motion-reduce:justify-center">
           {items.map((_, i) => (
             <span

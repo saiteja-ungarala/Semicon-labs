@@ -82,7 +82,7 @@ export const audiencePages: AudiencePage[] = [
         'Tool switching across Cadence, Synopsys & Siemens',
         'Multi-domain access options',
       ],
-      cta: { label: 'Get Started', to: '/register' },
+      cta: { label: 'View plans & pricing', to: '/pricing' },
     },
   },
   {
@@ -143,7 +143,7 @@ export const audiencePages: AudiencePage[] = [
         'Reader access add-on available',
         'Custom loyalty programs for your team',
       ],
-      cta: { label: 'Get Started', to: '/contact' },
+      cta: { label: 'View plans & pricing', to: '/pricing' },
     },
   },
   {

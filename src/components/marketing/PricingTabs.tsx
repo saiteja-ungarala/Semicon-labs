@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { LaunchOfferCard } from './LaunchOfferCard';
+import { usePlanHref } from '@/lib/checkoutPath';
 import { cn } from '@/lib/cn';
 
 /**
@@ -88,6 +89,7 @@ interface TierCardProps {
 }
 
 function TierCard({ pro, name, tag, badge, priceWas, price, priceSub, feats, cta }: TierCardProps) {
+  const planHref = usePlanHref();
   return (
     <div
       className={cn(
@@ -133,7 +135,12 @@ function TierCard({ pro, name, tag, badge, priceWas, price, priceSub, feats, cta
         ))}
       </ul>
 
-      <Button to={cta.to} variant={pro ? 'primary' : 'secondary'} arrow={pro} className="relative w-full">
+      <Button
+        to={cta.to.startsWith('/register') ? planHref(cta.to) : cta.to}
+        variant={pro ? 'primary' : 'secondary'}
+        arrow={pro}
+        className="relative w-full"
+      >
         {cta.label}
       </Button>
     </div>
@@ -197,6 +204,7 @@ function Note({ children }: { children: ReactNode }) {
 /* ---------------------------------------------------------------- panels */
 
 function IndividualPanel() {
+  const planHref = usePlanHref();
   return (
     <>
       <Banner
@@ -233,7 +241,7 @@ function IndividualPanel() {
           </ul>
 
           <div className="mt-7">
-            <Button to="/register?plan=notify" variant="secondary" className="w-full">
+            <Button to={planHref('/register?plan=notify')} variant="secondary" className="w-full">
               Notify me at launch
             </Button>
             <p className="mt-2.5 text-center text-[11px] text-ink-faint">No bonus hours after the 1,000 seats fill.</p>
@@ -270,7 +278,7 @@ function TeamsPanel() {
             { yes: true, text: 'Up to 40% off at scale' },
             { yes: false, text: 'Mentoring not included' },
           ]}
-          cta={{ label: 'Start a Basic team', to: '/contact?plan=team-basic' }}
+          cta={{ label: 'Start a Basic team', to: '/register?plan=team-basic' }}
         />
         <TierCard
           pro
@@ -285,7 +293,7 @@ function TeamsPanel() {
             { yes: true, text: 'Advanced / complex / signoff-flow labs' },
             { yes: true, text: 'Tool switching across EDA vendors' },
           ]}
-          cta={{ label: 'Start a Pro team', to: '/contact?plan=team-pro' }}
+          cta={{ label: 'Start a Pro team', to: '/register?plan=team-pro' }}
         />
       </div>
 

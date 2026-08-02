@@ -33,7 +33,7 @@ export function FinalCta() {
             before you decide on anything else.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Button to="/register" size="lg" arrow>
+            <Button to="/pricing" size="lg" arrow>
               Start Your First Challenge
             </Button>
             <Button

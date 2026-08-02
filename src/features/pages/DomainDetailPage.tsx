@@ -255,7 +255,7 @@ function PricingRail({ testcases }: { testcases: number }) {
           ))}
         </ul>
 
-        <Button to="/register" arrow className="mt-6 w-full">
+        <Button to="/pricing" arrow className="mt-6 w-full">
           Start solving — lock the price
         </Button>
         <p className="mt-3 text-center font-mono text-[10.5px] uppercase tracking-wide text-ink-faint">
