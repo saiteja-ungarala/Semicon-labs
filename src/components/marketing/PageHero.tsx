@@ -18,13 +18,55 @@ interface PageHeroProps {
   /** Optional chip artwork shown on the right (desktop only), softly masked into the page. */
   image?: string;
   imageAlt?: string;
+  /** Transparent-PNG artwork: floats on the right over a soft glow (not cropped). */
+  art?: string;
+  artAlt?: string;
 }
 
 /** Consistent inner-page header with breadcrumb, eyebrow, title and lede. */
-export function PageHero({ eyebrow, title, lede, crumbs, children, image, imageAlt = '' }: PageHeroProps) {
+export function PageHero({
+  eyebrow,
+  title,
+  lede,
+  crumbs,
+  children,
+  image,
+  imageAlt = '',
+  art,
+  artAlt = '',
+}: PageHeroProps) {
   return (
     <section className="relative overflow-hidden border-b border-line pb-14 pt-14 sm:pb-16 sm:pt-16">
       <div className="pointer-events-none absolute inset-0 bg-radial-blue" />
+
+      {/* Floating transparent artwork (audience pages): glow pedestal + slow drift.
+          The static wrapper owns the centering — a motion `y` animation would
+          overwrite Tailwind's -translate-y-1/2 and drop the art out of frame. */}
+      {art && (
+        <div className="pointer-events-none absolute right-[7%] top-1/2 hidden -translate-y-1/2 lg:block">
+          <motion.div
+            aria-hidden={!artAlt}
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="relative grid h-[240px] w-[240px] place-items-center xl:h-[280px] xl:w-[280px]"
+          >
+            {/* Soft brand glow behind the art */}
+            <div
+              aria-hidden
+              className="absolute inset-0 rounded-full blur-3xl"
+              style={{ background: 'radial-gradient(circle, rgba(46,30,224,0.18), transparent 65%)' }}
+            />
+            <div aria-hidden className="absolute inset-6 rounded-full border border-blue/15 bg-panel/40 backdrop-blur-sm" />
+            <img
+              src={art}
+              alt={artAlt}
+              className="relative h-[64%] w-[64%] animate-float object-contain drop-shadow-[0_18px_35px_rgba(28,20,120,0.22)]"
+              loading="eager"
+            />
+          </motion.div>
+        </div>
+      )}
 
       {/* Right-side chip artwork: fades into the page so the white system stays airy. */}
       {image && (

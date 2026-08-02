@@ -40,6 +40,8 @@ export default function AudiencePage() {
         eyebrow={page.eyebrow}
         title={page.title}
         lede={page.lede}
+        art={page.heroArt}
+        artAlt={`${page.name} illustration`}
         crumbs={[
           { name: 'Home', to: '/' },
           { name: 'Who We Serve', to: '/who-we-serve' },

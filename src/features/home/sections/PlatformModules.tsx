@@ -11,21 +11,21 @@ import { cn } from '@/lib/cn';
  * shows the handwritten alternative you'd be stuck with.
  */
 
+// Order is client-specified — do not resort.
 const benefits = [
-  { icon: '/icons/placements.svg', title: 'Placement Community Access', copy: 'A 200+ recruiter network that sees your verified skills.', without: 'cold-applying alone' },
-  { icon: '/icons/ai.svg', title: 'AI Powered Learning', copy: 'Guidance that adapts to how you debug — not a fixed script.', without: 'generic video courses' },
   { icon: '/icons/projects.svg', title: "Projects you haven't solved Before", copy: 'Real failures from real flows. Not textbook repeats.', without: 'the same toy projects' },
-  { icon: '/icons/library.svg', title: 'Lifetime free VLSI premium Library', copy: 'The reference material stays yours, forever.', without: 'scattered PDFs' },
-  { icon: '/icons/hourly.svg', title: 'Hourly based sessions', copy: 'Industry EDA tools by the hour — pay for what you use.', without: 'lakhs for licenses' },
+  { icon: '/icons/ai.svg', title: 'AI Powered Learning', copy: 'Guidance that adapts to how you debug — not a fixed script.', without: 'generic video courses' },
   { icon: '/icons/testcases.svg', title: '1500+ Testcases', copy: 'The largest solvable testcase bank in VLSI learning.', without: 'a handful of demos' },
   { icon: '/icons/progress.svg', title: 'Progress Tracking', copy: 'Every solve measured, every competency proven.', without: 'no proof of skill' },
-  { icon: '/icons/affordable.svg', title: 'Affordable', copy: 'Priced for learners — not for corporate budgets.', without: '₹2,00,000 fees' },
+  { icon: '/icons/access247.png', title: '24x7 Access Your Labs Anytime, Anywhere', copy: 'The lab is open whenever you are — no seat queue, no lab hours.', without: 'waiting for a lab seat' },
+  { icon: '/icons/library.svg', title: 'Lifetime free VLSI premium Library', copy: 'The reference material stays yours, forever.', without: 'scattered PDFs' },
+  { icon: '/icons/certification.png', title: 'Validated Industry Certification', copy: 'Certification backed by solves the platform actually verified.', without: 'an unverified PDF' },
 ];
 
 // Deterministic scatter for the "without" world: [x, y, rotate].
 const scatter: [number, number, number][] = [
   [-26, 14, -8], [18, -12, 6], [-14, 20, -5], [30, 10, 9],
-  [22, -16, 7], [-30, 8, -9], [12, 18, 5], [-18, -10, -6],
+  [22, -16, 7], [-30, 8, -9], [12, 18, 5],
 ];
 
 function ConnectingLines({ hidden }: { hidden: boolean }) {
@@ -44,7 +44,6 @@ function ConnectingLines({ hidden }: { hidden: boolean }) {
         'M 625,80 C 750,40 800,40 875,80',
         'M 125,220 C 250,180 300,180 375,220',
         'M 375,220 C 500,260 550,260 625,220',
-        'M 625,220 C 750,180 800,180 875,220',
       ].map((d, i) => (
         <path key={i} d={d} stroke="currentColor" strokeWidth="1.5" fill="none" strokeDasharray="6 6" />
       ))}

@@ -23,8 +23,8 @@ export interface AudiencePage {
   eyebrow: string;
   title: string;
   lede: string;
-  /** Hero visual (background-removed art) — drop files in web/public/images/audiences/ and set here. */
-  heroImage?: string;
+  /** Hero artwork (background-removed PNG in web/public/images/audiences/). */
+  heroArt: string;
   sectionEyebrow: string;
   sectionTitle: string;
   sectionLede: string;
@@ -36,6 +36,7 @@ export const audiencePages: AudiencePage[] = [
   {
     slug: 'individuals',
     name: 'Individuals',
+    heroArt: '/images/audiences/individuals.png',
     eyebrow: 'who we serve · individuals',
     title: 'Individuals',
     lede:
@@ -87,6 +88,7 @@ export const audiencePages: AudiencePage[] = [
   {
     slug: 'teams',
     name: 'Teams',
+    heroArt: '/images/audiences/teams.png',
     eyebrow: 'who we serve · teams',
     title: 'Teams',
     lede:
@@ -147,6 +149,7 @@ export const audiencePages: AudiencePage[] = [
   {
     slug: 'corporates',
     name: 'Corporates',
+    heroArt: '/images/audiences/corporates.png',
     eyebrow: 'who we serve · corporates',
     title: 'Corporates',
     lede:
