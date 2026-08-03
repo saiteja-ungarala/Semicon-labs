@@ -145,6 +145,7 @@ export default function DomainsPage() {
         title="Real challenges, straight from industry."
         lede="Every domain is broken down the way real teams work: skills, competencies, and the exact testcases engineers debug on live silicon. Pick your lane."
         crumbs={[{ name: 'Home', to: '/' }, { name: 'Domains' }]}
+        bgImage="/images/chips/ember-traces.jpg"
       >
         {totals && (
           <div className="flex flex-wrap gap-x-10 gap-y-3">
@@ -155,8 +156,8 @@ export default function DomainsPage() {
               [3, 'EDA vendors'],
             ].map(([v, l]) => (
               <div key={String(l)}>
-                <div className="font-mono text-3xl font-bold text-blue">{v}</div>
-                <div className="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-ink-faint">{l}</div>
+                <div className="font-mono text-3xl font-bold text-amber-300">{v}</div>
+                <div className="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-white/60">{l}</div>
               </div>
             ))}
           </div>

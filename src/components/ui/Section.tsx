@@ -31,12 +31,14 @@ interface SectionHeadProps {
   eyebrow?: string;
   title: ReactNode;
   lede?: ReactNode;
+  /** Extra content on the heading's right (split layout only), e.g. a control. */
+  right?: ReactNode;
   align?: 'split' | 'center';
   className?: string;
 }
 
 /** Standard eyebrow + heading + lede block used to open a section. */
-export function SectionHead({ eyebrow, title, lede, align = 'split', className }: SectionHeadProps) {
+export function SectionHead({ eyebrow, title, lede, right, align = 'split', className }: SectionHeadProps) {
   if (align === 'center') {
     return (
       <div className={cn('mx-auto mb-14 max-w-2xl text-center', className)}>
@@ -54,6 +56,7 @@ export function SectionHead({ eyebrow, title, lede, align = 'split', className }
         <h2 className="mt-4 text-display-md">{title}</h2>
       </div>
       {lede && <p className="shrink-0 text-pretty text-ink-dim md:w-64 md:text-right">{lede}</p>}
+      {right && <div className="shrink-0">{right}</div>}
     </div>
   );
 }

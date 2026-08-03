@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { Reveal } from '@/components/motion/Reveal';
+import { cn } from '@/lib/cn';
 
 export interface Crumb {
   name: string;
@@ -21,6 +22,8 @@ interface PageHeroProps {
   /** Transparent-PNG artwork: floats on the right over a soft glow (not cropped). */
   art?: string;
   artAlt?: string;
+  /** Full-bleed dark background image — flips the hero typography to light. */
+  bgImage?: string;
 }
 
 /** Consistent inner-page header with breadcrumb, eyebrow, title and lede. */
@@ -34,10 +37,21 @@ export function PageHero({
   imageAlt = '',
   art,
   artAlt = '',
+  bgImage,
 }: PageHeroProps) {
+  const dark = Boolean(bgImage);
   return (
     <section className="relative overflow-hidden border-b border-line pb-14 pt-14 sm:pb-16 sm:pt-16">
-      <div className="pointer-events-none absolute inset-0 bg-radial-blue" />
+      {!dark && <div className="pointer-events-none absolute inset-0 bg-radial-blue" />}
+
+      {/* Full-bleed background artwork with a left-heavy scrim so copy stays readable */}
+      {bgImage && (
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <img src={bgImage} alt="" className="h-full w-full object-cover" loading="eager" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#070812]/95 via-[#070812]/75 to-[#070812]/35" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#070812]/60 via-transparent to-transparent" />
+        </div>
+      )}
 
       {/* Floating transparent artwork (audience pages): glow pedestal + slow drift.
           The static wrapper owns the centering — a motion `y` animation would
@@ -90,15 +104,15 @@ export function PageHero({
       <Container className="relative">
         {crumbs && crumbs.length > 0 && (
           <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex flex-wrap items-center gap-2 font-mono text-xs text-ink-faint">
+            <ol className={cn('flex flex-wrap items-center gap-2 font-mono text-xs', dark ? 'text-white/50' : 'text-ink-faint')}>
               {crumbs.map((crumb, i) => (
                 <li key={crumb.name} className="flex items-center gap-2">
                   {crumb.to ? (
-                    <Link to={crumb.to} className="transition hover:text-ink">
+                    <Link to={crumb.to} className={cn('transition', dark ? 'hover:text-white' : 'hover:text-ink')}>
                       {crumb.name}
                     </Link>
                   ) : (
-                    <span className="text-ink-dim">{crumb.name}</span>
+                    <span className={dark ? 'text-white/75' : 'text-ink-dim'}>{crumb.name}</span>
                   )}
                   {i < crumbs.length - 1 && <span aria-hidden>/</span>}
                 </li>
@@ -107,9 +121,13 @@ export function PageHero({
           </nav>
         )}
         <Reveal>
-          {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-          <h1 className="mt-4 max-w-3xl text-display-lg">{title}</h1>
-          {lede && <p className="mt-5 max-w-2xl text-pretty text-lg text-ink-dim">{lede}</p>}
+          {eyebrow && <p className={cn('eyebrow', dark && 'text-amber-300')}>{eyebrow}</p>}
+          {/* Plain template string: twMerge would treat text-white as conflicting
+              with the custom text-display-lg size utility and strip the size. */}
+          <h1 className={`mt-4 max-w-3xl text-display-lg${dark ? ' text-white' : ''}`}>{title}</h1>
+          {lede && (
+            <p className={cn('mt-5 max-w-2xl text-pretty text-lg', dark ? 'text-white/75' : 'text-ink-dim')}>{lede}</p>
+          )}
           {children && <div className="mt-8">{children}</div>}
         </Reveal>
       </Container>

@@ -68,6 +68,32 @@ export function PlatformModules() {
             <span className="text-gradient">That no one ever provided till now.</span>
           </>
         }
+        right={
+          <button
+            type="button"
+            onClick={() => setWithout((v) => !v)}
+            className="group flex max-w-xs items-center gap-3 text-left"
+            aria-pressed={without}
+          >
+            <span className="text-blue transition-colors">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+                <path d="M12 2l1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2Z" />
+              </svg>
+            </span>
+            <span className={cn('relative h-7 w-12 shrink-0 rounded-full transition-colors', without ? 'bg-blue' : 'bg-line-strong')}>
+              <span className={cn('absolute top-1 h-5 w-5 rounded-full bg-white shadow transition-all', without ? 'left-6' : 'left-1')} />
+            </span>
+            {without ? (
+              <span className="text-sm font-bold text-ink">
+                Semicon Labs brings it all back — <span className="text-blue">every benefit, one platform.</span>
+              </span>
+            ) : (
+              <span className="whitespace-nowrap font-hand text-xl font-bold text-ink">
+                Imagine <span className="text-blue">without</span> Semicon Labs…
+              </span>
+            )}
+          </button>
+        }
       />
 
       <div className="relative mx-auto mt-16 max-w-5xl px-4">
@@ -147,33 +173,8 @@ export function PlatformModules() {
           })}
         </RevealGroup>
 
-        {/* Toggle bar — flip between the two worlds */}
-        <div className="relative z-10 mt-14 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 sm:flex-row">
-          <button
-            type="button"
-            onClick={() => setWithout((v) => !v)}
-            className="group flex items-center gap-3"
-            aria-pressed={without}
-          >
-            <span className="text-blue transition-colors">
-              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
-                <path d="M12 2l1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2Z" />
-              </svg>
-            </span>
-            <span className={cn('relative h-7 w-12 rounded-full transition-colors', without ? 'bg-blue' : 'bg-line-strong')}>
-              <span className={cn('absolute top-1 h-5 w-5 rounded-full bg-white shadow transition-all', without ? 'left-6' : 'left-1')} />
-            </span>
-            {without ? (
-              <span className="text-sm font-bold text-ink">
-                Semicon Labs brings it all back — <span className="text-blue">every benefit, one platform.</span>
-              </span>
-            ) : (
-              <span className="font-hand text-xl font-bold text-ink">
-                Imagine <span className="text-blue">without</span> Semicon Labs…
-              </span>
-            )}
-          </button>
-
+        {/* Footer link — the toggle now lives beside the section heading */}
+        <div className="relative z-10 mt-14 flex justify-center border-t border-line pt-6">
           <a href="#pricing" className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue transition hover:gap-2.5">
             Lock every benefit <span aria-hidden>→</span>
           </a>
