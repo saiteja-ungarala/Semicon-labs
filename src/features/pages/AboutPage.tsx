@@ -29,7 +29,18 @@ export default function AboutPage() {
         crumbs={[{ name: 'Home', to: '/' }, { name: 'About' }]}
       />
 
+      {/* Founders lead the page — the client wants the team front and center. */}
       <Section>
+        <SectionHead
+          align="center"
+          eyebrow="the people behind semicon labs"
+          title="Built by engineers who shipped real silicon."
+          lede="Decades inside NVIDIA, Synopsys, Intel, AMD, Xilinx and Marvell — distilled into the platform they wish they'd had."
+        />
+        <FoundersCarousel />
+      </Section>
+
+      <Section alt>
         <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
           <Reveal>
             <div className="space-y-5 text-pretty text-ink-dim">
@@ -71,7 +82,7 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section alt>
+      <Section>
         <SectionHead
           eyebrow="who it's for"
           title="Designed for engineers who want real project readiness."
@@ -86,16 +97,6 @@ export default function AboutPage() {
             </RevealItem>
           ))}
         </RevealGroup>
-      </Section>
-
-      <Section>
-        <SectionHead
-          align="center"
-          eyebrow="the people behind semicon labs"
-          title="Built by engineers who shipped real silicon."
-          lede="Decades inside Qualcomm, Intel, NVIDIA, AMD, TI and Broadcom — distilled into the platform they wish they'd had."
-        />
-        <FoundersCarousel />
       </Section>
 
       <FinalCta />
