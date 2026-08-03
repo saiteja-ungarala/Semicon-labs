@@ -15,13 +15,14 @@ interface Founder {
   photo: string | null; // null → initials card until the photo arrives
 }
 
+// Face ↔ name mapping corrected per the client's WhatsApp review (2026-08-03);
+// Shaik Hassan Shabbir removed at their request.
 const founders: Founder[] = [
-  { name: 'Sudheer Anala', role: 'Co-Founder & CEO', exp: 'Ex-Qualcomm · 15+ years', photo: '/images/founders/founder-1.png' },
+  { name: 'Sudheer Anala', role: 'Co-Founder & CEO', exp: 'Ex-Qualcomm · 15+ years', photo: '/images/founders/founder-4.png' },
   { name: 'Ravi Chakka', role: 'Co-Founder & CTO', exp: 'Ex-Intel · 15+ years', photo: '/images/founders/founder-2.png' },
-  { name: 'Sashikanth Challa', role: 'Physical Design Expert', exp: 'Ex-NVIDIA · 11+ years', photo: '/images/founders/founder-3.png' },
-  { name: 'Shaik Hassan Shabbir', role: 'Verification Lead', exp: 'Ex-AMD · 14+ years', photo: '/images/founders/founder-4.png' },
-  { name: 'Srikanth Anumalsetty', role: 'Head of Analog Design', exp: 'Ex-Texas Instruments · 12+ years', photo: '/images/founders/founder-5.png' },
-  { name: 'Bharat Devireddy', role: 'Senior Design Engineer', exp: 'Ex-Broadcom · 10+ years', photo: null },
+  { name: 'Sashikanth Challa', role: 'Physical Design Expert', exp: 'Ex-NVIDIA · 11+ years', photo: '/images/founders/founder-5.png' },
+  { name: 'Srikanth Anumalsetty', role: 'Head of Analog Design', exp: 'Ex-Texas Instruments · 12+ years', photo: '/images/founders/founder-1.png' },
+  { name: 'Bharat Devireddy', role: 'Senior Design Engineer', exp: 'Ex-Broadcom · 10+ years', photo: '/images/founders/founder-3.png' },
 ];
 
 const AUTO_MS = 3200;

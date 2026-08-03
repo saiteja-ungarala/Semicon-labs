@@ -126,19 +126,8 @@ export function Hero() {
           animate="show"
           className="mx-auto flex max-w-4xl flex-col items-center text-center"
         >
-          {/* 1 — Anchor pill: gives the composition a top edge and states the urgency */}
-          <motion.div variants={item}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-blue/20 bg-blue-soft px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-blue-600">
-              <span className="relative flex h-1.5 w-1.5" aria-hidden>
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue opacity-70" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue" />
-              </span>
-              Launching 15 August · first 1,000 seats
-            </span>
-          </motion.div>
-
-          {/* 2 — The main claim */}
-          <motion.h1 variants={item} className="mt-6 font-display font-extrabold tracking-tight text-ink">
+          {/* 1 — The main claim */}
+          <motion.h1 variants={item} className="font-display font-extrabold tracking-tight text-ink">
             <span className="block text-[clamp(2.5rem,5vw,4.2rem)] leading-[1.05]">
               The world's first{' '}
               <span className="bg-gradient-to-r from-blue via-[#5B4DFF] to-sky bg-clip-text text-transparent">

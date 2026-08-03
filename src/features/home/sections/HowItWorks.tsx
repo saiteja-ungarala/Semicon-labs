@@ -43,7 +43,6 @@ export function HowItWorks() {
             <span className="text-gradient">the same real-project loop.</span>
           </>
         }
-        lede="Problem → Investigation → Solution → Validation. The same sequence you'd run on a live project."
       />
 
       <div className="grid gap-8 lg:grid-cols-[minmax(220px,320px)_1fr] lg:gap-16">

@@ -13,17 +13,18 @@ import { breadcrumbSchema } from '@/lib/seo';
 // Per-domain chip artwork for the card banners (client-supplied chip imagery).
 const CARD_ART: Record<string, string> = {
   'physical-design': '/images/chips/chip-neon.jpg',
-  'design-verification': '/images/chips/chip-neon2.jpg',
-  'analog-layout': '/images/chips/chip-macro.jpg',
+  'design-verification': '/images/chips/chip-violet.jpg',
+  'analog-layout': '/images/chips/chip-ember2.jpg',
 };
 
 /** Marketing proof-points per domain card (client-provided claims). */
 const proofRows = (d: DomainSummary) => [
   { label: 'Skill tracks', value: `${d.stats.skills}` },
-  { label: 'Lab modules', value: `${d.stats.modules}` },
+  { label: 'Competencies', value: `${d.stats.modules}` },
   { label: 'Real testcases', value: `${d.stats.testcases}+` },
   { label: 'Supported by', value: 'SIEMENS · Cadence · Synopsys' },
   { label: 'Avg. industry pay', value: '₹3,50,000 LPA¹' },
+  ...(d.code === 'DV' ? [{ label: 'Active openings in India', value: '2,500–4,000+' }] : []),
 ];
 
 function DomainBigCard({ domain }: { domain: DomainSummary }) {
@@ -135,23 +136,21 @@ export default function DomainsPage() {
     <>
       <Seo
         title="Engineering Domains"
-        description="Physical Design, Design Verification and Analog Layout — real project challenges on industry EDA tools, structured Domain → Skill → Module → Testcase."
+        description="Physical Design, Design Verification and Analog Layout — real project challenges on industry EDA tools, structured Domain → Skill → Competency → Testcase."
         path="/domains"
         schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Domains', path: '/domains' }])]}
       />
       <PageHero
         eyebrow="engineering domains"
-        title="Real challenges, straight from real projects."
-        lede="Every domain is broken down the way real teams work: skills, lab modules, and the exact testcases engineers debug on live silicon. Pick your lane."
-        image="/images/chips/chip-neon.jpg"
-        imageAlt="Glowing chip on a circuit board"
+        title="Real challenges, straight from industry."
+        lede="Every domain is broken down the way real teams work: skills, competencies, and the exact testcases engineers debug on live silicon. Pick your lane."
         crumbs={[{ name: 'Home', to: '/' }, { name: 'Domains' }]}
       >
         {totals && (
           <div className="flex flex-wrap gap-x-10 gap-y-3">
             {[
               [totals.skills, 'skill tracks'],
-              [totals.modules, 'lab modules'],
+              [totals.modules, 'competencies'],
               [`${totals.testcases}+`, 'real testcases'],
               [3, 'EDA vendors'],
             ].map(([v, l]) => (

@@ -20,6 +20,7 @@ import {
   type SkillModule,
   type SkillSummary,
 } from '@/features/curriculum/api';
+import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
 import { proficiencyLevels } from '@/data/curriculum';
 import { breadcrumbSchema, courseSchema } from '@/lib/seo';
 import { cn } from '@/lib/cn';
@@ -29,8 +30,8 @@ const tone = { beginner: 'neutral', specialist: 'blue', expert: 'sky' } as const
 // Per-domain chip artwork for the hero (client-supplied chip imagery).
 const HERO_ART: Record<string, string> = {
   'physical-design': '/images/chips/chip-board.jpg',
-  'design-verification': '/images/chips/chip-holo.jpg',
-  'analog-layout': '/images/chips/chip-socket.jpg',
+  'design-verification': '/images/chips/chip-purple.jpg',
+  'analog-layout': '/images/chips/chip-amber.jpg',
 };
 
 /* ------------------------------------------------ testcases inside a module */
@@ -72,7 +73,7 @@ function TestcaseList({ moduleSlug }: { moduleSlug: string }) {
 
 /* -------------------------------------------------------- module accordion */
 
-function ModuleRow({ module }: { module: SkillModule }) {
+function ModuleRow({ module, step, starter }: { module: SkillModule; step: number; starter?: boolean }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="group rounded-xl border border-line bg-panel transition-all duration-300 hover:border-blue/30 hover:shadow-glow">
@@ -82,8 +83,18 @@ function ModuleRow({ module }: { module: SkillModule }) {
       >
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
+            <span className="font-mono text-[10.5px] font-bold text-blue/60">{String(step).padStart(2, '0')}</span>
             <span className="text-[15px] font-bold text-ink transition-colors group-hover:text-blue">{module.title}</span>
             <ToolBadge tool={module.toolVendor} />
+            {starter && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-blue px-2.5 py-0.5 font-mono text-[9.5px] font-bold uppercase tracking-wide text-white shadow-sm">
+                <span className="relative flex h-1.5 w-1.5" aria-hidden>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-70" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
+                </span>
+                Start here
+              </span>
+            )}
           </div>
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5">
             <DifficultyDots level={module.difficulty} />
@@ -113,11 +124,6 @@ function ModuleRow({ module }: { module: SkillModule }) {
             className="overflow-hidden border-t border-line/70 bg-void/30"
           >
             <TestcaseList moduleSlug={module.slug} />
-            <div className="border-t border-line/70 p-3 text-right">
-              <Link to={`/modules/${module.slug}`} className="text-[13px] font-semibold text-blue hover:underline">
-                Open the full module →
-              </Link>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -127,7 +133,7 @@ function ModuleRow({ module }: { module: SkillModule }) {
 
 /* ----------------------------------------------- modules inside a skill */
 
-function SkillModules({ domainSlug, skillSlug }: { domainSlug: string; skillSlug: string }) {
+function SkillModules({ domainSlug, skillSlug, firstSkill }: { domainSlug: string; skillSlug: string; firstSkill?: boolean }) {
   const { data, isLoading } = useSkill(domainSlug, skillSlug);
   if (isLoading) {
     return (
@@ -141,8 +147,8 @@ function SkillModules({ domainSlug, skillSlug }: { domainSlug: string; skillSlug
   if (!data) return null;
   return (
     <div className="space-y-3 pt-4">
-      {data.skill.modules.map((m) => (
-        <ModuleRow key={m.slug} module={m} />
+      {data.skill.modules.map((m, i) => (
+        <ModuleRow key={m.slug} module={m} step={i + 1} starter={firstSkill && i === 0} />
       ))}
     </div>
   );
@@ -183,7 +189,7 @@ function SkillBlock({
         <span className="flex items-center gap-5">
           <span className="hidden text-right sm:block">
             <span className="block font-mono text-[13px] font-bold text-ink transition-colors group-hover:text-blue">
-              <span className="text-blue">{skill.stats.modules}</span> modules · <span className="text-blue">{skill.stats.testcases}</span> testcases
+              <span className="text-blue">{skill.stats.modules}</span> competencies · <span className="text-blue">{skill.stats.testcases}</span> testcases
             </span>
             <span className="mt-0.5 block font-mono text-[10.5px] uppercase tracking-wide text-ink-dim">
               <span className="font-bold text-ink">{formatDuration(skill.stats.durationMin)}</span> of lab time
@@ -212,7 +218,7 @@ function SkillBlock({
             className="overflow-hidden"
           >
             <div className="border-t border-line/70 px-5 pb-6 pt-2 sm:px-6 sm:pb-7">
-              <SkillModules domainSlug={domainSlug} skillSlug={skill.slug} />
+              <SkillModules domainSlug={domainSlug} skillSlug={skill.slug} firstSkill={index === 0} />
             </div>
           </motion.div>
         )}
@@ -223,45 +229,12 @@ function SkillBlock({
 
 /* --------------------------------------------------- sticky pricing rail */
 
-function PricingRail({ testcases }: { testcases: number }) {
+// The client's ₹99 pre-book offer card rides every domain page (funnel:
+// domain → /pricing → register — the card's CTA is route-aware).
+function PricingRail() {
   return (
     <aside className="lg:sticky lg:top-24 lg:self-start">
-      <div className="gradient-border relative overflow-hidden rounded-2xl border border-transparent bg-panel p-7 shadow-card">
-        <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-blue-soft px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-blue-600">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-blue" />
-          </span>
-          Launch pricing
-        </span>
-        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-faint">Own any module for</p>
-        <div className="mt-2 flex items-baseline gap-2">
-          <span className="font-mono text-5xl font-bold text-ink">₹499</span>
-          <span className="text-sm font-semibold text-ink-dim">/ module</span>
-        </div>
-        <p className="mt-1.5 text-[13px] text-ink-dim">One-time payment · lifetime access · every testcase inside included.</p>
-
-        <ul className="mt-6 space-y-2.5 border-t border-line pt-5 text-sm text-ink-dim">
-          {[
-            'All testcases of the module unlocked',
-            'Real EDA tool sessions, in your browser',
-            'Objective validation on every solve',
-            '7-day money-back guarantee',
-          ].map((f) => (
-            <li key={f} className="flex items-start gap-2.5">
-              <span aria-hidden className="mt-0.5 font-mono text-blue">✓</span>
-              {f}
-            </li>
-          ))}
-        </ul>
-
-        <Button to="/pricing" arrow className="mt-6 w-full">
-          Start solving — lock the price
-        </Button>
-        <p className="mt-3 text-center font-mono text-[10.5px] uppercase tracking-wide text-ink-faint">
-          {testcases}+ testcases live in this domain
-        </p>
-      </div>
+      <LaunchOfferCard variant="rail" />
     </aside>
   );
 }
@@ -334,7 +307,7 @@ export default function DomainDetailPage() {
           <div className="flex flex-wrap items-center gap-x-10 gap-y-3">
             {[
               [domain.stats.skills, 'skills'],
-              [domain.stats.modules, 'modules'],
+              [domain.stats.modules, 'competencies'],
               [domain.stats.testcases, 'testcases'],
             ].map(([v, l]) => (
               <div key={String(l)}>
@@ -367,8 +340,8 @@ export default function DomainDetailPage() {
         <Section>
           <SectionHead
             eyebrow="the full curriculum — one page"
-            title={`Every skill, module and testcase in ${domain.code}.`}
-            lede="Skill → modules → testcases. Expand anything; the numbers are live from the catalog, not marketing."
+            title={`Every skill, competency and testcase in ${domain.code}.`}
+            lede="Skill → competencies → testcases. Expand anything; the numbers are live from the catalog, not marketing."
           />
           <div className="grid gap-10 lg:grid-cols-[1fr_340px] lg:gap-12">
             <div className="min-w-0 space-y-4">
@@ -382,7 +355,7 @@ export default function DomainDetailPage() {
                 />
               ))}
             </div>
-            <PricingRail testcases={domain.stats.testcases} />
+            <PricingRail />
           </div>
         </Section>
       )}

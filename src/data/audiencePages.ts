@@ -76,7 +76,7 @@ export const audiencePages: AudiencePage[] = [
       price: '₹12,600',
       priceNote: '1 user · per domain',
       features: [
-        'All modules and certifications in the domain',
+        'All competencies and certifications in the domain',
         'Self-paced learning with completion certification',
         'Cloud-based labs — nothing to install',
         'Tool switching across Cadence, Synopsys & Siemens',
@@ -137,7 +137,7 @@ export const audiencePages: AudiencePage[] = [
       priceNote: 'per session · session = 1 month · 5+ users',
       popular: true,
       features: [
-        'All domain modules included',
+        'All domain competencies included',
         'Self-paced learning + completion certification',
         'Tool switching across vendors',
         'Reader access add-on available',
@@ -197,7 +197,7 @@ export const audiencePages: AudiencePage[] = [
       price: 'Custom',
       priceNote: '25+ users · tailored rollout',
       features: [
-        'All domains, all modules, all vendors',
+        'All domains, all competencies, all vendors',
         'Self-paced learning + certification',
         'Token-based lab provisioning',
         'Admin roles, usage reporting & dashboards',

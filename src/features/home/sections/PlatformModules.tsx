@@ -20,12 +20,13 @@ const benefits = [
   { icon: '/icons/access247.png', title: '24x7 Access Your Labs Anytime, Anywhere', copy: 'The lab is open whenever you are — no seat queue, no lab hours.', without: 'waiting for a lab seat' },
   { icon: '/icons/library.svg', title: 'Lifetime free VLSI premium Library', copy: 'The reference material stays yours, forever.', without: 'scattered PDFs' },
   { icon: '/icons/certification.png', title: 'Validated Industry Certification', copy: 'Certification backed by solves the platform actually verified.', without: 'an unverified PDF' },
+  { icon: '/icons/placements.svg', title: 'Access to placement community', copy: 'A 290+ recruiter network that sees your verified skills.', without: 'cold-applying alone' },
 ];
 
 // Deterministic scatter for the "without" world: [x, y, rotate].
 const scatter: [number, number, number][] = [
   [-26, 14, -8], [18, -12, 6], [-14, 20, -5], [30, 10, 9],
-  [22, -16, 7], [-30, 8, -9], [12, 18, 5],
+  [22, -16, 7], [-30, 8, -9], [12, 18, 5], [-18, -10, -6],
 ];
 
 function ConnectingLines({ hidden }: { hidden: boolean }) {
@@ -44,6 +45,7 @@ function ConnectingLines({ hidden }: { hidden: boolean }) {
         'M 625,80 C 750,40 800,40 875,80',
         'M 125,220 C 250,180 300,180 375,220',
         'M 375,220 C 500,260 550,260 625,220',
+        'M 625,220 C 750,180 800,180 875,220',
       ].map((d, i) => (
         <path key={i} d={d} stroke="currentColor" strokeWidth="1.5" fill="none" strokeDasharray="6 6" />
       ))}
@@ -66,7 +68,6 @@ export function PlatformModules() {
             <span className="text-gradient">That no one ever provided till now.</span>
           </>
         }
-        lede="Each of these exists on this platform and nowhere else — together, they're the reason early registrants don't wait."
       />
 
       <div className="relative mx-auto mt-16 max-w-5xl px-4">

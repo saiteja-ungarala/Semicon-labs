@@ -22,13 +22,15 @@ const TABS: { id: TabId; label: string }[] = [
 
 /* ---------------------------------------------------------------- pieces */
 
-function Banner({ left, right }: { left: ReactNode; right: string }) {
+function Banner({ left, right }: { left: ReactNode; right?: string }) {
   return (
     <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-between gap-3 rounded-2xl border-[1.5px] border-dashed border-blue/40 px-6 py-4">
       <div className="text-[14px] text-ink">{left}</div>
-      <div className="rounded-full bg-void-2 px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-ink-dim">
-        {right}
-      </div>
+      {right && (
+        <div className="rounded-full bg-void-2 px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-ink-dim">
+          {right}
+        </div>
+      )}
     </div>
   );
 }
@@ -262,7 +264,6 @@ function TeamsPanel() {
     <>
       <Banner
         left={<><b className="text-blue-600">1 session</b> = 1 seat, 1 month, 240 lab hours. Minimum 2 sessions.</>}
-        right="Billed monthly"
       />
       <div className="mx-auto mt-8 grid max-w-3xl gap-5 md:grid-cols-2">
         <TierCard

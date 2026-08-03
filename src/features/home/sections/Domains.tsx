@@ -6,16 +6,17 @@ import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import { useDomains, type DomainSummary } from '@/features/curriculum/api';
 
 /**
- * "Real challenges, straight from real projects." — the three domains as
+ * "Real challenges, straight from industry." — the three domains as
  * proof-heavy cards (live catalog counts + client-approved claims).
  */
 
 const claimRows = (d: DomainSummary) => [
   { label: 'Skill tracks', value: `${d.stats.skills}` },
-  { label: 'Lab modules', value: `${d.stats.modules}` },
+  { label: 'Competencies', value: `${d.stats.modules}` },
   { label: 'Real testcases', value: `${d.stats.testcases}+` },
   { label: 'Supported by', value: 'SIEMENS · Cadence · Synopsys' },
   { label: 'Avg. industry pay', value: '₹3,50,000 LPA¹' },
+  ...(d.code === 'DV' ? [{ label: 'Active openings in India', value: '2,500–4,000+' }] : []),
 ];
 
 function HomeDomainCard({ domain }: { domain: DomainSummary }) {
@@ -90,10 +91,9 @@ export function Domains() {
           <>
             Real challenges,
             <br className="hidden sm:block" />{' '}
-            <span className="text-gradient">straight from real projects.</span>
+            <span className="text-gradient">straight from industry.</span>
           </>
         }
-        lede="This is the project experience interviews actually test — real failures, real tools, real testcases. Pick your domain and start building it today."
       />
       <RevealGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.1}>
         {isLoading

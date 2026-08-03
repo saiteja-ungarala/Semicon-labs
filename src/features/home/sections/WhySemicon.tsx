@@ -50,7 +50,6 @@ export function WhySemicon() {
             <span className="text-gradient">as knowing how to solve a problem.</span>
           </>
         }
-        lede="Most platforms teach you to run a tool. Projects need you to fix what the tool can't. Here's the difference."
       />
 
       <InteractiveComparison />

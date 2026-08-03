@@ -29,7 +29,7 @@ export function SampleChallenges() {
     <Section id="challenges" alt>
       <SectionHead
         eyebrow="what you'll actually solve"
-        title="Real challenges, straight from real projects."
+        title="Real challenges, straight from industry."
         lede="Every challenge starts with a failure you have to investigate — not a tutorial to follow. Here's a sample."
       />
 
