@@ -1,5 +1,23 @@
 # Deploying the web app
 
+## Vercel (current production host)
+
+`vercel.json` does two things — the order of the rewrites matters:
+
+1. `/api/*` is proxied to the Railway API. The browser therefore only ever
+   talks to its own origin, which means **no CORS preflights and auth cookies
+   keep working**. Changing the backend URL is a one-line edit here — no
+   rebuild of the bundle required.
+2. Everything else falls back to `index.html` so client-side routes
+   (`/pricing`, `/domains/…`) survive a refresh or a shared deep link.
+   Static files in `dist/` are matched before rewrites, so assets still resolve.
+
+**Do not set `VITE_API_URL` in Vercel's env vars.** Leaving it unset makes the
+app call the relative `/api`, which is what the rewrite above expects. Setting
+it would bypass the proxy and reintroduce CORS.
+
+
+
 The container renders its nginx config at start-up from env vars, so the same
 image runs locally (compose) and on Railway/Render/Fly without edits.
 
