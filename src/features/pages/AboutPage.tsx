@@ -35,7 +35,7 @@ export default function AboutPage() {
           align="center"
           eyebrow="the people behind semicon labs"
           title="Built by engineers who shipped real silicon."
-          lede="Decades inside NVIDIA, Synopsys, Intel, AMD, Xilinx and Marvell — distilled into the platform they wish they'd had."
+          lede="Decades inside NVIDIA, Apple, Synopsys, Intel, AMD, eBay, Xilinx and Marvell — distilled into the platform they wish they'd had."
         />
         <FoundersCarousel />
       </Section>

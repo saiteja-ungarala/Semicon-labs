@@ -1,5 +1,4 @@
 import { Section, SectionHead } from '@/components/ui/Section';
-import { InteractiveComparison } from '@/components/marketing/InteractiveComparison';
 import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import { whyPillars, type PillarIcon } from '@/data/marketing';
 
@@ -42,20 +41,6 @@ export function WhySemicon() {
   return (
     <Section id="why">
       <SectionHead
-        eyebrow="the gap in semiconductor learning"
-        title={
-          <>
-            Knowing a flow is not the same
-            <br className="hidden sm:block" />{' '}
-            <span className="text-gradient">as knowing how to solve a problem.</span>
-          </>
-        }
-      />
-
-      <InteractiveComparison />
-
-      <SectionHead
-        className="mt-24"
         eyebrow="the skills every semiconductor engineer needs"
         title={
           <>

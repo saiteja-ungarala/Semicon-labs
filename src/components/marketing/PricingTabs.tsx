@@ -211,7 +211,7 @@ function IndividualPanel() {
     <>
       <Banner
         left={<><b className="text-blue-600">🔥 Limited launch offer</b> — pre-book today, pay the launch rate later.</>}
-        right="Only 1,000 seats"
+        right="Only for First 1000 seats"
       />
       <div className="mx-auto mt-8 grid max-w-3xl items-stretch gap-5 md:grid-cols-2">
         {/* The attention card: ₹99 pre-book */}
@@ -246,15 +246,10 @@ function IndividualPanel() {
             <Button to={planHref('/register?plan=notify')} variant="secondary" className="w-full">
               Notify me at launch
             </Button>
-            <p className="mt-2.5 text-center text-[11px] text-ink-faint">No bonus hours after the 1,000 seats fill.</p>
+            <p className="mt-2.5 text-center text-[11px] text-ink-faint">No bonus hours after the first 1000 seats fill.</p>
           </div>
         </div>
       </div>
-
-      <Note>
-        Reserve today and lock the launch rate — <b className="text-blue-600">200 hours for the price of 100</b>.
-        Once the 1,000 seats are gone, 100 hours cost ₹9,000 and 200 hours cost ₹18,000. All prices exclude 18% GST.
-      </Note>
     </>
   );
 }
@@ -451,10 +446,6 @@ export function PricingTabs() {
           {tab === 'corporate' && <CorporatePanel />}
         </motion.div>
       </AnimatePresence>
-
-      <p className="mt-10 text-center font-mono text-[11px] text-ink-faint">
-        All prices exclude 18% GST unless stated · Corporate quotes via sales
-      </p>
     </div>
   );
 }

@@ -15,7 +15,6 @@ import { WhySemicon } from './sections/WhySemicon';
 import { AiEra } from './sections/AiEra';
 import { Domains } from './sections/Domains';
 import { HowItWorks } from './sections/HowItWorks';
-import { ProficiencyLevels } from './sections/ProficiencyLevels';
 import { PricingSection } from './sections/PricingSection';
 import { Testimonials } from './sections/Testimonials';
 import { FaqSection } from './sections/FaqSection';
@@ -47,7 +46,6 @@ export function HomePage() {
       <AiEra />
       <Domains />
       <HowItWorks />
-      <ProficiencyLevels />
       <PricingSection />
       <Testimonials />
       <FaqSection />

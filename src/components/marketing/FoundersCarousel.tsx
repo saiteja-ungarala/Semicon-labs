@@ -20,7 +20,7 @@ interface Founder {
 const founders: Founder[] = [
   { name: 'Sudheer Anala', role: 'Co-Founder & CEO', exp: 'Ex-NVIDIA (Tegra) · 24+ years', photo: '/images/founders/founder-4.png' },
   { name: 'Ravi Chakka', role: 'Co-Founder & CTO', exp: 'Ex-Synopsys, Intel & AMD · 20+ years', photo: '/images/founders/founder-2.png' },
-  { name: 'Sashikanth Challa', role: 'Physical Design Expert', exp: 'Ex-NVIDIA · 11+ years', photo: '/images/founders/founder-5.png' },
+  { name: 'Sashikanth Challa', role: 'Head of Software', exp: 'Ex-Apple & eBay · 20+ years', photo: '/images/founders/founder-5.png' },
   { name: 'Srikanth Anumalasetty', role: 'Synthesis & STA Expert', exp: 'Ex-AMD & Xilinx · 15+ years', photo: '/images/founders/founder-1.png' },
   { name: 'Bharath Devireddy', role: 'Senior Design Engineer', exp: 'Ex-Marvell & AMD · 15+ years', photo: '/images/founders/founder-3.png' },
 ];

@@ -128,6 +128,9 @@ const config: Config = {
         float: 'float 6s ease-in-out infinite',
         'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
         marquee: 'marquee 34s linear infinite',
+        // Announcement ticker: one message crosses, then a long gap.
+        'marquee-ticker': 'marquee 18s linear infinite',
+        'marquee-ticker-wide': 'marquee 26s linear infinite',
       },
       transitionTimingFunction: { 'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)' },
     },

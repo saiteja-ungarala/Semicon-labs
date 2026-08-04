@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/motion/Reveal';
 import { sampleChallenges, type ChallengeDomain } from '@/data/challenges';
 import { cn } from '@/lib/cn';
@@ -79,12 +78,6 @@ export function SampleChallenges() {
             </div>
           </article>
         ))}
-      </div>
-
-      <div className="mt-12 text-center">
-        <Button to="/modules" arrow>
-          Browse all modules
-        </Button>
       </div>
     </Section>
   );

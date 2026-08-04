@@ -97,7 +97,7 @@ export const legalDocs: Record<LegalKind, LegalDoc> = {
         heading: '3. Subscriptions and payment',
         body: [
           'Paid plans are billed in advance on a recurring basis until cancelled. Founding pricing is honored for as long as your subscription remains active and uninterrupted.',
-          'Payments are processed by Razorpay. Taxes may apply based on your location.',
+          'Payments are processed by Easebuzz. Prices are exclusive of 18% GST unless stated otherwise.',
           'You can cancel anytime from your account; access continues until the end of the current billing period.',
         ],
       },

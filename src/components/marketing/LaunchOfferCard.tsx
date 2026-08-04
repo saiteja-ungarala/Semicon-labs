@@ -48,7 +48,7 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-70" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
           </span>
-          1,000 seats
+          First 1000 seats
         </span>
       </div>
       <p className="relative mt-0.5 text-[13px] text-ink-dim">Lock the launch rate today</p>
