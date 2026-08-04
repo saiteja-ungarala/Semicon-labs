@@ -1,29 +1,15 @@
-import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Seo } from '@/components/seo/Seo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import {
-  DifficultyDots,
-  LabMixBar,
-  LabTypeBadge,
-  ToolBadge,
-} from '@/components/curriculum/CurriculumBits';
-import {
-  useDomain,
-  useSkill,
-  useModuleTestcases,
-  formatDuration,
-  type SkillModule,
-  type SkillSummary,
-} from '@/features/curriculum/api';
+import { Reveal } from '@/components/motion/Reveal';
+import { FlowRail } from '@/components/curriculum/flow/FlowRail';
+import { useDomain } from '@/features/curriculum/api';
 import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
 import { proficiencyLevels } from '@/data/curriculum';
 import { breadcrumbSchema, courseSchema } from '@/lib/seo';
-import { cn } from '@/lib/cn';
 
 const tone = { beginner: 'neutral', specialist: 'blue', expert: 'sky' } as const;
 
@@ -34,198 +20,6 @@ const HERO_ART: Record<string, string> = {
   'analog-layout': '/images/chips/chip-amber.jpg',
 };
 
-/* ------------------------------------------------ testcases inside a module */
-
-function TestcaseList({ moduleSlug }: { moduleSlug: string }) {
-  const { data, isLoading } = useModuleTestcases(moduleSlug);
-  if (isLoading) {
-    return (
-      <div className="space-y-2 p-4">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="h-9 animate-pulse rounded-lg bg-void-2" />
-        ))}
-      </div>
-    );
-  }
-  if (!data?.testcases.length) {
-    return <p className="p-4 text-sm text-ink-dim">Testcases for this module are being finalized.</p>;
-  }
-  return (
-    <ul className="divide-y divide-line/70">
-      {data.testcases.map((tc, i) => (
-        <li key={tc.slug} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2.5">
-          <span className="font-mono text-[10.5px] text-ink-faint">{String(i + 1).padStart(2, '0')}</span>
-          <span className="min-w-0 flex-1 truncate text-[13px] font-semibold text-ink" title={tc.title}>
-            {tc.title}
-          </span>
-          <LabTypeBadge type={tc.labType} />
-          {tc.verifiable && (
-            <span className="hidden font-mono text-[10px] uppercase tracking-wide text-blue sm:inline" title="Objectively validated">
-              ✓
-            </span>
-          )}
-          <span className="font-mono text-[10.5px] uppercase text-ink-faint">~{formatDuration(tc.estimatedMin)}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-/* -------------------------------------------------------- module accordion */
-
-function ModuleRow({ module, step, starter }: { module: SkillModule; step: number; starter?: boolean }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="group rounded-xl border border-line bg-panel transition-all duration-300 hover:border-blue/30 hover:shadow-glow">
-      <div 
-        className="flex cursor-pointer flex-wrap items-center gap-x-4 gap-y-2 p-4 transition-colors hover:bg-blue-soft/10"
-        onClick={() => setOpen((v) => !v)}
-      >
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="font-mono text-[10.5px] font-bold text-blue/60">{String(step).padStart(2, '0')}</span>
-            <span className="text-[15px] font-bold text-ink transition-colors group-hover:text-blue">{module.title}</span>
-            <ToolBadge tool={module.toolVendor} />
-            {starter && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-blue px-2.5 py-0.5 font-mono text-[9.5px] font-bold uppercase tracking-wide text-white shadow-sm">
-                <span className="relative flex h-1.5 w-1.5" aria-hidden>
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-70" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
-                </span>
-                Start here
-              </span>
-            )}
-          </div>
-          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5">
-            <DifficultyDots level={module.difficulty} />
-            <span className="font-mono text-[10.5px] uppercase tracking-wide text-ink-dim">
-              <span className="font-bold text-blue">{formatDuration(module.durationMin)}</span> lab
-            </span>
-            <span className="font-mono text-[10.5px] uppercase tracking-wide text-ink-dim">
-              <span className="font-bold text-blue">{module.testcaseCount}</span> testcases
-            </span>
-            {module.testcaseCount > 0 && <LabMixBar mix={module.labMix} />}
-          </div>
-        </div>
-        <div className="flex items-center gap-1.5 text-[12.5px] font-semibold text-ink-dim transition-colors group-hover:text-blue">
-          <span>{open ? 'Hide testcases' : 'View testcases'}</span>
-          <svg aria-hidden className={cn('transition-transform duration-200', open && 'rotate-180')} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </div>
-      </div>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-line/70 bg-void/30"
-          >
-            <TestcaseList moduleSlug={module.slug} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
-/* ----------------------------------------------- modules inside a skill */
-
-function SkillModules({ domainSlug, skillSlug, firstSkill }: { domainSlug: string; skillSlug: string; firstSkill?: boolean }) {
-  const { data, isLoading } = useSkill(domainSlug, skillSlug);
-  if (isLoading) {
-    return (
-      <div className="space-y-3 pt-4">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="h-20 animate-pulse rounded-xl border border-line bg-panel/60" />
-        ))}
-      </div>
-    );
-  }
-  if (!data) return null;
-  return (
-    <div className="space-y-3 pt-4">
-      {data.skill.modules.map((m, i) => (
-        <ModuleRow key={m.slug} module={m} step={i + 1} starter={firstSkill && i === 0} />
-      ))}
-    </div>
-  );
-}
-
-/* ------------------------------------------------------- skill accordion */
-
-function SkillBlock({
-  domainSlug,
-  skill,
-  index,
-  defaultOpen,
-}: {
-  domainSlug: string;
-  skill: SkillSummary;
-  index: number;
-  defaultOpen: boolean;
-}) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <div className="group rounded-2xl border border-line bg-panel shadow-sm transition-all duration-300 hover:border-blue/30 hover:shadow-md">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className="flex w-full flex-wrap items-center gap-x-4 gap-y-2 p-5 text-left transition-colors hover:bg-blue-soft/10 sm:p-6 rounded-t-2xl"
-      >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-soft/50 font-mono text-sm font-bold text-blue transition-colors group-hover:bg-blue group-hover:text-white">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="flex flex-wrap items-center gap-2">
-            <span className="text-[17px] font-bold text-ink transition-colors group-hover:text-blue">{skill.name}</span>
-            <ToolBadge tool={skill.toolVendor} />
-          </span>
-          <span className="mt-1 block text-[13.5px] leading-snug text-ink-dim">{skill.summary}</span>
-        </span>
-        <span className="flex items-center gap-5">
-          <span className="hidden text-right sm:block">
-            <span className="block font-mono text-[13px] font-bold text-ink transition-colors group-hover:text-blue">
-              <span className="text-blue">{skill.stats.modules}</span> competencies · <span className="text-blue">{skill.stats.testcases}</span> testcases
-            </span>
-            <span className="mt-0.5 block font-mono text-[10.5px] uppercase tracking-wide text-ink-dim">
-              <span className="font-bold text-ink">{formatDuration(skill.stats.durationMin)}</span> of lab time
-            </span>
-          </span>
-          <span
-            aria-hidden
-            className={cn(
-              'flex items-center justify-center text-ink-faint transition-transform duration-200 group-hover:text-ink',
-              open && 'rotate-180',
-            )}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </span>
-        </span>
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="border-t border-line/70 px-5 pb-6 pt-2 sm:px-6 sm:pb-7">
-              <SkillModules domainSlug={domainSlug} skillSlug={skill.slug} firstSkill={index === 0} />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
 
 /* --------------------------------------------------- sticky pricing rail */
 
@@ -233,7 +27,10 @@ function SkillBlock({
 // domain → /pricing → register — the card's CTA is route-aware).
 function PricingRail() {
   return (
-    <aside className="lg:sticky lg:top-24 lg:self-start">
+    // The rail can outgrow a 768px-tall laptop viewport, so it scrolls
+    // internally; the inset padding keeps the card's glow from being clipped.
+    // No overscroll-contain — the wheel must chain back to the page.
+    <aside className="no-scrollbar lg:sticky lg:top-24 lg:-mx-1 lg:-my-1 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto lg:px-1 lg:py-1">
       <LaunchOfferCard variant="rail" />
     </aside>
   );
@@ -316,7 +113,7 @@ export default function DomainDetailPage() {
               </div>
             ))}
             <p className="max-w-xs text-[13px] leading-snug text-ink-dim">
-              Everything below is on this one page — expand a skill, open a module, read its exact testcases.
+              It's all on this page — open a stage, pick a step, read the exact labs you'd run in week one.
             </p>
           </div>
         )}
@@ -339,21 +136,15 @@ export default function DomainDetailPage() {
       ) : (
         <Section>
           <SectionHead
-            eyebrow="the full curriculum — one page"
-            title={`Every skill, competency and testcase in ${domain.code}.`}
-            lede="Skill → competencies → testcases. Expand anything; the numbers are live from the catalog, not marketing."
+            eyebrow="the full route — nothing hidden"
+            title={`The whole ${domain.code} flow, one stage at a time.`}
+            lede="Open a stage, pick a step, read the exact lab you'd run. Every number is live from the catalog."
           />
-          <div className="grid gap-10 lg:grid-cols-[1fr_340px] lg:gap-12">
-            <div className="min-w-0 space-y-4">
-              {domain.skills.map((skill, i) => (
-                <SkillBlock
-                  key={skill.slug}
-                  domainSlug={domain.slug}
-                  skill={skill}
-                  index={i}
-                  defaultOpen={i === 0}
-                />
-              ))}
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-12">
+            <div className="min-w-0">
+              <Reveal direction="up">
+                <FlowRail key={domain.slug} domain={domain} />
+              </Reveal>
             </div>
             <PricingRail />
           </div>

@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 import {
+  DIFFICULTY_LABEL,
   LAB_TYPE_LABEL,
   TOOL_LABEL,
   type Difficulty,
@@ -90,16 +91,41 @@ const mixColor: Record<LabType, string> = {
   CHALLENGE: 'text-navy bg-navy-soft border-navy/20',
 };
 
+/** Proportional fills for the compact `bar` variant. */
+const mixFill: Record<LabType, string> = {
+  GOLDEN: 'bg-blue-400',
+  GUIDED: 'bg-blue',
+  EXERCISE: 'bg-sky',
+  BUGGY: 'bg-[#B4451F]',
+  CHALLENGE: 'bg-navy',
+};
+
 /** Simple text summary showing a module's mix of lab types. */
 export function LabMixBar({
   mix,
+  variant = 'chips',
   className,
 }: {
   mix: Partial<Record<LabType, number>>;
+  /** `bar` collapses the chips into one proportional rule. */
+  variant?: 'chips' | 'bar';
   className?: string;
 }) {
   const entries = (Object.entries(mix) as [LabType, number][]).filter(([, n]) => n > 0);
   if (entries.length === 0) return null;
+  if (variant === 'bar') {
+    return (
+      <span
+        className={cn('flex h-1.5 w-full overflow-hidden rounded-full bg-line', className)}
+        aria-hidden
+        title={entries.map(([t, n]) => `${n} ${LAB_TYPE_LABEL[t].toLowerCase()}`).join(' · ')}
+      >
+        {entries.map(([type, count]) => (
+          <span key={type} className={mixFill[type]} style={{ flexGrow: count }} />
+        ))}
+      </span>
+    );
+  }
   return (
     <div className={cn('flex flex-wrap gap-2', className)}>
       {entries.map(([type, count]) => (
@@ -112,6 +138,121 @@ export function LabMixBar({
         </span>
       ))}
     </div>
+  );
+}
+
+/* ------------------------------------------------ flow-explorer additions */
+
+const meterFilled: Record<Difficulty, number> = { BEGINNER: 1, INTERMEDIATE: 2, ADVANCED: 3 };
+
+/**
+ * Three-segment level meter. Reads as a measurement rather than a label, which
+ * suits the dense rows of the curriculum line. Uses the ambient `--ac` accent,
+ * so it must be rendered inside a subtree that defines it.
+ */
+export function DifficultyMeter({
+  level,
+  compact,
+  className,
+}: {
+  level: Difficulty;
+  compact?: boolean;
+  className?: string;
+}) {
+  return (
+    <span className={cn('inline-flex items-center gap-1.5', className)} title={DIFFICULTY_LABEL[level]}>
+      <span className="flex gap-[3px]" aria-hidden>
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            className={cn(
+              'h-[3px] w-3 rounded-full',
+              i < meterFilled[level] ? 'bg-[var(--ac)]' : 'bg-line-strong',
+            )}
+          />
+        ))}
+      </span>
+      <span
+        className={cn(
+          'font-mono font-bold uppercase tracking-wider text-ink-dim',
+          compact ? 'text-[10px]' : 'text-[10.5px]',
+        )}
+      >
+        {level.toLowerCase()}
+      </span>
+    </span>
+  );
+}
+
+/** "This lab is machine-checked" — the platform's core credibility claim. */
+export function VerifiedTag({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center gap-1 rounded-full bg-blue-soft px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.1em] text-blue-600',
+        className,
+      )}
+      title="Objectively validated — the platform checks your result, not your effort."
+    >
+      <svg
+        aria-hidden
+        width="10"
+        height="10"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+      Auto-graded<span className="sr-only">Automatically graded</span>
+    </span>
+  );
+}
+
+/** The catalog id of a competency, shown like a specimen label. */
+export function SpecimenTag({ code, className }: { code: string; className?: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center rounded-md border border-line bg-void-2 px-2 py-0.5 font-mono text-[10px] font-bold tracking-[0.08em] text-ink-faint',
+        className,
+      )}
+    >
+      {code}
+    </span>
+  );
+}
+
+/** One pip per competency — "stops on this leg" at a glance. */
+export function StepTicks({
+  count,
+  active,
+  className,
+}: {
+  count: number;
+  active: boolean;
+  className?: string;
+}) {
+  const shown = Math.min(count, 8);
+  return (
+    <span className={cn('inline-flex items-center gap-[3px]', className)} aria-hidden>
+      {Array.from({ length: shown }).map((_, i) => (
+        <span
+          key={i}
+          className={cn(
+            'h-1 w-3 rounded-full transition-colors duration-300',
+            active ? 'bg-[var(--ac)]' : 'bg-line-strong',
+          )}
+          style={{ transitionDelay: `${i * 30}ms` }}
+        />
+      ))}
+      {count > shown && (
+        <span className="ml-1 font-mono text-[9.5px] font-bold text-ink-faint">+{count - shown}</span>
+      )}
+    </span>
   );
 }
 
