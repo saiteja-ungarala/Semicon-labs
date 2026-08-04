@@ -12,13 +12,6 @@ function AudienceGlyph({ icon }: { icon: AudienceIcon }) {
     strokeLinejoin: 'round' as const,
   };
   switch (icon) {
-    case 'student':
-      return (
-        <svg viewBox="0 0 24 24" className="h-6 w-6" {...common}>
-          <path d="M12 4 2 9l10 5 10-5-10-5Z" />
-          <path d="M6 11v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" />
-        </svg>
-      );
     case 'individual':
       return (
         <svg viewBox="0 0 24 24" className="h-6 w-6" {...common}>
@@ -52,7 +45,7 @@ interface WhoWeServeProps {
 /** Audience-to-plan grid — the client reference's "Who We Serve" pattern. */
 export function WhoWeServe({ detailed = false }: WhoWeServeProps) {
   return (
-    <RevealGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
+    <RevealGroup className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3" stagger={0.08}>
       {audiences.map((a) => (
         <RevealItem key={a.slug}>
           <div
@@ -87,7 +80,7 @@ export function WhoWeServe({ detailed = false }: WhoWeServeProps) {
               to={a.cta.to}
               className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold text-blue transition hover:gap-2.5"
             >
-              {a.cta.label} <span aria-hidden>→</span>
+              {a.cta.label} <span aria-hidden className="transition-transform">→</span>
             </Link>
           </div>
         </RevealItem>

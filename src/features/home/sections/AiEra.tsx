@@ -34,7 +34,7 @@ export function AiEra() {
         <Reveal direction="left">
           <Card gradient className="overflow-hidden p-0">
             {/* AI-over-silicon artwork crowns the demand list */}
-            <div className="relative h-28 overflow-hidden">
+            <div className="relative h-44 overflow-hidden sm:h-48">
               <img
                 src="/images/chips/chip-ai.jpg"
                 alt=""
@@ -42,23 +42,23 @@ export function AiEra() {
                 loading="lazy"
                 className="h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-panel via-panel/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-panel via-panel/15 to-transparent" />
               <span className="absolute bottom-2.5 left-6 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-white/85">
                 AI × Silicon
               </span>
             </div>
-            <div className="p-8 pt-6">
-            <p className="font-mono text-xs uppercase tracking-wider text-blue font-bold">
+            <div className="px-6 pb-6 pt-4">
+            <p className="font-mono text-[11px] uppercase tracking-wider text-blue font-bold">
               What industry projects actually demand
             </p>
-            <RevealGroup className="mt-6 space-y-px" stagger={0.05}>
+            <RevealGroup className="mt-3" stagger={0.05}>
               {industryDemands.map((demand, i) => (
                 <RevealItem key={demand}>
-                  <div className="flex items-center gap-4 border-b border-line/60 py-3.5 last:border-0 hover:bg-void/40 transition-colors px-2 rounded-lg -mx-2">
-                    <span className="font-mono text-xs text-blue font-bold">
+                  <div className="-mx-2 flex items-center gap-3 rounded-lg border-b border-line/60 px-2 py-2 transition-colors last:border-0 hover:bg-void/40">
+                    <span className="font-mono text-[11px] font-bold text-blue">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span className="text-[15px] text-ink font-medium">{demand}</span>
+                    <span className="text-[14px] font-medium text-ink">{demand}</span>
                   </div>
                 </RevealItem>
               ))}

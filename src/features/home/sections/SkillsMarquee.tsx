@@ -6,28 +6,37 @@
 interface RecruiterLogo {
   name: string;
   src?: string; // absent → styled text badge (logo not yet supplied)
-  cls?: string; // per-logo max-height class for optical size consistency
+  /** Stacked/square marks need more height to carry the same optical weight
+   *  as a wide wordmark of equal area. */
+  square?: boolean;
 }
 
-// `cls` tunes each mark's height so every logo reads the SAME optical size
-// (source files have wildly different padding/aspect ratios).
+// Sources are the auto-trimmed copies in /logos/trim: the originals carry very
+// different amounts of internal whitespace (NVIDIA's ink filled 32% of its
+// file, Siemens' 29%), which is why the row used to look ragged. With the
+// padding cropped away, one shared box is enough to size them all evenly.
 const recruiters: RecruiterLogo[] = [
-  { name: 'Intel', src: '/logos/intel.png', cls: 'max-h-11' },
+  { name: 'Intel', src: '/logos/trim/intel.png', square: true },
   { name: 'HCL' },
-  { name: 'AMD', src: '/logos/amd.png', cls: 'max-h-6' },
-  { name: 'Synopsys', src: '/logos/synopsys.png', cls: 'max-h-6' },
-  { name: 'NVIDIA', src: '/logos/nvidia.jpg', cls: 'max-h-12' },
-  { name: 'Cyient', src: '/logos/cyient.png', cls: 'max-h-6' },
-  { name: 'Cadence', src: '/logos/cadence.png', cls: 'max-h-7' },
-  { name: 'Qualcomm', src: '/logos/qualcomm.png', cls: 'max-h-7' },
-  { name: 'Siemens', src: '/logos/siemens.jpg', cls: 'max-h-7' },
+  { name: 'AMD', src: '/logos/trim/amd.png' },
+  { name: 'Synopsys', src: '/logos/trim/synopsys.png' },
+  { name: 'NVIDIA', src: '/logos/trim/nvidia.png', square: true },
+  { name: 'Cyient', src: '/logos/trim/cyient.png' },
+  { name: 'Cadence', src: '/logos/trim/cadence.png' },
+  { name: 'Qualcomm', src: '/logos/trim/qualcomm.png' },
+  { name: 'Siemens', src: '/logos/trim/siemens.png' },
   // Capgemini asset has a baked-in checkered background — text badge until a clean file arrives.
   { name: 'Capgemini' },
-  { name: 'Chipex', src: '/logos/chipex.jpg', cls: 'max-h-9' },
+  { name: 'Chipex', src: '/logos/trim/chipex.png' },
   { name: 'Tessolve' },
-  { name: 'NXP', src: '/logos/nxp.avif', cls: 'max-h-6' },
-  { name: 'Xilinx', src: '/logos/xilinx.png', cls: 'max-h-7' },
+  { name: 'NXP', src: '/logos/trim/nxp.png' },
+  { name: 'Xilinx', src: '/logos/trim/xilinx.png' },
 ];
+
+// One shared drawing box. Bounding BOTH dimensions is what makes a wide
+// wordmark and a stacked glyph read as the same size.
+const LOGO_BOX = 'max-h-6 max-w-[104px] object-contain';
+const LOGO_BOX_SQUARE = 'max-h-9 max-w-[104px] object-contain';
 
 export function SkillsMarquee() {
   // Duplicate the track so the -50% translate loops seamlessly.
@@ -61,10 +70,10 @@ export function SkillsMarquee() {
                   src={r.src}
                   alt={r.name}
                   loading="lazy"
-                  className={`${r.cls ?? 'max-h-8'} max-w-full object-contain opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0`}
+                  className={`${r.square ? LOGO_BOX_SQUARE : LOGO_BOX} opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0`}
                 />
               ) : (
-                <span className="whitespace-nowrap font-display text-xl font-extrabold tracking-tight text-ink/40">
+                <span className="whitespace-nowrap font-display text-[17px] font-extrabold tracking-tight text-ink/40">
                   {r.name}
                 </span>
               )}

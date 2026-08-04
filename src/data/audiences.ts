@@ -1,9 +1,9 @@
 /**
- * "Who We Serve" — audience segments mapped to the plan that fits them, mirroring
- * the client reference (Individual / Team / Corporate) and extending it with the
- * learner personas from the platform brief (students, working engineers).
+ * "Who We Serve" — the three audience segments the site is organised around.
+ * These mirror the header dropdown exactly (Individuals / Teams / Corporates)
+ * so the nav and the page never disagree; each card links to its own page.
  */
-export type AudienceIcon = 'student' | 'individual' | 'team' | 'enterprise';
+export type AudienceIcon = 'individual' | 'team' | 'enterprise';
 
 export interface Audience {
   slug: string;
@@ -17,51 +17,37 @@ export interface Audience {
 
 export const audiences: Audience[] = [
   {
-    slug: 'students-freshers',
-    icon: 'student',
-    title: 'Students & Freshers',
-    planLabel: 'Starts free',
-    summary:
-      'Preparing for your first semiconductor role. Build real project experience before day one and walk into interviews able to solve problems, not just recall commands.',
-    points: [
-      'Guided challenges that teach the thought process',
-      'Placement-ready PD & DV competencies',
-      'Objective validation you can point to',
-    ],
-    cta: { label: 'For Individuals →', to: '/who-we-serve/individuals' },
-  },
-  {
-    slug: 'working-engineers',
+    slug: 'individuals',
     icon: 'individual',
-    title: 'Working Engineers',
+    title: 'Individuals',
     planLabel: 'Individual plan',
     summary:
-      'Already in the field and want to go deeper in Physical Design or Design Verification. Sharpen the exact competencies your live projects demand.',
+      'Freshers preparing for a first semiconductor role, and working engineers going deeper. Build real project experience on the exact competencies live projects demand.',
     points: [
-      'Independent & expert-level challenges',
-      'Self-paced, lifetime access to courses',
-      'Verified competency certificates',
+      'Guided challenges that teach the thought process',
+      'Independent & expert-level challenges as you progress',
+      'Verified competency certificates you can point to',
     ],
-    cta: { label: 'For Individuals →', to: '/who-we-serve/individuals' },
+    cta: { label: 'For Individuals', to: '/who-we-serve/individuals' },
   },
   {
-    slug: 'teams-cohorts',
+    slug: 'teams',
     icon: 'team',
-    title: 'Teams & Cohorts',
+    title: 'Teams',
     planLabel: 'Team plan · 5+ seats',
     summary:
       'Training a group of engineers together. Give your whole cohort the same hands-on, validated challenge experience with shared progress tracking.',
     points: [
       'Group seats with shared progress',
-      'All PD & DV domain modules',
-      'Onboarding for training cohorts',
+      'Every PD & DV competency included',
+      'Onboarding built for training cohorts',
     ],
-    cta: { label: 'For Teams →', to: '/who-we-serve/teams' },
+    cta: { label: 'For Teams', to: '/who-we-serve/teams' },
   },
   {
-    slug: 'enterprises-universities',
+    slug: 'corporates',
     icon: 'enterprise',
-    title: 'Enterprises & Universities',
+    title: 'Corporates',
     planLabel: 'Corporate · 25+ seats',
     summary:
       'Building semiconductor capability at scale — org-wide or across a department. Custom rollout, admin controls, and reporting to match your programme.',
@@ -70,6 +56,6 @@ export const audiences: Audience[] = [
       'Custom rollout and billing terms',
       'Labs provisioned via tokens',
     ],
-    cta: { label: 'For Corporates →', to: '/who-we-serve/corporates' },
+    cta: { label: 'For Corporates', to: '/who-we-serve/corporates' },
   },
 ];
