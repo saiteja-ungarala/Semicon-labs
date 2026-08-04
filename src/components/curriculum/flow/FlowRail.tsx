@@ -136,18 +136,22 @@ export function FlowRail({ domain }: { domain: DomainSummary }) {
   return (
     <div className="relative min-w-0" style={accentVars(domain.slug)}>
       {/* base track — static wrapper owns position, motion child owns motion */}
-      <span
+      {/* The viewport trigger must live on the WRAPPER: the child starts at
+          scaleY(0), and a zero-height box never intersects, so observing the
+          child directly leaves the rail permanently invisible. */}
+      <motion.span
         aria-hidden
         className="pointer-events-none absolute bottom-3 left-[15px] top-3 w-0.5 overflow-hidden rounded-full sm:left-[19px]"
+        initial={reduce ? false : 'hidden'}
+        whileInView="shown"
+        viewport={{ once: true, margin: '-80px' }}
       >
         <motion.span
-          className="block h-full w-full origin-top rounded-full bg-line"
-          initial={reduce ? false : { scaleY: 0 }}
-          whileInView={{ scaleY: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
+          className="block h-full w-full origin-top rounded-full bg-line-strong"
+          variants={{ hidden: { scaleY: 0 }, shown: { scaleY: 1 } }}
           transition={{ duration: reduce ? 0 : 0.85, ease: EASE }}
         />
-      </span>
+      </motion.span>
 
       {/* start cap */}
       <div className="relative grid grid-cols-[40px_minmax(0,1fr)] gap-x-3 pb-3 sm:grid-cols-[48px_minmax(0,1fr)] sm:gap-x-4 sm:pb-4">
@@ -179,9 +183,10 @@ export function FlowRail({ domain }: { domain: DomainSummary }) {
                 rowRefs.current[i] = el;
               }}
               className={cn(
-                'group relative grid scroll-mt-[104px] grid-cols-[40px_minmax(0,1fr)] gap-x-3 py-4 sm:grid-cols-[48px_minmax(0,1fr)] sm:gap-x-4 sm:py-5',
+                'group relative grid scroll-mt-[104px] grid-cols-[40px_minmax(0,1fr)] gap-x-3 py-2 sm:grid-cols-[48px_minmax(0,1fr)] sm:gap-x-4 sm:py-2.5',
+                // hairline between collapsed rows, which fades as the row lifts
                 !open &&
-                  'after:pointer-events-none after:absolute after:bottom-0 after:left-[52px] after:right-0 after:h-px after:bg-line sm:after:left-[64px]',
+                  'after:pointer-events-none after:absolute after:bottom-0 after:left-[64px] after:right-4 after:h-px after:bg-line after:transition-opacity group-hover:after:opacity-0 sm:after:left-[76px]',
               )}
             >
               {/* accent fill — the run head travelling down the line */}
@@ -205,15 +210,20 @@ export function FlowRail({ domain }: { domain: DomainSummary }) {
                 />
               </span>
 
-              {open && (
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute left-4 top-[31px] h-0.5 w-9 rounded-full bg-[var(--ac-30)] sm:left-5 sm:top-[39px] sm:w-11"
-                />
-              )}
+              {/* the tick that welds a row to the line — accent when open, a
+                  quiet hover cue when collapsed */}
+              <span
+                aria-hidden
+                className={cn(
+                  'pointer-events-none absolute left-4 top-[38px] h-0.5 rounded-full transition-all duration-200 sm:left-5 sm:top-[43px]',
+                  open
+                    ? 'w-9 bg-[var(--ac-30)] sm:w-11'
+                    : 'w-6 bg-line opacity-0 group-hover:opacity-100 sm:w-8',
+                )}
+              />
 
               {/* node */}
-              <div className="relative z-10 flex justify-start">
+              <div className="relative z-10 flex justify-start pt-2.5 sm:pt-3">
                 <span className="relative flex h-8 w-8 items-center justify-center sm:h-10 sm:w-10">
                   <motion.span
                     aria-hidden
@@ -227,12 +237,12 @@ export function FlowRail({ domain }: { domain: DomainSummary }) {
                   <span
                     aria-hidden
                     className={cn(
-                      'absolute inset-[4px] rounded-full border-2 bg-panel transition-all duration-300 sm:inset-[5px]',
+                      'absolute inset-[3px] rounded-full border-2 bg-panel shadow-sm transition-all duration-300 sm:inset-[4px]',
                       open
                         ? 'scale-90 opacity-0'
                         : passed
                           ? 'border-[color:var(--ac)] bg-[var(--ac-10)]'
-                          : 'border-line-strong',
+                          : 'border-line-strong group-hover:border-[color:var(--ac-30)] group-hover:bg-[var(--ac-06)]',
                     )}
                   />
                   <span
@@ -242,7 +252,7 @@ export function FlowRail({ domain }: { domain: DomainSummary }) {
                         ? 'text-[12.5px] font-bold text-white'
                         : passed
                           ? 'text-[11px] font-bold text-[color:var(--ac)]'
-                          : 'text-[11px] font-semibold text-ink-faint',
+                          : 'text-[11px] font-bold text-ink-dim group-hover:text-[color:var(--ac)]',
                     )}
                   >
                     {String(i + 1).padStart(2, '0')}
@@ -309,7 +319,7 @@ export function FlowRail({ domain }: { domain: DomainSummary }) {
                     onPointerEnter={() => onIntent(skill.slug)}
                     onPointerLeave={clearIntent}
                     onFocus={() => onIntent(skill.slug)}
-                    className="flex w-full items-start justify-between gap-5 text-left"
+                    className="flex w-full items-center gap-4 rounded-2xl border border-transparent px-4 py-3.5 text-left transition-all duration-200 group-hover:border-[color:var(--ac-30)] group-hover:bg-panel group-hover:shadow-card"
                   >
                     <span className="min-w-0 flex-1">
                       <span className="flex flex-wrap items-center gap-2">
@@ -323,33 +333,45 @@ export function FlowRail({ domain }: { domain: DomainSummary }) {
                       </span>
                       <span
                         aria-hidden
-                        className="mt-1.5 block font-mono text-[11px] tabular-nums text-ink-faint sm:hidden"
+                        className="mt-1.5 flex items-center gap-2 font-mono text-[11px] tabular-nums text-ink-faint sm:hidden"
                       >
+                        <StepTicks count={m} active={false} />
                         {m} steps · {t} labs · {formatDuration(skill.stats.durationMin)}
                       </span>
                     </span>
 
-                    <span className="hidden shrink-0 items-start gap-4 pt-0.5 sm:flex">
-                      <StepTicks count={m} active={false} className="mt-1.5" />
-                      <span className="text-right">
-                        <span className="block font-mono text-[13px] font-bold tabular-nums text-ink">
-                          {m}
-                          <span className="ml-1 font-medium text-ink-faint">steps</span>
-                          <span className="mx-1.5 text-line-strong">/</span>
-                          {t}
-                          <span className="ml-1 font-medium text-ink-faint">labs</span>
-                        </span>
-                        <span className="mt-0.5 block font-mono text-[10.5px] uppercase tracking-[0.14em] text-ink-faint">
-                          {formatDuration(skill.stats.durationMin)} of lab time
-                        </span>
+                    {/* stats live in a fixed-width column of their own */}
+                    <span className="hidden w-[152px] shrink-0 text-right sm:block">
+                      <span className="block font-mono text-[13px] font-bold tabular-nums text-ink">
+                        {m}
+                        <span className="ml-1 font-medium text-ink-faint">steps</span>
+                        <span className="mx-1.5 text-line-strong">·</span>
+                        {t}
+                        <span className="ml-1 font-medium text-ink-faint">labs</span>
+                      </span>
+                      <span className="mt-0.5 block font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+                        {formatDuration(skill.stats.durationMin)} lab time
                       </span>
                     </span>
 
+                    {/* its own column, so it can never print over the stats */}
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute bottom-0 right-0 hidden translate-x-1 items-center gap-1.5 font-mono text-[10.5px] font-bold uppercase tracking-[0.16em] text-[color:var(--ac)] opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 sm:inline-flex"
+                      className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-panel text-ink-faint transition-all duration-200 group-hover:border-[color:var(--ac-30)] group-hover:bg-[var(--ac-10)] group-hover:text-[color:var(--ac)]"
                     >
-                      Open stage <span>↓</span>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="transition-transform duration-200 group-hover:translate-y-0.5"
+                      >
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
                     </span>
                   </button>
                 )}
