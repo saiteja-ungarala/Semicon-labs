@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
-import { HandArrow } from '@/components/marketing/HandArrow';
 
 const HEADLINES = [
   'Industry Ready Programs.',
@@ -127,15 +126,6 @@ export function Hero() {
           animate="show"
           className="mx-auto flex max-w-4xl flex-col items-center text-center"
         >
-          {/* Hand-drawn arrow from the claim up to the logo in the header —
-              the eye goes "world's first VLSI cloud labs" → who says so. */}
-          <div aria-hidden className="pointer-events-none absolute -top-[78px] left-1 hidden h-[210px] w-[260px] lg:block">
-            <HandArrow variant="to-logo" className="inset-0 h-full w-full" delay={0.9} />
-            <span className="absolute bottom-0 left-0 w-[132px] -rotate-2 text-right font-hand text-[17px] leading-tight text-ink-dim">
-              built by the engineers who shipped it
-            </span>
-          </div>
-
           {/* 1 — The main claim */}
           <motion.h1 variants={item} className="font-display font-extrabold tracking-tight text-ink">
             <span className="block text-[clamp(2.5rem,5vw,4.2rem)] leading-[1.05]">
