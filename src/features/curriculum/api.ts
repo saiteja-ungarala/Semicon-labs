@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 
 // ---------------------------------------------------------------- types
@@ -102,48 +102,28 @@ export function useDomain(slug: string | undefined) {
   });
 }
 
-/** Shared so hover-intent prefetch and the hooks can't drift apart. */
-export const skillQueryOptions = (domainSlug: string, skillSlug: string) => ({
-  queryKey: ['skill', domainSlug, skillSlug] as const,
-  queryFn: async () => {
-    const { data } = await api.get<{ data: SkillDetail }>(`/domains/${domainSlug}/skills/${skillSlug}`);
-    return data.data;
-  },
-  staleTime: 5 * 60 * 1000,
-});
-
-export const moduleTestcasesQueryOptions = (moduleSlug: string) => ({
-  queryKey: ['module-testcases', moduleSlug] as const,
-  queryFn: async () => {
-    const { data } = await api.get<{ data: ModuleTestcases }>(`/modules/${moduleSlug}/testcases`);
-    return data.data;
-  },
-  staleTime: 5 * 60 * 1000,
-});
-
 export function useSkill(domainSlug: string | undefined, skillSlug: string | undefined) {
   return useQuery({
-    ...skillQueryOptions(domainSlug ?? '', skillSlug ?? ''),
     enabled: Boolean(domainSlug && skillSlug),
+    queryKey: ['skill', domainSlug, skillSlug],
+    queryFn: async () => {
+      const { data } = await api.get<{ data: SkillDetail }>(`/domains/${domainSlug}/skills/${skillSlug}`);
+      return data.data;
+    },
+    staleTime: 5 * 60 * 1000,
   });
 }
 
 export function useModuleTestcases(moduleSlug: string | undefined) {
   return useQuery({
-    ...moduleTestcasesQueryOptions(moduleSlug ?? ''),
     enabled: Boolean(moduleSlug),
+    queryKey: ['module-testcases', moduleSlug],
+    queryFn: async () => {
+      const { data } = await api.get<{ data: ModuleTestcases }>(`/modules/${moduleSlug}/testcases`);
+      return data.data;
+    },
+    staleTime: 5 * 60 * 1000,
   });
-}
-
-/** Warm a stage/step on hover intent so opening it feels instant. */
-export function useCurriculumPrefetch() {
-  const qc = useQueryClient();
-  return {
-    prefetchSkill: (domainSlug: string, skillSlug: string) =>
-      qc.prefetchQuery(skillQueryOptions(domainSlug, skillSlug)),
-    prefetchTestcases: (moduleSlug: string) =>
-      qc.prefetchQuery(moduleTestcasesQueryOptions(moduleSlug)),
-  };
 }
 
 // ---------------------------------------------------------------- labels
