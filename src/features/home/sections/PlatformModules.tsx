@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Section, SectionHead } from '@/components/ui/Section';
+import { HandArrow } from '@/components/marketing/HandArrow';
 import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import { cn } from '@/lib/cn';
 
@@ -69,12 +70,18 @@ export function PlatformModules() {
           </>
         }
         right={
-          <button
-            type="button"
-            onClick={() => setWithout((v) => !v)}
-            className="group flex max-w-xs items-center gap-3 text-left"
-            aria-pressed={without}
-          >
+          <div className="relative">
+            {/* Hand-drawn arrow so the eye lands on the toggle — without it the
+                control reads as decoration next to the heading. */}
+            <div aria-hidden className="pointer-events-none absolute -left-7 -top-[56px] hidden h-[54px] w-[110px] lg:block">
+              <HandArrow variant="to-toggle" className="inset-0 h-full w-full" delay={0.35} />
+            </div>
+            <button
+              type="button"
+              onClick={() => setWithout((v) => !v)}
+              className="group flex max-w-xs items-center gap-3 text-left"
+              aria-pressed={without}
+            >
             <span className="text-blue transition-colors">
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
                 <path d="M12 2l1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2Z" />
@@ -83,16 +90,17 @@ export function PlatformModules() {
             <span className={cn('relative h-7 w-12 shrink-0 rounded-full transition-colors', without ? 'bg-blue' : 'bg-line-strong')}>
               <span className={cn('absolute top-1 h-5 w-5 rounded-full bg-white shadow transition-all', without ? 'left-6' : 'left-1')} />
             </span>
-            {without ? (
-              <span className="text-sm font-bold text-ink">
-                Semicon Labs brings it all back — <span className="text-blue">every benefit, one platform.</span>
-              </span>
-            ) : (
-              <span className="whitespace-nowrap font-hand text-xl font-bold text-ink">
-                Imagine <span className="text-blue">without</span> Semicon Labs…
-              </span>
-            )}
-          </button>
+              {without ? (
+                <span className="text-sm font-bold text-ink">
+                  Semicon Labs brings it all back — <span className="text-blue">every benefit, one platform.</span>
+                </span>
+              ) : (
+                <span className="whitespace-nowrap font-hand text-xl font-bold text-ink">
+                  Imagine <span className="text-blue">without</span> Semicon Labs…
+                </span>
+              )}
+            </button>
+          </div>
         }
       />
 
