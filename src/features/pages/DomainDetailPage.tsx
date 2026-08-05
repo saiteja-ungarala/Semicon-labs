@@ -15,6 +15,7 @@ import {
   type SkillModule,
   type SkillSummary,
 } from '@/features/curriculum/api';
+import { FlowMap } from '@/components/curriculum/FlowMap';
 import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
 import { proficiencyLevels } from '@/data/curriculum';
 import { breadcrumbSchema, courseSchema } from '@/lib/seo';
@@ -163,7 +164,10 @@ function SkillBlock({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="group rounded-2xl border border-line bg-panel shadow-sm transition-all duration-300 hover:border-blue/30 hover:shadow-md">
+    <div
+      id={`skill-${skill.slug}`}
+      className="group scroll-mt-28 rounded-2xl border border-line bg-panel shadow-sm transition-all duration-300 hover:border-blue/30 hover:shadow-md"
+    >
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -337,6 +341,7 @@ export default function DomainDetailPage() {
             title={`Every skill, competency and testcase in ${domain.code}.`}
             lede="Skill → competencies → testcases. Expand anything; the numbers are live from the catalog, not marketing."
           />
+          <FlowMap domain={domain} />
           <div className="grid gap-10 lg:grid-cols-[1fr_340px] lg:gap-12">
             <div className="min-w-0 space-y-4">
               {domain.skills.map((skill, i) => (
