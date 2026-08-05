@@ -6,12 +6,7 @@ import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import {
-  DifficultyDots,
-  LabMixBar,
-  LabTypeBadge,
-  ToolBadge,
-} from '@/components/curriculum/CurriculumBits';
+import { DifficultyDots, LabTypeBadge, ToolBadge } from '@/components/curriculum/CurriculumBits';
 import {
   useDomain,
   useSkill,
@@ -104,7 +99,6 @@ function ModuleRow({ module, step, starter }: { module: SkillModule; step: numbe
             <span className="font-mono text-[10.5px] uppercase tracking-wide text-ink-dim">
               <span className="font-bold text-blue">{module.testcaseCount}</span> testcases
             </span>
-            {module.testcaseCount > 0 && <LabMixBar mix={module.labMix} />}
           </div>
         </div>
         <div className="flex items-center gap-1.5 text-[12.5px] font-semibold text-ink-dim transition-colors group-hover:text-blue">
