@@ -4,11 +4,7 @@ import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Button } from '@/components/ui/Button';
 import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
-import {
-  DifficultyDots,
-  LabMixBar,
-  ToolBadge,
-} from '@/components/curriculum/CurriculumBits';
+import { DifficultyDots, ToolBadge } from '@/components/curriculum/CurriculumBits';
 import {
   useSkill,
   formatDuration,
@@ -40,7 +36,6 @@ function ModuleRow({ module }: { module: SkillModule }) {
             testcases
           </span>
         </div>
-        {module.testcaseCount > 0 && <LabMixBar mix={module.labMix} className="mt-3 max-w-md" />}
       </div>
       <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end sm:justify-center">
         <div className="text-right">
