@@ -3,6 +3,8 @@ export type LegalKind = 'privacy' | 'terms' | 'refund';
 export interface LegalSection {
   heading: string;
   body: string[];
+  /** Rendered as a tick/bullet list rather than paragraphs. */
+  list?: string[];
 }
 
 export interface LegalDoc {
@@ -14,151 +16,327 @@ export interface LegalDoc {
   sections: LegalSection[];
 }
 
-const effectiveDate = 'July 1, 2026';
+const effectiveDate = 'August 6, 2026';
 
+/**
+ * Verbatim from the client's approved legal pack (Terms & Conditions, Privacy
+ * Policy and Refund Policy). Wording is theirs — edit only from an updated
+ * document, not in passing.
+ */
 export const legalDocs: Record<LegalKind, LegalDoc> = {
+  terms: {
+    kind: 'terms',
+    title: 'Terms & Conditions',
+    description:
+      'The agreement governing your use of Semiconlabs.com and every service offered by Semicon Labs.',
+    updated: effectiveDate,
+    intro:
+      'By accessing or using Semiconlabs.com (“Website”), you (“User”, “You”, “Your”) agree to be bound by these Terms & Conditions (“Agreement”). If you do not agree, you must discontinue use of the Website and all services offered by Semicon Labs (“Company”, “We”, “Us”, “Our”).',
+    sections: [
+      {
+        heading: '1. Acceptance of the agreement',
+        body: [
+          'By accessing or using Semiconlabs.com, you agree to be bound by this Agreement. If you do not agree, you must discontinue use of the Website and all services offered by Semicon Labs.',
+        ],
+      },
+      {
+        heading: '2. User account, login credentials & security',
+        body: ['You may be required to create an account to access certain services.'],
+        list: [
+          'Your login credentials are strictly for personal use.',
+          'Sharing, transferring, or allowing others to use your account is prohibited and may result in immediate suspension.',
+          'You are responsible for maintaining confidentiality of your account and all activities performed under it.',
+          'Notify us immediately if you suspect unauthorized access.',
+        ],
+      },
+      {
+        heading: '3. Services offered',
+        body: ['Semicon Labs provides:'],
+        list: [
+          'Semiconductor skill development & training (VLSI Layout, Physical Design, Design & Verification, etc.)',
+          'Corporate training, assessments, and technical learning support',
+          'Company information, documentation, and communication channels',
+        ],
+      },
+      {
+        heading: '',
+        body: [
+          'We reserve the right to modify, update, or discontinue any service at any time. All services are provided on an “as-is” and “as-available” basis.',
+        ],
+      },
+      {
+        heading: '4. License to use',
+        body: [
+          'We grant you a limited, non-exclusive, non-transferable, revocable license to access and use the Website for personal use and professional engagement with Semicon Labs.',
+          'You may not:',
+        ],
+        list: [
+          'Copy, distribute, or reproduce content',
+          'Modify or create derivative works',
+          'Use content for commercial resale',
+          'Use automated tools (bots, scrapers) without permission',
+        ],
+      },
+      {
+        heading: '',
+        body: ['All rights not expressly granted are reserved.'],
+      },
+      {
+        heading: '5. Intellectual property rights',
+        body: [
+          'All content on Semiconlabs.com — including text, graphics, logos, documents, training material, HR templates, software, and media — is the exclusive property of Semicon Labs.',
+          'You agree not to:',
+        ],
+        list: [
+          'Reproduce or republish any content without written permission',
+          'Use our trademarks, branding, or proprietary materials',
+          'Upload or distribute content that infringes third-party rights',
+        ],
+      },
+      {
+        heading: '6. User responsibilities & acceptable use',
+        body: ['You agree NOT to:'],
+        list: [
+          'Upload harmful, illegal, defamatory, or abusive content',
+          'Attempt to hack, reverse engineer, or disrupt the Website',
+          'Upload files containing viruses or malicious code',
+          'Use the Website for spam, phishing, or fraudulent activities',
+          'Misrepresent your identity or submit false information',
+        ],
+      },
+      {
+        heading: '',
+        body: [
+          'Violation may result in account termination and legal action. We reserve the right to report unlawful activities to authorities as permitted under the IT Act, 2000.',
+        ],
+      },
+      {
+        heading: '7. Personal information & privacy',
+        body: [
+          'Semicon Labs is committed to protecting your personal data in accordance with the Digital Personal Data Protection Act, 2023 (DPDP Act). How we collect, process, store and delete personal data — and the rights you hold over it — is set out in full in our Privacy Policy, linked at the foot of this page.',
+        ],
+      },
+      {
+        heading: '8. Third-party links',
+        body: ['The Website may contain links to external websites. Semicon Labs:'],
+        list: [
+          'Does not control third-party content',
+          'Is not responsible for their accuracy, policies, or practices',
+          'Does not endorse external websites unless explicitly stated',
+        ],
+      },
+      {
+        heading: '',
+        body: [
+          'Use third-party links at your own discretion; Semicon Labs is not liable for third-party data practices.',
+        ],
+      },
+      {
+        heading: '9. Payments, subscriptions & transactions',
+        body: ['For paid services (training, assessments, digital tools):'],
+        list: [
+          'You agree to pay applicable fees',
+          'Prices may change without prior notice',
+          'Taxes may apply as per Indian law',
+        ],
+      },
+      {
+        heading: '',
+        body: [
+          'Orders may be refused or cancelled at our discretion. Pre-purchase disclosures regarding refund eligibility will be shown before payment, as required under the Consumer Protection Act, 2019. Refund eligibility is set out in full in our Refund Policy, linked at the foot of this page.',
+        ],
+      },
+      {
+        heading: '10. Limitation of liability',
+        body: ['To the extent permitted by applicable law, Semicon Labs is not liable for:'],
+        list: [
+          'Service interruptions, technical issues, or downtime',
+          'Loss of data, profits, or business opportunities',
+          'Errors, omissions, or inaccuracies in content',
+          'Unauthorized access caused by your negligence',
+        ],
+      },
+      {
+        heading: '',
+        body: ['Your use of the Website is at your own risk.'],
+      },
+      {
+        heading: '11. Indemnification',
+        body: [
+          'You agree to indemnify and hold Semicon Labs, its employees, directors, and partners harmless from any claims, damages, losses, or legal expenses arising from:',
+        ],
+        list: [
+          'Your misuse of the Website',
+          'Violation of this Agreement',
+          'Infringement of third-party rights',
+        ],
+      },
+      {
+        heading: '12. Termination of access',
+        body: ['We may suspend or terminate your access immediately if:'],
+        list: [
+          'You violate any terms',
+          'You misuse services or content',
+          'You engage in fraudulent or harmful activities',
+        ],
+      },
+      {
+        heading: '',
+        body: [
+          'Upon termination, your license to use the Website ends immediately. You may request deletion of your personal data as per the DPDP Act.',
+        ],
+      },
+      {
+        heading: '13. Governing law & jurisdiction',
+        body: [
+          'This Agreement is governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in Hyderabad, Telangana.',
+        ],
+      },
+      {
+        heading: '14. Amendments',
+        body: [
+          'We may update or modify these Terms & Conditions at any time. Material changes will be posted on the Website, and continued use constitutes acceptance of the updated terms.',
+        ],
+      },
+    ],
+  },
+
   privacy: {
     kind: 'privacy',
     title: 'Privacy Policy',
-    description: 'How Semicon Labs collects, uses, and protects your personal information.',
+    description:
+      'How Semicon Labs collects, processes and protects your personal data under the DPDP Act, 2023.',
     updated: effectiveDate,
     intro:
-      'This Privacy Policy explains what information Semicon Labs collects, why we collect it, and the choices you have. We collect the minimum necessary to run the platform and never sell your personal data.',
+      'Semicon Labs is committed to protecting your personal data in accordance with the Digital Personal Data Protection Act, 2023 (DPDP Act). This policy explains what we collect, the lawful basis on which we process it, and the rights you hold over it.',
     sections: [
       {
-        heading: '1. Information we collect',
+        heading: '1. Lawful processing',
         body: [
-          'Account information you provide when you register — your name, email address, and authentication credentials (passwords are stored only as salted hashes).',
-          'Learning activity such as challenges started, submissions, validation results, and progress, so we can track your competency development and improve the platform.',
-          'Payment metadata processed by our payment provider (Razorpay). We do not store full card numbers on our servers.',
-          'Technical data such as device, browser, and anonymized usage analytics used to keep the service secure and performant.',
+          'Your personal data will be collected and processed only for lawful purposes such as communication, verification, training delivery, and service improvement.',
+          'We do not process personal data beyond what is necessary for providing our services.',
         ],
       },
       {
-        heading: '2. How we use information',
+        heading: '2. Consent',
         body: [
-          'To operate your account, deliver challenges, validate solutions, and track progress.',
-          'To process payments, issue invoices, and provide receipts.',
-          'To communicate service updates, security notices, and — only with your consent — product news.',
-          'To detect, prevent, and respond to fraud, abuse, and security incidents.',
+          'By using our Website and services, you provide consent for the collection and processing of your personal data.',
+          'You may withdraw consent at any time by contacting us; however, withdrawal may limit your ability to use certain services.',
         ],
       },
       {
-        heading: '3. Legal bases and sharing',
+        heading: '3. Data minimization',
         body: [
-          'We process data to perform our contract with you, to meet legal obligations, and for legitimate interests such as securing the platform.',
-          'We share data only with processors who help us operate — including our payment provider, email delivery, and infrastructure hosting — under contractual confidentiality obligations.',
-          'We do not sell your personal information.',
+          'Only essential personal data required for training, communication, verification, or support will be collected.',
         ],
       },
       {
-        heading: '4. Data retention and your rights',
-        body: [
-          'We retain account and learning data for as long as your account is active, and payment records for as long as required by law.',
-          'You may request access, correction, export, or deletion of your personal data at any time by contacting us.',
-          'You can close your account from your profile settings; residual backups are purged on a rolling schedule.',
+        heading: '4. Your rights under the DPDP Act',
+        body: ['You have the right to:'],
+        list: [
+          'Access your personal data',
+          'Request correction of inaccurate data',
+          'Request deletion of personal data (subject to legal and operational requirements)',
+          'Withdraw consent',
+          'Be informed about how your data is used',
         ],
       },
       {
-        heading: '5. Security',
+        heading: '',
         body: [
-          'We use encryption in transit, hashed credentials, rate limiting, and audit logging to protect your data. No system is perfectly secure, but we work continuously to protect your information.',
+          'Requests can be submitted to our designated Data Protection Officer (DPO).',
+          'DPO contact details — Name: Vamsi · Email: dpo@semiconlabs.com · Address: Semicon Labs, Hyderabad, Telangana, India.',
         ],
       },
       {
-        heading: '6. Contact',
-        body: ['Questions about this policy can be sent to hello@semiconlabs.com.'],
-      },
-    ],
-  },
-  terms: {
-    kind: 'terms',
-    title: 'Terms of Service',
-    description: 'The terms that govern your use of the Semicon Labs platform.',
-    updated: effectiveDate,
-    intro:
-      'These Terms of Service govern your access to and use of Semicon Labs. By creating an account or using the platform, you agree to these terms.',
-    sections: [
-      {
-        heading: '1. Your account',
+        heading: '5. Data security',
         body: [
-          'You must provide accurate information and keep your credentials secure. You are responsible for activity under your account.',
-          'Accounts are for individual use. You may not share access to paid content that is licensed to you personally.',
+          'We implement reasonable security safeguards to protect your personal data from unauthorized access, disclosure, or misuse.',
+          'In case of a data breach, we will follow DPDP Act-mandated reporting procedures.',
         ],
       },
       {
-        heading: '2. Use of the platform',
+        heading: '6. No unauthorized sharing',
         body: [
-          'Challenges, content, validation logic, and materials are provided for your personal learning. You may not scrape, resell, or redistribute platform content.',
-          'You agree not to interfere with the platform’s operation, attempt to bypass validation or access controls, or use the service unlawfully.',
+          'We do not sell or share your personal data with third-party marketers.',
+          'Data may be shared only with authorized service providers or if required by law.',
         ],
       },
       {
-        heading: '3. Subscriptions and payment',
+        heading: '7. Children’s data',
         body: [
-          'Paid plans are billed in advance on a recurring basis until cancelled. Founding pricing is honored for as long as your subscription remains active and uninterrupted.',
-          'Payments are processed by Easebuzz. Prices are exclusive of 18% GST unless stated otherwise.',
-          'You can cancel anytime from your account; access continues until the end of the current billing period.',
+          'Semicon Labs does not knowingly collect personal data from children below the age defined under the DPDP Act without parental consent.',
         ],
       },
       {
-        heading: '4. Intellectual property',
+        heading: '8. Data retention',
         body: [
-          'Semicon Labs and its licensors retain all rights to the platform, content, and brand. Your submissions remain yours, but you grant us a limited license to process them for validation and to improve the service.',
+          'Personal data will be retained only for the duration necessary to fulfill the purpose for which it was collected or as required by law.',
         ],
       },
       {
-        heading: '5. Disclaimers and liability',
+        heading: '9. Data storage location',
         body: [
-          'The platform is provided “as is.” While our challenges are inspired by real engineering scenarios, they are educational and do not constitute professional engineering advice.',
-          'To the maximum extent permitted by law, Semicon Labs is not liable for indirect or consequential damages arising from use of the service.',
+          'Your data may be stored on secure servers located in India.',
+          'If data is transferred outside India, it will be done in compliance with DPDP Act requirements.',
         ],
       },
       {
-        heading: '6. Changes and termination',
+        heading: '10. Third-party links',
         body: [
-          'We may update these terms; material changes will be communicated. We may suspend or terminate accounts that violate these terms.',
-          'Questions can be sent to hello@semiconlabs.com.',
+          'The Website may contain links to external websites. Semicon Labs does not control third-party content and is not liable for third-party data practices. Use third-party links at your own discretion.',
         ],
       },
     ],
   },
+
   refund: {
     kind: 'refund',
     title: 'Refund Policy',
-    description: 'Our 7-day money-back guarantee and how refunds work at Semicon Labs.',
+    description: 'Refund and cancellation terms for Semicon Labs subscriptions and training programs.',
     updated: effectiveDate,
     intro:
-      'We want you to buy with confidence. Every paid Semicon Labs plan is covered by a 7-day money-back guarantee.',
+      'Refund eligibility is disclosed before payment, as required under the Consumer Protection Act, 2019. This policy sets out when a refund is and is not issued.',
     sections: [
       {
-        heading: '1. 7-day money-back guarantee',
+        heading: '1. Subscription fees',
         body: [
-          'If you are not satisfied with a paid plan, you can request a full refund within 7 days of your initial purchase — no questions asked.',
-          'The guarantee applies to your first payment on a plan. Renewals are covered by the cancellation terms below.',
+          'Subscription fees once paid are generally non-refundable, except where legally required or explicitly stated. Refund eligibility will be clearly disclosed before payment.',
         ],
       },
       {
-        heading: '2. How to request a refund',
+        heading: '2. Cancellation by user',
         body: [
-          'Email hello@semiconlabs.com from the address on your account, or use the billing section of your profile. Include your order reference if you have it.',
-          'Approved refunds are issued to your original payment method via Razorpay, typically within 5–10 business days depending on your bank.',
+          'If you cancel your subscription, access will continue until the end of the active subscription period. No refunds will be issued for early cancellation.',
         ],
       },
       {
-        heading: '3. Cancellations and renewals',
+        heading: '3. Cancellation by Semicon Labs',
         body: [
-          'You can cancel anytime from your account. Cancellation stops future renewals; you keep access until the end of the current billing period.',
-          'Renewal charges are generally non-refundable once the new period begins, except where required by law. Cancel before your renewal date to avoid the next charge.',
+          'If Semicon Labs cancels a subscription or training program due to unforeseen circumstances, a 100% refund will be issued. Tax amounts may not be refundable as per statutory rules.',
         ],
       },
       {
-        heading: '4. Exceptions',
+        heading: '4. Training material & tool access',
         body: [
-          'The free Starter plan involves no payment and therefore no refund.',
-          'We may decline refund requests that show signs of abuse, such as repeated purchase-and-refund cycles.',
+          'Training material and tool access will be provided only after full payment of the subscription fee.',
         ],
+      },
+      {
+        heading: '5. Discounted subscriptions',
+        body: ['No refunds will be provided for discounted subscriptions or promotional offers.'],
+      },
+      {
+        heading: '6. Payment records',
+        body: ['Users must retain receipts and payment records for future reference.'],
       },
     ],
   },
+};
+
+/** Short blurbs used for the cross-links at the foot of every policy page. */
+export const legalBlurb: Record<LegalKind, string> = {
+  terms: 'The agreement covering accounts, acceptable use, IP and liability.',
+  privacy: 'What personal data we collect and your rights under the DPDP Act.',
+  refund: 'When a subscription or training fee is refundable, and when it is not.',
 };
