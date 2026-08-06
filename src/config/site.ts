@@ -22,13 +22,23 @@ export const site = {
     mark: '/images/logo-mark.png', // SL monogram only
     wordmark: '/images/main-logo.png', // horizontal SEMICON LABS wordmark (primary)
   },
+  // Live accounts. The LinkedIn entry is the PUBLIC company URL — the admin
+  // dashboard link (/admin/dashboard/) only resolves for page administrators.
   social: {
-    linkedin: 'https://www.linkedin.com/company/semiconlabs',
-    twitter: 'https://twitter.com/semiconlabs',
-    youtube: 'https://www.youtube.com/@semiconlabs',
-    github: 'https://github.com/semiconlabs',
+    linkedin: 'https://www.linkedin.com/company/133293910/',
+    instagram: 'https://www.instagram.com/semicon.labs/',
+    youtube: 'https://www.youtube.com/@SemiconLabs',
+    facebook: 'https://www.facebook.com/profile.php?id=61590531068682',
   },
 } as const;
+
+/** Display order + accessible names + brand hover colour for the social row. */
+export const socialLinks = [
+  { key: 'linkedin', label: 'LinkedIn', href: site.social.linkedin, brand: '#0A66C2' },
+  { key: 'instagram', label: 'Instagram', href: site.social.instagram, brand: '#E1306C' },
+  { key: 'youtube', label: 'YouTube', href: site.social.youtube, brand: '#FF0000' },
+  { key: 'facebook', label: 'Facebook', href: site.social.facebook, brand: '#1877F2' },
+] as const;
 
 export interface NavChild {
   label: string;
@@ -93,7 +103,6 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
   {
     title: 'Resources',
     items: [
-      { label: 'Resource Library', to: '/resources' },
       { label: 'Refund Policy', to: '/refund' },
       { label: 'Privacy', to: '/privacy' },
       { label: 'Terms', to: '/terms' },

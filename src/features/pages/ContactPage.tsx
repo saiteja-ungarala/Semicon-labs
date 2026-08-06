@@ -5,6 +5,7 @@ import { Section } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Button } from '@/components/ui/Button';
 import { site } from '@/config/site';
+import { SocialRow } from '@/components/marketing/SocialRow';
 import { breadcrumbSchema } from '@/lib/seo';
 import { cn } from '@/lib/cn';
 
@@ -64,6 +65,13 @@ export default function ContactPage() {
               href="/careers"
               hint="We're building the team that builds the platform."
             />
+            <div>
+              <p className="font-mono text-xs uppercase tracking-wider text-navy">Follow us</p>
+              <p className="mt-2 text-sm text-ink-dim">
+                Launch updates, lab walkthroughs and openings land here first.
+              </p>
+              <SocialRow className="mt-4" size="lg" />
+            </div>
             <div className="rounded-2xl border border-line bg-panel/60 p-6">
               <p className="font-mono text-xs uppercase tracking-wider text-navy">Note</p>
               <p className="mt-3 text-sm text-ink-dim">
