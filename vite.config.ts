@@ -17,7 +17,7 @@ export default defineConfig({
         target: process.env.VITE_API_PROXY ?? 'http://localhost:4000',
         changeOrigin: true,
         configure: (proxy, _options) => {
-          proxy.on('proxyReq', (proxyReq, req, _res) => {
+          proxy.on('proxyReq', (proxyReq, _req, _res) => {
             // If proxying to a remote backend, spoof the Origin to bypass remote CORS restrictions
             if (process.env.VITE_API_PROXY?.includes('http')) {
               proxyReq.setHeader('Origin', process.env.VITE_API_PROXY);
