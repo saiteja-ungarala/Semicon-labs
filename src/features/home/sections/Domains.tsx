@@ -10,21 +10,28 @@ import { useDomains, type DomainSummary } from '@/features/curriculum/api';
  * proof-heavy cards (live catalog counts + client-approved claims).
  */
 
+// Domain-specific hiring stats (PD / DV / Analog Layout).
+const payByCode: Record<string, string> = { PD: '₹9 LPA', DV: '₹11 LPA', AL: '₹7 LPA' };
+const openingsByCode: Record<string, string> = {
+  PD: '4,000+ jobs in India',
+  DV: '3,500+ DV openings',
+  AL: '3,000+ opportunities',
+};
+
 const claimRows = (d: DomainSummary) => [
   { label: 'Skill tracks', value: `${d.stats.skills}` },
-  { label: 'Competencies', value: `${d.stats.modules}` },
-  { label: 'Real testcases', value: `${d.stats.testcases}+` },
+  { label: 'Modules', value: `${d.stats.modules}` },
+  { label: 'Real world scenarios', value: `${d.stats.testcases}+` },
   { label: 'Supported by', value: 'SIEMENS · Cadence · Synopsys' },
-  { label: 'Avg. industry pay', value: '₹3,50,000 LPA¹' },
-  ...(d.code === 'DV' ? [{ label: 'Active openings in India', value: '2,500–4,000+' }] : []),
+  { label: 'Avg. industry pay', value: payByCode[d.code] ?? '₹9 LPA' },
+  { label: 'Active openings', value: openingsByCode[d.code] ?? '3,000+' },
 ];
 
 function HomeDomainCard({ domain }: { domain: DomainSummary }) {
   if (domain.comingSoon) {
     return (
       <div className="flex h-full flex-col rounded-2xl border-2 border-dashed border-line-strong bg-panel/40 p-7">
-        <div className="flex items-start justify-between gap-3">
-          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-navy">{domain.pipeline}</p>
+        <div className="flex items-start justify-end gap-3">
           <Badge tone="neutral">Coming soon</Badge>
         </div>
         <h3 className="mt-3 text-xl font-bold text-ink">{domain.name}</h3>
@@ -37,8 +44,7 @@ function HomeDomainCard({ domain }: { domain: DomainSummary }) {
   }
   return (
     <div className="gradient-border group flex h-full flex-col rounded-2xl border border-transparent bg-panel p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
-      <div className="flex items-start justify-between gap-3">
-        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-navy">{domain.pipeline}</p>
+      <div className="flex items-start justify-end gap-3">
         <Badge tone="blue">
           <span className="relative mr-1.5 flex h-1.5 w-1.5" aria-hidden>
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue opacity-60" />
@@ -59,7 +65,7 @@ function HomeDomainCard({ domain }: { domain: DomainSummary }) {
             <span className="font-mono text-[10.5px] uppercase tracking-wider text-ink-faint">{row.label}</span>
             <span
               className={
-                row.label === 'Real testcases'
+                row.label === 'Real world scenarios'
                   ? 'text-right text-[13.5px] font-bold text-blue transition-transform duration-300 group-hover:scale-110'
                   : 'text-right text-[13.5px] font-bold text-ink'
               }
@@ -108,8 +114,7 @@ export function Domains() {
               </RevealItem>
             ))}
       </RevealGroup>
-      <div className="mt-3 flex items-center justify-between gap-4">
-        <p className="font-mono text-[10.5px] text-ink-faint">¹ Data taken from Times of India</p>
+      <div className="mt-3 flex items-center justify-end gap-4">
         <Link to="/domains" className="text-sm font-semibold text-blue transition hover:underline">
           View all domains →
         </Link>

@@ -14,8 +14,8 @@ import { cn } from '@/lib/cn';
 
 const ART: Record<string, { photo: string; position: string; kind: 'die' | 'cluster' | 'wafer'; seats: string }> = {
   individuals: { photo: '/images/chips/chip-macro.jpg', position: '50% 45%', kind: 'die', seats: '1 engineer' },
-  teams: { photo: '/images/chips/chip-neon.jpg', position: '50% 50%', kind: 'cluster', seats: '5–24 engineers' },
-  corporates: { photo: '/images/chips/chip-violet.jpg', position: '50% 72%', kind: 'wafer', seats: '25+ engineers' },
+  teams: { photo: '/images/chips/chip-neon.jpg', position: '50% 50%', kind: 'cluster', seats: 'min 2' },
+  corporates: { photo: '/images/chips/chip-violet.jpg', position: '50% 72%', kind: 'wafer', seats: 'min 10 licenses' },
 };
 
 // Stepped heights: the composition itself is the data.

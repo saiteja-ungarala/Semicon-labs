@@ -17,14 +17,22 @@ const CARD_ART: Record<string, string> = {
   'analog-layout': '/images/chips/chip-ember2.jpg',
 };
 
+// Domain-specific hiring stats (PD / DV / Analog Layout).
+const payByCode: Record<string, string> = { PD: '₹9 LPA', DV: '₹11 LPA', AL: '₹7 LPA' };
+const openingsByCode: Record<string, string> = {
+  PD: '4,000+ jobs in India',
+  DV: '3,500+ DV openings',
+  AL: '3,000+ opportunities',
+};
+
 /** Marketing proof-points per domain card (client-provided claims). */
 const proofRows = (d: DomainSummary) => [
   { label: 'Skill tracks', value: `${d.stats.skills}` },
-  { label: 'Competencies', value: `${d.stats.modules}` },
-  { label: 'Real testcases', value: `${d.stats.testcases}+` },
+  { label: 'Modules', value: `${d.stats.modules}` },
+  { label: 'Real world scenarios', value: `${d.stats.testcases}+` },
   { label: 'Supported by', value: 'SIEMENS · Cadence · Synopsys' },
-  { label: 'Avg. industry pay', value: '₹3,50,000 LPA¹' },
-  ...(d.code === 'DV' ? [{ label: 'Active openings in India', value: '2,500–4,000+' }] : []),
+  { label: 'Avg. industry pay', value: payByCode[d.code] ?? '₹9 LPA' },
+  { label: 'Active openings', value: openingsByCode[d.code] ?? '3,000+' },
 ];
 
 function DomainBigCard({ domain }: { domain: DomainSummary }) {
@@ -95,7 +103,7 @@ function DomainBigCard({ domain }: { domain: DomainSummary }) {
             <span className="font-mono text-[10.5px] uppercase tracking-wider text-ink-faint">{row.label}</span>
             <span
               className={
-                row.label === 'Real testcases'
+                row.label === 'Real world scenarios'
                   ? 'text-right text-[13.5px] font-bold text-blue transition-transform duration-300 group-hover:scale-110'
                   : 'text-right text-[13.5px] font-bold text-ink'
               }
@@ -136,14 +144,14 @@ export default function DomainsPage() {
     <>
       <Seo
         title="Engineering Domains"
-        description="Physical Design, Design Verification and Analog Layout — real project challenges on industry EDA tools, structured Domain → Skill → Competency → Testcase."
+        description="Physical Design, Design Verification and Analog Layout — real project challenges on industry EDA tools, structured Domain → Skill → Module → Real world scenario."
         path="/domains"
         schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Domains', path: '/domains' }])]}
       />
       <PageHero
         eyebrow="engineering domains"
         title="Real challenges, straight from industry."
-        lede="Every domain is broken down the way real teams work: skills, competencies, and the exact testcases engineers debug on live silicon. Pick your lane."
+        lede="Every domain is broken down the way real teams work: skills, modules, and the exact real world scenarios engineers debug on live silicon. Pick your lane."
         crumbs={[{ name: 'Home', to: '/' }, { name: 'Domains' }]}
         bgImage="/images/chips/ember-traces.jpg"
       >
@@ -151,8 +159,8 @@ export default function DomainsPage() {
           <div className="flex flex-wrap gap-x-10 gap-y-3">
             {[
               [totals.skills, 'skill tracks'],
-              [totals.modules, 'competencies'],
-              [`${totals.testcases}+`, 'real testcases'],
+              [totals.modules, 'modules'],
+              [`${totals.testcases}+`, 'real world scenarios'],
               [3, 'EDA vendors'],
             ].map(([v, l]) => (
               <div key={String(l)}>
@@ -186,7 +194,6 @@ export default function DomainsPage() {
                 </RevealItem>
               ))}
         </RevealGroup>
-        <p className="mt-4 text-right font-mono text-[10.5px] text-ink-faint">¹ Data taken from Times of India</p>
       </Section>
 
       {/* A taste of the actual challenges (moved here from the homepage). */}

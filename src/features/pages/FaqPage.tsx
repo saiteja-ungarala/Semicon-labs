@@ -19,7 +19,7 @@ export default function FaqPage() {
     <>
       <Seo
         title="Frequently Asked Questions"
-        description="Answers about how Semicon Labs works — challenges, validation, domains, competencies, billing, and the roadmap toward a full learning platform."
+        description="Answers about how Semicon Labs works — challenges, validation, domains, modules, billing, and the roadmap toward a full learning platform."
         path="/faq"
         schemas={[
           breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'FAQ', path: '/faq' }]),

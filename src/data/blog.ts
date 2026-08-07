@@ -46,9 +46,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: 'from-competencies-to-complete-chips',
-    title: 'From competencies to complete chips: the Semicon Labs roadmap',
+    title: 'From modules to complete chips: the Semicon Labs roadmap',
     excerpt:
-      'Phase one is focused competency challenges. Here is how those individual skills come together into full, industry-inspired chip development projects.',
+      'Phase one is focused module challenges. Here is how those individual skills come together into full, industry-inspired chip development projects.',
     category: 'Platform',
     readingMinutes: 6,
     publishedAt: '2026-05-12',

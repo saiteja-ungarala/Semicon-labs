@@ -10,7 +10,7 @@ import { Hero } from './sections/Hero';
 import { HeroVideo } from './sections/HeroVideo';
 import { SkillsMarquee } from './sections/SkillsMarquee';
 import { PlatformModules } from './sections/PlatformModules';
-import { TrustStrip } from './sections/TrustStrip';
+
 import { WhySemicon } from './sections/WhySemicon';
 import { AiEra } from './sections/AiEra';
 import { Domains } from './sections/Domains';
@@ -40,7 +40,7 @@ export function HomePage() {
       <Hero />
       <HeroVideo />
       <SkillsMarquee />
-      <TrustStrip />
+
       <PlatformModules />
       <WhySemicon />
       <AiEra />

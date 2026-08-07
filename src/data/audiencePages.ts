@@ -63,7 +63,7 @@ export const audiencePages: AudiencePage[] = [
         copy: '24/7 lab access with semiconductor professionals behind it, not a generic helpdesk.',
       },
       {
-        title: '750+ real testcases to solve',
+        title: '750+ real world scenarios to solve',
         copy: 'Golden, buggy, guided and challenge labs distilled from live project failures — the practice bank no other platform has.',
       },
       {
@@ -76,7 +76,7 @@ export const audiencePages: AudiencePage[] = [
       price: '₹12,600',
       priceNote: '1 user · per domain',
       features: [
-        'All competencies and certifications in the domain',
+        'All modules and certifications in the domain',
         'Self-paced learning with completion certification',
         'Cloud-based labs — nothing to install',
         'Tool switching across Cadence, Synopsys & Siemens',
@@ -120,7 +120,7 @@ export const audiencePages: AudiencePage[] = [
       },
       {
         title: 'Built-in support at every step',
-        copy: 'AI assistance, guided workflows and automatic testcase validation keep engineers moving without waiting on seniors.',
+        copy: 'AI assistance, guided workflows and automatic scenario validation keep engineers moving without waiting on seniors.',
       },
       {
         title: 'Catch issues before they become bigger problems',
@@ -137,7 +137,7 @@ export const audiencePages: AudiencePage[] = [
       priceNote: 'per session · session = 1 month · 5+ users',
       popular: true,
       features: [
-        'All domain competencies included',
+        'All domain modules included',
         'Self-paced learning + completion certification',
         'Tool switching across vendors',
         'Reader access add-on available',
@@ -197,7 +197,7 @@ export const audiencePages: AudiencePage[] = [
       price: 'Custom',
       priceNote: '25+ users · tailored rollout',
       features: [
-        'All domains, all competencies, all vendors',
+        'All domains, all modules, all vendors',
         'Self-paced learning + certification',
         'Token-based lab provisioning',
         'Admin roles, usage reporting & dashboards',

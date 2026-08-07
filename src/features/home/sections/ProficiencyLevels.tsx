@@ -17,7 +17,7 @@ export function ProficiencyLevels() {
             <span className="text-gradient">then assessed.</span>
           </>
         }
-        lede="Every competency moves you through the same progression a new hire goes through on a real team."
+        lede="Every module moves you through the same progression a new hire goes through on a real team."
       />
       <RevealGroup className="grid gap-6 md:grid-cols-3" stagger={0.1}>
         {proficiencyLevels.map((level, i) => (

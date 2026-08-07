@@ -12,19 +12,17 @@ import { cn } from '@/lib/cn';
  * shows the handwritten alternative you'd be stuck with.
  */
 
-// Order is client-specified — do not resort.
 const benefits = [
   { icon: '/icons/projects.svg', title: "Projects you haven't solved Before", copy: 'Real failures from real flows. Not textbook repeats.', without: 'the same toy projects' },
   { icon: '/icons/ai.svg', title: 'AI Powered Learning', copy: 'Guidance that adapts to how you debug — not a fixed script.', without: 'generic video courses' },
-  { icon: '/icons/testcases.svg', title: '1500+ Testcases', copy: 'The largest solvable testcase bank in VLSI learning.', without: 'a handful of demos' },
-  { icon: '/icons/progress.svg', title: 'Progress Tracking', copy: 'Every solve measured, every competency proven.', without: 'no proof of skill' },
+  { icon: '/icons/library.svg', title: '50+ skills\n100+ modules', copy: 'Master essential VLSI skills through comprehensive modules.', without: 'limited topics' },
+  { icon: '/icons/testcases.svg', title: '1500+ Real world scenarios', copy: 'The largest solvable real world scenario bank in VLSI learning.', without: 'a handful of demos' },
   { icon: '/icons/access247.png', title: '24x7 Access Your Labs Anytime, Anywhere', copy: 'The lab is open whenever you are — no seat queue, no lab hours.', without: 'waiting for a lab seat' },
   { icon: '/icons/library.svg', title: 'Lifetime free VLSI premium Library', copy: 'The reference material stays yours, forever.', without: 'scattered PDFs' },
   { icon: '/icons/certification.png', title: 'Validated Industry Certification', copy: 'Certification backed by solves the platform actually verified.', without: 'an unverified PDF' },
   { icon: '/icons/placements.svg', title: 'Access to placement community', copy: 'A 290+ recruiter network that sees your verified skills.', without: 'cold-applying alone' },
 ];
 
-// Deterministic scatter for the "without" world: [x, y, rotate].
 const scatter: [number, number, number][] = [
   [-26, 14, -8], [18, -12, 6], [-14, 20, -5], [30, 10, 9],
   [22, -16, 7], [-30, 8, -9], [12, 18, 5], [-18, -10, -6],
@@ -149,7 +147,7 @@ export function PlatformModules() {
                   {/* Benefit name — struck through in the "without" world */}
                   <span
                     className={cn(
-                      'max-w-[130px] text-center text-[13px] font-semibold leading-tight transition-colors duration-500 sm:text-sm',
+                      'max-w-[150px] text-center text-[13px] font-semibold leading-tight transition-colors duration-500 sm:text-sm whitespace-pre-line',
                       without ? 'text-ink-faint line-through decoration-red-500/80 decoration-2' : 'text-ink',
                     )}
                   >

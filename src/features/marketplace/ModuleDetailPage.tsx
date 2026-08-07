@@ -144,7 +144,7 @@ export default function ModuleDetailPage() {
                   )}
                 </div>
                 <p className="mt-2 text-sm text-ink-dim">
-                  Every testcase is a real failure from a live flow — not a textbook exercise. You solve it in the
+                  Every real world scenario is a real failure from a live flow — not a textbook exercise. You solve it in the
                   actual tool, and the platform verifies your fix objectively.
                 </p>
                 <div className="relative mt-5 overflow-hidden rounded-2xl border border-line bg-panel">
@@ -175,7 +175,7 @@ export default function ModuleDetailPage() {
 
             {module.competencies.length > 0 && (
               <>
-                <h2 className="mt-10 text-2xl font-bold">Competencies you'll build</h2>
+                <h2 className="mt-10 text-2xl font-bold">Modules you'll build</h2>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   {module.competencies.map((c) => (
                     <div key={c.slug} className="rounded-xl border border-line bg-panel/60 p-5">

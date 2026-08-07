@@ -44,10 +44,21 @@ export function SkillsMarquee() {
 
   return (
     <div className="relative overflow-hidden border-t border-line/40 bg-white py-12">
-      <div className="mx-auto mb-8 max-w-content px-5 sm:px-6 lg:px-8">
-        <p className="text-center font-display text-[13px] font-bold uppercase tracking-[0.12em] text-ink-faint">
-          Partnered with <span className="text-blue">290+ Recruiters</span>
-        </p>
+      <div className="mx-auto mb-10 max-w-4xl px-5 text-center sm:px-6 lg:px-8">
+        <div className="mb-6 flex flex-wrap items-center justify-center gap-3">
+          <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-widest text-blue-600 shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
+            AI-Powered Career Accelerator
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-sky px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white shadow-md">
+            Partnered with 290+ Recruiters
+          </span>
+        </div>
+        
+        <h2 className="font-display text-[22px] font-bold leading-snug tracking-tight text-ink sm:text-[28px] md:text-[34px]">
+          Master the required skills, become placement-ready through AI mock interviews,{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-sky">and unlock our exclusive 290+ Placement Community.</span>
+        </h2>
       </div>
       <div
         className="group relative overflow-hidden"

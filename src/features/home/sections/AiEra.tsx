@@ -19,15 +19,15 @@ export function AiEra() {
             <span className="text-gradient">Engineers must decide whether they're right.</span>
           </h2>
           <p className="mt-6 text-pretty text-ink-dim leading-relaxed">
-            AI can generate scripts, suggest fixes, and automate execution. But it cannot replace
-            engineering judgment. Someone still has to ask the right questions, understand failures,
-            verify results, evaluate trade-offs, and decide whether a design is truly ready to move
-            forward.
+            AI can generate scripts, suggest fixes, and automate execution. But engineering judgment
+            remains irreplaceable. Engineers still need to ask the right questions, analyze failures,
+            validate results, evaluate trade-offs, and make critical design decisions.
           </p>
           <p className="mt-4 text-pretty text-ink-dim leading-relaxed">
-            The future belongs not to engineers who simply use tools, but to engineers who can
-            confidently work with AI to build better silicon. Those are the capabilities Semicon
-            Labs is built to develop.
+            The future belongs to engineers who can effectively combine technical expertise with AI
+            capabilities. At Semicon Labs, along with industry-grade VLSI workflows, we help you build
+            these skills and prepare for real-world challenges through AI-powered mock interviews
+            designed to improve interview readiness and placement confidence.
           </p>
         </Reveal>
 

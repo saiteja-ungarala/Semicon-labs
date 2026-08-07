@@ -44,7 +44,7 @@ function TestcaseList({ moduleSlug }: { moduleSlug: string }) {
     );
   }
   if (!data?.testcases.length) {
-    return <p className="p-4 text-sm text-ink-dim">Testcases for this module are being finalized.</p>;
+    return <p className="p-4 text-sm text-ink-dim">Real world scenarios for this module are being finalized.</p>;
   }
   return (
     <ul className="divide-y divide-line/70">
@@ -98,12 +98,12 @@ function ModuleRow({ module, step, starter }: { module: SkillModule; step: numbe
               <span className="font-bold text-blue">{formatDuration(module.durationMin)}</span> lab
             </span>
             <span className="font-mono text-[10.5px] uppercase tracking-wide text-ink-dim">
-              <span className="font-bold text-blue">{module.testcaseCount}</span> testcases
+              <span className="font-bold text-blue">{module.testcaseCount}</span> real world scenarios
             </span>
           </div>
         </div>
         <div className="flex items-center gap-1.5 text-[12.5px] font-semibold text-ink-dim transition-colors group-hover:text-blue">
-          <span>{open ? 'Hide testcases' : 'View testcases'}</span>
+          <span>{open ? 'Hide real world scenarios' : 'View real world scenarios'}</span>
           <svg aria-hidden className={cn('transition-transform duration-200', open && 'rotate-180')} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
@@ -187,7 +187,7 @@ function SkillBlock({
         <span className="flex items-center gap-5">
           <span className="hidden text-right sm:block">
             <span className="block font-mono text-[13px] font-bold text-ink transition-colors group-hover:text-blue">
-              <span className="text-blue">{skill.stats.modules}</span> competencies · <span className="text-blue">{skill.stats.testcases}</span> testcases
+              <span className="text-blue">{skill.stats.modules}</span> modules · <span className="text-blue">{skill.stats.testcases}</span> real world scenarios
             </span>
             <span className="mt-0.5 block font-mono text-[10.5px] uppercase tracking-wide text-ink-dim">
               <span className="font-bold text-ink">{formatDuration(skill.stats.durationMin)}</span> of lab time
@@ -305,8 +305,8 @@ export default function DomainDetailPage() {
           <div className="flex flex-wrap items-center gap-x-10 gap-y-3">
             {[
               [domain.stats.skills, 'skills'],
-              [domain.stats.modules, 'competencies'],
-              [domain.stats.testcases, 'testcases'],
+              [domain.stats.modules, 'modules'],
+              [domain.stats.testcases, 'real world scenarios'],
             ].map(([v, l]) => (
               <div key={String(l)}>
                 <div className="font-mono text-3xl font-bold text-blue">{v}</div>
@@ -314,7 +314,7 @@ export default function DomainDetailPage() {
               </div>
             ))}
             <p className="max-w-xs text-[13px] leading-snug text-ink-dim">
-              Everything below is on this one page — expand a skill, open a module, read its exact testcases.
+              Everything below is on this one page — expand a skill, open a module, read its exact real world scenarios.
             </p>
           </div>
         )}
@@ -338,8 +338,8 @@ export default function DomainDetailPage() {
         <Section>
           <SectionHead
             eyebrow="the full curriculum — one page"
-            title={`Every skill, competency and testcase in ${domain.code}.`}
-            lede="Skill → competencies → testcases. Expand anything; the numbers are live from the catalog, not marketing."
+            title={`Every skill, module and real world scenario in ${domain.code}.`}
+            lede="Skill → modules → real world scenarios. Expand anything; the numbers are live from the catalog, not marketing."
           />
           <FlowMap domain={domain} />
           <div className="grid gap-10 lg:grid-cols-[1fr_340px] lg:gap-12">

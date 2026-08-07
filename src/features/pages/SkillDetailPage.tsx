@@ -33,7 +33,7 @@ function ModuleRow({ module }: { module: SkillModule }) {
           </span>
           <span className="font-mono text-[11px] uppercase tracking-wide text-ink-faint">
             <b className="mr-1 text-[13px] normal-case tracking-normal text-blue">{module.testcaseCount}</b>
-            testcases
+            real world scenarios
           </span>
         </div>
       </div>
@@ -115,7 +115,7 @@ export default function SkillDetailPage() {
           <div className="flex flex-wrap items-center gap-x-10 gap-y-3">
             {[
               [skill.modules.length, 'lab modules'],
-              [totalLabs, 'real testcases'],
+              [totalLabs, 'real world scenarios'],
               [formatDuration(skill.stats.durationMin), 'of lab time'],
             ].map(([v, l]) => (
               <div key={String(l)}>
@@ -132,7 +132,7 @@ export default function SkillDetailPage() {
         <SectionHead
           eyebrow="lab modules — own them forever"
           title="Solve it the way the industry does."
-          lede="Each module is a focused lab on a real flow problem. Buy only the ones you need — every one comes with its testcases, tool session, and objective validation."
+          lede="Each module is a focused lab on a real flow problem. Buy only the ones you need — every one comes with its real world scenarios, tool session, and objective validation."
         />
         <RevealGroup className="space-y-4" stagger={0.05}>
           {skill.modules.map((module) => (

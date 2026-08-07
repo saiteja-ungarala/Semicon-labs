@@ -22,24 +22,24 @@ export const audiences: Audience[] = [
     title: 'Individuals',
     planLabel: 'Individual plan',
     summary:
-      'Freshers preparing for a first semiconductor role, and working engineers going deeper. Build real project experience on the exact competencies live projects demand.',
+      'VLSI Trained Freshers preparing for a first semiconductor role, and working engineers going deeper. Build real project experience on the exact Modules live projects demand.',
     points: [
       'Guided challenges that teach the thought process',
       'Independent & expert-level challenges as you progress',
-      'Verified competency certificates you can point to',
+      'Verified module certificates you can point to',
     ],
-    cta: { label: 'For Individuals', to: '/who-we-serve/individuals' },
+    cta: { label: 'VLSI Trained Freshers & Working Professionals', to: '/who-we-serve/individuals' },
   },
   {
     slug: 'teams',
     icon: 'team',
     title: 'Teams',
-    planLabel: 'Team plan · 5+ seats',
+    planLabel: 'Team plan · 2+ seats',
     summary:
       'Training a group of engineers together. Give your whole cohort the same hands-on, validated challenge experience with shared progress tracking.',
     points: [
       'Group seats with shared progress',
-      'Every PD & DV competency included',
+      'Every PD & DV modules included',
       'Onboarding built for training cohorts',
     ],
     cta: { label: 'For Teams', to: '/who-we-serve/teams' },
@@ -48,7 +48,7 @@ export const audiences: Audience[] = [
     slug: 'corporates',
     icon: 'enterprise',
     title: 'Corporates',
-    planLabel: 'Corporate · 25+ seats',
+    planLabel: 'Corporate · 10+ licenses',
     summary:
       'Building semiconductor capability at scale — org-wide or across a department. Custom rollout, admin controls, and reporting to match your programme.',
     points: [

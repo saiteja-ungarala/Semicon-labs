@@ -40,19 +40,6 @@ export function UrgencyBar() {
           ))}
         </div>
       </Link>
-      <button
-        type="button"
-        aria-label="Dismiss announcement"
-        onClick={() => {
-          sessionStorage.setItem(STORAGE_KEY, '1');
-          setVisible(false);
-        }}
-        className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded bg-blue-600/60 p-1 text-white/80 transition hover:bg-white/15 hover:text-white"
-      >
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-          <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        </svg>
-      </button>
     </div>
   );
 }

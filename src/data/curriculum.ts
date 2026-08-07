@@ -186,8 +186,8 @@ export const platformStats = [
   { value: '3', label: 'Engineering Domains' },
   { value: '3', label: 'Proficiency Levels' },
   { value: '50+', label: 'Skill Tracks' },
-  { value: '100+', label: 'Competencies' },
-  { value: '1500+', label: 'Testcases Ready to Solve' },
+  { value: '100+', label: 'Modules' },
+  { value: '1500+', label: 'Real world scenarios Ready to Solve' },
 ];
 
 /** Traditional learning vs. Semicon Labs — the core positioning table. */

@@ -141,7 +141,7 @@ export function FlowMap({ domain }: { domain: DomainSummary }) {
           {domain.code} flow map
         </p>
         <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/40">
-          {domain.stats.skills} skills · {domain.stats.modules} competencies · {domain.stats.testcases} testcases
+          {domain.stats.skills} skills · {domain.stats.modules} modules · {domain.stats.testcases} real world scenarios
         </p>
       </div>
 

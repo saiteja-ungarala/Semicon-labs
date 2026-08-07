@@ -60,8 +60,8 @@ export const primaryNav: NavItem[] = [
     to: '/who-we-serve',
     children: [
       { label: 'Individuals', to: '/who-we-serve/individuals', description: 'Freshers & working engineers — level up solo' },
-      { label: 'Teams', to: '/who-we-serve/teams', description: 'Fast-growing VLSI teams · 5+ seats' },
-      { label: 'Corporates', to: '/who-we-serve/corporates', description: 'Org-wide enablement · 25+ seats' },
+      { label: 'Teams', to: '/who-we-serve/teams', description: 'Fast-growing VLSI teams · min 2' },
+      { label: 'Corporates', to: '/who-we-serve/corporates', description: 'Org-wide enablement · min 10 licenses' },
     ],
   },
   {
@@ -75,7 +75,6 @@ export const primaryNav: NavItem[] = [
     ],
   },
   { label: 'Pricing', to: '/pricing' },
-  { label: 'Blog', to: '/blog' },
   { label: 'About', to: '/about' },
 ];
 
@@ -86,7 +85,7 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
       { label: 'Who We Serve', to: '/who-we-serve' },
       { label: 'Curriculum', to: '/domains' },
       { label: 'Courses', to: '/modules' },
-      { label: 'Competencies', to: '/competencies' },
+      { label: 'Modules', to: '/competencies' },
       { label: 'Pricing', to: '/pricing' },
     ],
   },
@@ -95,7 +94,6 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
     items: [
       { label: 'About', to: '/about' },
       { label: 'Careers', to: '/careers' },
-      { label: 'Blog', to: '/blog' },
       { label: 'Contact', to: '/contact' },
       { label: 'FAQ', to: '/faq' },
     ],

@@ -206,49 +206,15 @@ function Note({ children }: { children: ReactNode }) {
 /* ---------------------------------------------------------------- panels */
 
 function IndividualPanel() {
-  const planHref = usePlanHref();
   return (
     <>
       <Banner
         left={<><b className="text-blue-600">🔥 Limited launch offer</b> — pre-book today, pay the launch rate later.</>}
         right="Only for First 1000 seats"
       />
-      <div className="mx-auto mt-8 grid max-w-3xl items-stretch gap-5 md:grid-cols-2">
-        {/* The attention card: ₹99 pre-book */}
+      {/* Individuals: a single pre-book card — no separate Basic/Pro split. */}
+      <div className="mx-auto mt-8 max-w-lg">
         <LaunchOfferCard variant="full" />
-
-        {/* The quiet contrast: what everyone else pays */}
-        <div className="relative flex flex-col rounded-3xl border border-line bg-panel p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-blue/40 hover:shadow-card-hover">
-          <span className="font-display text-[21px] font-bold text-ink">After Launch</span>
-          <p className="mt-0.5 text-[13px] text-ink-dim">Pay-per-use rate · no bonus hours</p>
-
-          <ul className="mt-6 rounded-2xl border border-line bg-void px-5 py-1">
-            {[
-              ['100 hours', '₹9,000'],
-              ['200 hours', '₹18,000'],
-            ].map(([l, v]) => (
-              <li key={l} className="flex items-center justify-between gap-3 border-t border-line/70 py-3.5 first:border-t-0">
-                <span className="text-[13.5px] text-ink-dim">{l}</span>
-                <b className="font-mono text-[17px] text-ink">{v}</b>
-              </li>
-            ))}
-          </ul>
-
-          <ul className="mt-6 flex-1 space-y-2.5 border-t border-line pt-5">
-            <Feat yes>Same labs, same tools, same testcases</Feat>
-            <Feat yes>Basic & Pro compute tiers open at launch</Feat>
-            <Feat yes>Top-up packs available anytime</Feat>
-            <Feat yes={false}>100 bonus hours — pre-book exclusive</Feat>
-            <Feat yes={false}>Launch-rate lock — pre-book exclusive</Feat>
-          </ul>
-
-          <div className="mt-7">
-            <Button to={planHref('/register?plan=notify')} variant="secondary" className="w-full">
-              Notify me at launch
-            </Button>
-            <p className="mt-2.5 text-center text-[11px] text-ink-faint">No bonus hours after the first 1000 seats fill.</p>
-          </div>
-        </div>
       </div>
     </>
   );
@@ -317,7 +283,6 @@ const CORP_COMPARE: { cap: string; basic: boolean; pro: boolean }[] = [
   { cap: 'Tool switching across EDA vendors', basic: false, pro: true },
   { cap: 'Certifications + progress tracking', basic: true, pro: true },
   { cap: 'AI chatbot + ticketing support', basic: true, pro: true },
-  { cap: 'Employee performance loyalty rewards', basic: true, pro: true },
 ];
 
 const CORP_DISCOUNTS: { label: string; width: number; pct: string }[] = [
@@ -358,7 +323,6 @@ function CorporatePanel() {
           {[
             ['10', 'min. licenses'],
             ['40%', 'max. volume discount'],
-            ['92–95%', 'vs. in-house training'],
           ].map(([v, l]) => (
             <div key={l}>
               <b className="block font-display text-[25px] font-bold text-blue">{v}</b>
@@ -396,10 +360,6 @@ function CorporatePanel() {
           </div>
         ))}
       </div>
-      <Note>
-        Exact per-license pricing, contract terms, and the performance loyalty pool are shared by sales once
-        we know your headcount and domain mix.
-      </Note>
     </>
   );
 }

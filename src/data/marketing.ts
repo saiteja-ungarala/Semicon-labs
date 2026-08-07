@@ -75,9 +75,18 @@ export interface Testimonial {
   name: string;
   role: string;
   rating: number;
+  logo?: 'google' | 'none'; // Defines which logo to render in the UI
 }
 
 export const testimonials: Testimonial[] = [
+  {
+    quote:
+      'Bite-sized training and mentorship helped me learn advanced skills. It should be introduced to students of all ages.',
+    name: 'Sayak Dutta',
+    role: 'Software Engineer',
+    rating: 5,
+    logo: 'google',
+  },
   {
     quote:
       "I'd finished three STA courses and still froze on my first real hold violation. My first Semicon Labs challenge was harder than any of them — in exactly the way I needed.",
@@ -129,34 +138,28 @@ export const faqs: Faq[] = [
       'No. Every challenge runs in our environment with the same reports, logs, and outputs you would see on a real project — no license, install, or workstation required.',
   },
   {
-    category: 'getting-started',
-    question: "I'm a student with no project experience. Is this too advanced?",
-    answer:
-      'Start at the Guided level. You are walked through the methodology and the thought process an experienced engineer would use, before you are ever asked to solve anything independently.',
-  },
-  {
     category: 'learning',
-    question: 'How is my solution actually graded?',
+    question: 'What is the difference between Skills and Competencies?',
     answer:
-      'Every challenge has an objective validation check tied to the expected engineering outcome — measured against the result, not a human reviewer’s subjective opinion of your write-up.',
-  },
-  {
-    category: 'learning',
-    question: 'What is the difference between a domain, a skill, and a competency?',
-    answer:
-      'A domain is a broad discipline (Physical Design or Design Verification). A skill is a specialized area within it (like Static Timing Analysis). A competency is a specific capability you are measured on (like Setup Closure). You progress competency by competency.',
-  },
-  {
-    category: 'platform',
-    question: 'Will this become a full learning platform?',
-    answer:
-      'Yes. This is Phase One. Individual competency challenges come first; complete, industry-inspired chip-development projects that connect those competencies are on the roadmap. Your progress carries forward.',
+      'Skills are certification paths made up of Competencies, Lab Testcases, and a Quiz. Once you complete all of these, you earn a certificate for that skill. If you complete only a Competency, you cannot earn a certificate.',
   },
   {
     category: 'billing',
-    question: 'Can I cancel if it is not for me?',
+    question: 'What is included in Basic vs Pro plans?',
     answer:
-      'Yes — cancel anytime from your account, and every paid plan carries a 7-day money-back guarantee, no questions asked.',
+      'In the Basic plan, you can only work with one tool. In the Pro plan, you can switch tools and handle bigger projects/labs.',
+  },
+  {
+    category: 'learning',
+    question: 'How can I get a Certificate?',
+    answer:
+      'You can earn a certificate only after completing all the Modules in your enrolled skill.',
+  },
+  {
+    category: 'platform',
+    question: 'What content is inside a Module?',
+    answer:
+      'The Content Inside the Modules are Objectives, Core Concepts, Lab Guide, Success Criteria and a Small Quiz.',
   },
 ];
 

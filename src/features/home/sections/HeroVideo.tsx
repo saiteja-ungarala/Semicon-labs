@@ -18,7 +18,7 @@ export function HeroVideo() {
   }, [isInView]);
 
   return (
-    <section className="relative -mt-6 sm:-mt-10 z-20 pb-16 sm:pb-24">
+    <section className="relative mt-8 sm:mt-12 z-20 pb-16 sm:pb-24">
       <Container className="px-4 sm:px-6">
         <motion.div
           ref={containerRef}

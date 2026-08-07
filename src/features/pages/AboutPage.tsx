@@ -10,7 +10,7 @@ const audience = [
   { title: 'Engineering students', copy: 'Preparing for a semiconductor career and want real exposure before day one.' },
   { title: 'Recent graduates', copy: 'Seeking practical industry experience that coursework never provided.' },
   { title: 'Career switchers', copy: 'Transitioning into Physical Design or Design Verification from an adjacent field.' },
-  { title: 'Working engineers', copy: 'Deepening expertise in specific domains and competencies on the job.' },
+  { title: 'Working engineers', copy: 'Deepening expertise in specific domains and modules on the job.' },
 ];
 
 export default function AboutPage() {

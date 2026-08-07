@@ -49,16 +49,16 @@ export default function CompetenciesPage() {
   return (
     <>
       <Seo
-        title="Competencies"
-        description="Browse every Semicon Labs competency across Physical Design and Design Verification — the specific capabilities you'll demonstrate through real engineering challenges."
+        title="Modules"
+        description="Browse every Semicon Labs module across Physical Design and Design Verification — the specific capabilities you'll demonstrate through real engineering challenges."
         path="/competencies"
-        schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Competencies', path: '/competencies' }])]}
+        schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Modules', path: '/competencies' }])]}
       />
       <PageHero
         eyebrow="every capability, measured"
-        title="Competencies you'll actually prove."
-        lede="A competency is a specific capability you demonstrate — Setup Closure, Coverage Closure, DRC Debug. Search the full set below."
-        crumbs={[{ name: 'Home', to: '/' }, { name: 'Competencies' }]}
+        title="Modules you'll actually prove."
+        lede="A module is a specific capability you demonstrate — Setup Closure, Coverage Closure, DRC Debug. Search the full set below."
+        crumbs={[{ name: 'Home', to: '/' }, { name: 'Modules' }]}
       />
       <Section>
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -76,8 +76,8 @@ export default function CompetenciesPage() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search competencies, skills, keywords…"
-              aria-label="Search competencies"
+              placeholder="Search modules, skills, keywords…"
+              aria-label="Search modules"
               className="h-11 w-full rounded-lg border border-line bg-panel pl-10 pr-4 text-sm text-ink placeholder:text-ink-faint focus:border-blue/60 focus:outline-none"
             />
           </div>
@@ -101,12 +101,12 @@ export default function CompetenciesPage() {
         </div>
 
         <p className="mb-6 font-mono text-xs text-ink-faint">
-          {results.length} competenc{results.length === 1 ? 'y' : 'ies'}
+          {results.length} module{results.length === 1 ? '' : 's'}
         </p>
 
         {results.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-line py-20 text-center">
-            <p className="text-ink-dim">No competencies match “{query}”.</p>
+            <p className="text-ink-dim">No modules match “{query}”.</p>
             <button
               type="button"
               onClick={() => setQuery('')}

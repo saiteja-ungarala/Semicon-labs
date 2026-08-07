@@ -11,10 +11,15 @@ export function TrustStrip() {
   return (
     <Container className="py-16 sm:py-20">
       <Reveal>
-        <p className="eyebrow justify-center">the platform in numbers</p>
-        <h2 className="mx-auto mt-3 text-center text-display-md">
-          Structured, measured, and <span className="text-gradient">growing.</span>
+        <h2 className="mx-auto max-w-3xl text-center text-display-md">
+          Industry Challenges That <span className="text-gradient">Prepare You for Placements</span>
         </h2>
+        <p className="mx-auto mt-5 max-w-3xl text-center text-pretty text-ink-dim leading-relaxed">
+          Experience real-world engineering scenarios with domain-specific skills, modules, and
+          scenario based problems inspired by industry workflows. Develop the debugging, validation,
+          and problem-solving skills required to confidently tackle VLSI interviews and placement
+          opportunities.
+        </p>
       </Reveal>
 
       <Reveal>

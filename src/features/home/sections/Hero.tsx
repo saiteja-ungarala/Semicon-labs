@@ -3,14 +3,12 @@ import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-mot
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 
-const HEADLINES = [
-  'Industry Ready Programs.',
-  'AI Powered Learning.',
-  'Learn by Building.',
-  'Career Accelerators.',
-  'Future Skills.',
-  'Enterprise Training.',
-  'Pro Certifications.',
+// The rotating slot after "…the industry's" cycles the real EDA vendor logos,
+// in full colour, with the same slide transition the headlines used.
+const ROTATING_WORDS = [
+  'leading tools.',
+  'best practices.',
+  'standard flows.',
 ];
 
 const BACKGROUND_WORDS = [
@@ -72,11 +70,12 @@ export function Hero() {
   const [headlineIndex, setHeadlineIndex] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setHeadlineIndex((prev) => (prev + 1) % HEADLINES.length);
-    }, 3200);
-    return () => clearInterval(id);
-  }, []);
+    if (reduce) return;
+    const i = setInterval(() => {
+      setHeadlineIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+    }, 2500);
+    return () => clearInterval(i);
+  }, [reduce]);
 
   const container = {
     hidden: { opacity: 0 },
@@ -99,7 +98,10 @@ export function Hero() {
   const scrollingWords = [...BACKGROUND_WORDS, ...BACKGROUND_WORDS, ...BACKGROUND_WORDS];
 
   return (
-    <section className="relative flex min-h-[62vh] flex-col items-center justify-center overflow-hidden pb-12 pt-10 sm:pb-16 sm:pt-14">
+    <section className="relative flex min-h-[50vh] flex-col items-center justify-center overflow-hidden pb-8 pt-8 sm:pb-10 sm:pt-10">
+      {/* Subtle radial glow to enhance tech feel */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[800px] rounded-full bg-blue-600/10 blur-[120px]" />
+
       {/* Background scrolling words, masked to the edges */}
       <div
         className="pointer-events-none absolute left-0 right-0 top-[70%] z-0 w-full -translate-y-1/2 select-none overflow-hidden"
@@ -134,7 +136,7 @@ export function Hero() {
                 VLSI cloud labs
               </span>
             </span>
-            <span className="mx-auto mt-3 block max-w-3xl text-[clamp(1.2rem,2.2vw,1.75rem)] font-bold leading-snug text-ink/80">
+            <span className="mx-auto mt-5 block max-w-2xl text-[clamp(1.1rem,2vw,1.4rem)] font-medium leading-relaxed text-ink-dim">
               for solving industry-grade projects on leading EDA tools.
             </span>
           </motion.h1>
@@ -142,12 +144,12 @@ export function Hero() {
           {/* 3 — The rotating promise */}
           <motion.div
             variants={item}
-            className="mt-5 flex flex-wrap items-baseline justify-center gap-x-2.5 text-[17px] font-semibold text-ink-dim"
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-3 text-[16px] text-ink-dim"
           >
             <span>Solve real chip problems with the industry's</span>
             {/* popLayout (not "wait") so the outgoing word leaves while the next
                 one arrives — with "wait" there is a visibly empty gap. */}
-            <span className="relative inline-flex h-[1.4em] min-w-[14ch] overflow-hidden text-left" aria-live="polite">
+            <span className="relative inline-flex h-[2em] min-w-[170px] items-center justify-center overflow-hidden rounded-full bg-blue-50/80 border border-blue-100 shadow-sm px-4" aria-live="polite">
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span
                   key={headlineIndex}
@@ -155,9 +157,9 @@ export function Hero() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={reduce ? { opacity: 0 } : { y: '-1.1em', opacity: 0 }}
                   transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute left-0 top-0 whitespace-nowrap font-bold text-blue"
+                  className="absolute flex items-center font-bold text-blue-600 whitespace-nowrap"
                 >
-                  {HEADLINES[headlineIndex]}
+                  {ROTATING_WORDS[headlineIndex]}
                 </motion.span>
               </AnimatePresence>
             </span>
@@ -177,27 +179,47 @@ export function Hero() {
           </motion.div>
 
           {/* 5 — One designed strip closes the hero: real tools + live seat count */}
-          <motion.div variants={item} className="relative z-20 mt-11 w-full">
-            <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 rounded-2xl border border-line bg-panel/70 px-8 py-6 shadow-card backdrop-blur-sm sm:flex-row sm:gap-10">
-              <div className="flex shrink-0 flex-col items-center gap-3 sm:items-start">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-ink-faint">
-                  Real tools, in your browser
-                </span>
-                <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2">
-                  {TOOL_LOGOS.map((t) => (
-                    <img
-                      key={t.name}
-                      src={t.src}
-                      alt={t.name}
-                      className={`${t.h} w-auto max-w-[130px] object-contain opacity-90`}
-                      loading="eager"
-                    />
-                  ))}
+          <motion.div variants={item} className="relative z-20 mt-10 w-full">
+            <motion.div
+              animate={reduce ? {} : { y: [0, -6, 0] }}
+              transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}
+              className="mx-auto flex max-w-4xl flex-col overflow-hidden rounded-2xl border border-line-strong bg-panel shadow-2xl backdrop-blur-md"
+            >
+              {/* Window Header */}
+              <div className="flex items-center justify-between border-b border-line bg-void/50 px-4 py-3">
+                <div className="flex gap-1.5">
+                  <div className="h-3 w-3 rounded-full bg-red-400" />
+                  <div className="h-3 w-3 rounded-full bg-amber-400" />
+                  <div className="h-3 w-3 rounded-full bg-green-400" />
                 </div>
+                <div className="flex-1 text-center font-mono text-[10px] uppercase tracking-widest text-ink-faint">
+                  Cloud Lab Instance — Active
+                </div>
+                <div className="w-10" /> {/* Spacer for flex balance */}
               </div>
-              <div aria-hidden className="hidden h-14 w-px shrink-0 bg-line sm:block" />
-              <RegistrationsBar />
-            </div>
+
+              {/* Window Body */}
+              <div className="flex flex-col items-center gap-6 px-8 py-8 sm:flex-row sm:gap-10">
+                <div className="flex shrink-0 flex-col items-center gap-3 sm:items-start">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-ink-dim">
+                    Real tools, in your browser
+                  </span>
+                  <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2">
+                    {TOOL_LOGOS.map((t) => (
+                      <img
+                        key={t.name}
+                        src={t.src}
+                        alt={t.name}
+                        className={`${t.h} w-auto max-w-[130px] object-contain opacity-90`}
+                        loading="eager"
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div aria-hidden className="hidden h-14 w-px shrink-0 bg-line sm:block" />
+                <RegistrationsBar />
+              </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       </Container>

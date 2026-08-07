@@ -6,10 +6,10 @@ import { cn } from '@/lib/cn';
 const steps = [
   {
     num: '01',
-    phase: 'Competencies',
+    phase: 'Modules',
     title: 'Master individual skills',
     description:
-      'Your journey begins with focused engineering challenges built around specific competencies in Physical Design and Design Verification.',
+      'Your journey begins with focused engineering challenges built around specific modules in Physical Design and Design Verification.',
   },
   {
     num: '02',
@@ -23,7 +23,7 @@ const steps = [
     phase: 'Projects',
     title: 'Connect skills in real projects',
     description:
-      'As your competencies grow, individual skills come together through complete, industry-inspired semiconductor projects.',
+      'As your modules grow, individual skills come together through complete, industry-inspired semiconductor projects.',
   },
   {
     num: '04',
@@ -38,7 +38,7 @@ export function JourneyToChips() {
   return (
     <Section>
       <SectionHead
-        eyebrow="from competencies to complete chips"
+        eyebrow="from modules to complete chips"
         title="Individual skills, connected into real product development."
         lede="Every engineer starts by mastering individual skills. Here's how those skills come together into complete chip development."
       />

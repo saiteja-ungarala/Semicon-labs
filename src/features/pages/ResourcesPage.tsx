@@ -11,7 +11,7 @@ const resources = [
   { title: 'PD Signoff Readiness Sheet', kind: 'Template', desc: 'How to judge whether a block is genuinely ready to hand off to signoff.' },
   { title: 'DV Root-Cause Playbook', kind: 'Playbook', desc: 'Separating symptom from cause across DUT, testbench, and stimulus.' },
   { title: 'Semiconductor Glossary', kind: 'Reference', desc: 'Plain-language definitions for the terminology used across PD and DV challenges.' },
-  { title: 'Interview Readiness Set', kind: 'Guide', desc: 'The competency areas that matter most when interviewing for PD and DV roles.' },
+  { title: 'Interview Readiness Set', kind: 'Guide', desc: 'The modules that matter most when interviewing for PD and DV roles.' },
 ];
 
 export default function ResourcesPage() {
