@@ -94,9 +94,7 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
           <Button to={planHref('/register?plan=individual-launch')} arrow variant="primary" className="w-full h-12 text-base">
             Grab it for ₹99
           </Button>
-          <p className="text-center text-[10px] sm:text-[11px] text-ink-dim mt-2.5">
-            Don't just take our word for it — for <b>₹99</b>, try the real platform yourself.
-          </p>
+          
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { PricingTabs } from '@/components/marketing/PricingTabs';
 import { ComparisonTable } from '@/components/marketing/ComparisonTable';
+import { PreBookForm } from '@/components/marketing/PreBookForm';
 import { FaqAccordion } from '@/components/marketing/FaqAccordion';
 import { Reveal } from '@/components/motion/Reveal';
 import { faqs } from '@/data/marketing';
@@ -26,7 +27,7 @@ export default function PricingPage() {
         eyebrow="pricing, made simple"
         title={
           <>
-            Same labs. <span className="text-gradient">More power on Pro.</span>
+            Pricing That Fits <span className="text-gradient">Every VLSI Journey</span>
           </>
         }
         lede="Basic and Pro run identical labs, tools, and problem sets. Pro just hands you a bigger engine underneath — for the labs that need it."
@@ -35,6 +36,7 @@ export default function PricingPage() {
       <Section>
         <Reveal>
           <PricingTabs />
+          <PreBookForm />
         </Reveal>
       </Section>
 

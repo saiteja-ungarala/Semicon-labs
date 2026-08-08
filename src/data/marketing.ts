@@ -79,46 +79,66 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
   {
     quote:
-      'Bite-sized training and mentorship helped me learn advanced skills. It should be introduced to students of all ages.',
-    name: 'Sayak Dutta',
-    role: 'Software Engineer',
-    rating: 5,
-    logo: 'google',
+      'The hands-on VLSI labs are a great way to move beyond theory. Working with industry EDA tools and real-world scenarios gave me a much better understanding of practical semiconductor workflows.',
+    name: 'Anshul Mehta',
+    role: 'M.Tech · IIT',
+    rating: 4.5,
   },
   {
     quote:
-      "I'd finished three STA courses and still froze on my first real hold violation. My first Semicon Labs challenge was harder than any of them — in exactly the way I needed.",
-    name: 'M. Sharma',
-    role: 'Physical Design Engineer, 1st year',
-    rating: 5,
+      'What I liked most was the project-based approach. The real-world VLSI scenarios make you think through problems rather than simply follow instructions.',
+    name: 'Yaswanth',
+    role: 'Ex-NVIDIA',
+    rating: 4,
   },
   {
     quote:
-      'The debug challenges feel exactly like the regression triage I do at work now. I wish this existed before my first project, not after it.',
-    name: 'A. Fernandes',
-    role: 'Verification Engineer',
-    rating: 5,
+      'The cloud-based labs make it very convenient to practise with EDA tools from anywhere. It removes the setup challenges and lets you focus directly on the engineering problems.',
+    name: 'Kiran Kumar',
+    role: 'M.Tech · IIT',
+    rating: 4.5,
   },
   {
     quote:
-      'Went from Guided to Assessment level on coverage closure in six weeks. That track alone was worth the upgrade.',
-    name: 'R. Okafor',
-    role: 'Graduate, ECE',
-    rating: 5,
+      'The industry-oriented scenarios helped me understand debugging and validation much better. It feels closer to how real VLSI engineering problems are approached.',
+    name: 'Pavan',
+    role: 'Ex-Intel',
+    rating: 4,
   },
   {
     quote:
-      'It stopped being about remembering commands and started being about reading a report and knowing what to do next. That shift is the whole point.',
-    name: 'K. Nair',
-    role: 'Design Verification Engineer',
-    rating: 5,
+      'The Physical Design labs gave me valuable hands-on exposure. Working through practical scenarios helped me understand the complete flow much better than theory alone.',
+    name: 'Kavya',
+    role: 'Physical Design Trainee',
+    rating: 4,
   },
   {
     quote:
-      'Objective validation is the difference. I always knew whether I actually fixed it — not whether I wrote a convincing paragraph about it.',
-    name: 'T. Mehta',
-    role: 'Physical Design Engineer',
-    rating: 5,
+      'The AI-powered mock interviews are a useful addition. After developing the technical skills, practising interview scenarios helped me identify gaps and improve my interview readiness.',
+    name: 'Koushik',
+    role: 'VLSI Trained Fresher',
+    rating: 4.5,
+  },
+  {
+    quote:
+      'I found the real-time project scenarios particularly useful. They helped me develop problem-solving skills and understand how engineers approach failures, debugging, and design decisions.',
+    name: 'Krithi',
+    role: 'M.Tech · IIT',
+    rating: 4,
+  },
+  {
+    quote:
+      'The platform gives you access to practical VLSI environments without needing a complicated local setup. The ability to practise industry workflows through the cloud is a major advantage.',
+    name: 'Jahnavi',
+    role: 'VLSI Trained Fresher',
+    rating: 4.5,
+  },
+  {
+    quote:
+      'For someone looking to become industry-ready, Semicon Labs provides a strong combination of EDA tools, practical projects, real-world scenarios, and interview preparation. It definitely adds value beyond classroom learning.',
+    name: 'Jagadeesh',
+    role: 'VLSI Trained Fresher',
+    rating: 4,
   },
 ];
 

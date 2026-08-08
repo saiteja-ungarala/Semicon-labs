@@ -29,7 +29,7 @@ export function FinalCta() {
             Your next project won't wait for you to "finish a course."
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-pretty text-white/70">
-            Start with a free challenge right now — experience what real investigation feels like
+            Start right now and experience what real investigation feels like
             before you decide on anything else.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
@@ -45,9 +45,6 @@ export function FinalCta() {
               Browse All Challenges
             </Button>
           </div>
-          <p className="mt-7 font-mono text-xs text-white/50">
-            7-day money-back guarantee · No credit card for the free tier
-          </p>
         </Reveal>
       </Container>
     </section>

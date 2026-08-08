@@ -3,6 +3,7 @@ import { Section, SectionHead } from '@/components/ui/Section';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
+import { OPENINGS_BY_CODE, PAY_BY_CODE } from '@/data/curriculum';
 import { useDomains, type DomainSummary } from '@/features/curriculum/api';
 
 /**
@@ -10,21 +11,13 @@ import { useDomains, type DomainSummary } from '@/features/curriculum/api';
  * proof-heavy cards (live catalog counts + client-approved claims).
  */
 
-// Domain-specific hiring stats (PD / DV / Analog Layout).
-const payByCode: Record<string, string> = { PD: '₹9 LPA', DV: '₹11 LPA', AL: '₹7 LPA' };
-const openingsByCode: Record<string, string> = {
-  PD: '4,000+ jobs in India',
-  DV: '3,500+ DV openings',
-  AL: '3,000+ opportunities',
-};
-
 const claimRows = (d: DomainSummary) => [
   { label: 'Skill tracks', value: `${d.stats.skills}` },
   { label: 'Modules', value: `${d.stats.modules}` },
   { label: 'Real world scenarios', value: `${d.stats.testcases}+` },
   { label: 'Supported by', value: 'SIEMENS · Cadence · Synopsys' },
-  { label: 'Avg. industry pay', value: payByCode[d.code] ?? '₹9 LPA' },
-  { label: 'Active openings', value: openingsByCode[d.code] ?? '3,000+' },
+  { label: 'Avg. industry pay', value: PAY_BY_CODE[d.code] ?? '₹9 LPA' },
+  { label: 'Active openings', value: OPENINGS_BY_CODE[d.code] ?? '3,000+' },
 ];
 
 function HomeDomainCard({ domain }: { domain: DomainSummary }) {

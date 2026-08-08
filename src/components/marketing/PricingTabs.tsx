@@ -244,7 +244,6 @@ function TeamsPanel() {
             { yes: true, text: 'Standard-complexity labs, all domains' },
             { yes: true, text: 'AI chatbot + ticketing support' },
             { yes: true, text: 'Up to 40% off at scale' },
-            { yes: false, text: 'Mentoring not included' },
           ]}
           cta={{ label: 'Start a Basic team', to: '/register?plan=team-basic' }}
         />

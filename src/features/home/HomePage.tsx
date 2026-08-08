@@ -13,6 +13,7 @@ import { PlatformModules } from './sections/PlatformModules';
 
 import { WhySemicon } from './sections/WhySemicon';
 import { AiEra } from './sections/AiEra';
+import { IitPrograms } from './sections/IitPrograms';
 import { Domains } from './sections/Domains';
 import { HowItWorks } from './sections/HowItWorks';
 import { PricingSection } from './sections/PricingSection';
@@ -44,6 +45,7 @@ export function HomePage() {
       <PlatformModules />
       <WhySemicon />
       <AiEra />
+      <IitPrograms />
       <Domains />
       <HowItWorks />
       <PricingSection />

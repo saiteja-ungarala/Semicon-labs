@@ -59,10 +59,6 @@ export const audiencePages: AudiencePage[] = [
         copy: 'Content written and updated by working professionals — current tools, current flows, current standards.',
       },
       {
-        title: 'Real support from real engineers',
-        copy: '24/7 lab access with semiconductor professionals behind it, not a generic helpdesk.',
-      },
-      {
         title: '750+ real world scenarios to solve',
         copy: 'Golden, buggy, guided and challenge labs distilled from live project failures — the practice bank no other platform has.',
       },
@@ -104,7 +100,7 @@ export const audiencePages: AudiencePage[] = [
       },
       {
         title: 'Your team practices on real industry tools',
-        copy: 'Industry-grade Cadence, Synopsys and Siemens flows — not simulators, not toy environments.',
+        copy: 'Industry-grade Cadence, Synopsys and Siemens flows — not simulators.',
       },
       {
         title: 'Zero infrastructure. Maximum productivity.',
@@ -112,7 +108,7 @@ export const audiencePages: AudiencePage[] = [
       },
       {
         title: 'All domains in one place',
-        copy: 'Physical Design, Design Verification, RTL2GDS and Analog Layout — one platform for the whole team.',
+        copy: 'Physical Design, Design & Verification and Analog Layout — one platform for the whole team.',
       },
       {
         title: 'Faster ramp-up for every new engineer',
@@ -164,7 +160,7 @@ export const audiencePages: AudiencePage[] = [
       },
       {
         title: 'Real EDA infrastructure without procurement headaches',
-        copy: 'Browser-based Cadence, Synopsys and Siemens access. No tool procurement cycles, no license servers, no CAPEX.',
+        copy: 'Browser-based Cadence, Synopsys and Siemens access. No tool procurement cycles, no license servers.',
       },
       {
         title: 'Compress engineering ramp-up from years to months',
@@ -172,7 +168,7 @@ export const audiencePages: AudiencePage[] = [
       },
       {
         title: 'Cross-domain & cross-vendor learning in one platform',
-        copy: 'RTL2GDS, Physical Design and Verification across all three major vendors — one contract, one dashboard.',
+        copy: 'Physical Design, Design & Verification and Analog Layout across all three major vendors — one contract, one dashboard.',
       },
       {
         title: 'Standardized practical benchmarking across the organization',
@@ -180,11 +176,11 @@ export const audiencePages: AudiencePage[] = [
       },
       {
         title: 'Enterprise visibility & scale-friendly commercials',
-        copy: 'Centralized dashboards, flexible seat allocation, and up to 40% volume discounts as you scale.',
+        copy: 'Centralized dashboards, flexible License allocation, and up to 40% volume discounts as you scale.',
       },
       {
-        title: 'Just-in-time upskilling without delivery disruption',
-        copy: 'Engineers skill up in parallel with delivery — no pulling teams off projects for training weeks.',
+        title: 'Progress Tracking',
+        copy: 'Track all your organization users progress in one platform and ensure everything stays on the right track.',
       },
     ],
     pricing: {
@@ -194,7 +190,6 @@ export const audiencePages: AudiencePage[] = [
       features: [
         'All domains, all modules, all vendors',
         'Self-paced learning + certification',
-        'Token-based lab provisioning',
         'Admin roles, usage reporting & dashboards',
         'Dedicated rollout and success support',
       ],

@@ -15,9 +15,8 @@ import {
   type SkillModule,
   type SkillSummary,
 } from '@/features/curriculum/api';
-import { FlowMap } from '@/components/curriculum/FlowMap';
 import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
-import { proficiencyLevels } from '@/data/curriculum';
+import { OPENINGS_BY_CODE, PAY_BY_CODE, proficiencyLevels } from '@/data/curriculum';
 import { breadcrumbSchema, courseSchema } from '@/lib/seo';
 import { cn } from '@/lib/cn';
 
@@ -307,6 +306,8 @@ export default function DomainDetailPage() {
               [domain.stats.skills, 'skills'],
               [domain.stats.modules, 'modules'],
               [domain.stats.testcases, 'real world scenarios'],
+              [PAY_BY_CODE[domain.code] ?? '₹9 LPA', 'avg. industry pay'],
+              [OPENINGS_BY_CODE[domain.code] ?? '3,000+', 'active openings'],
             ].map(([v, l]) => (
               <div key={String(l)}>
                 <div className="font-mono text-3xl font-bold text-blue">{v}</div>
@@ -341,7 +342,6 @@ export default function DomainDetailPage() {
             title={`Every skill, module and real world scenario in ${domain.code}.`}
             lede="Skill → modules → real world scenarios. Expand anything; the numbers are live from the catalog, not marketing."
           />
-          <FlowMap domain={domain} />
           <div className="grid gap-10 lg:grid-cols-[1fr_340px] lg:gap-12">
             <div className="min-w-0 space-y-4">
               {domain.skills.map((skill, i) => (

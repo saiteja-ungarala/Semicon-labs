@@ -126,6 +126,15 @@ export interface ProficiencyLevel {
   description: string;
 }
 
+/** Per-domain hiring stats (client-provided). One source for the home page,
+ *  the domains index and every domain detail page. */
+export const PAY_BY_CODE: Record<string, string> = { PD: '₹9 LPA', DV: '₹11 LPA', AL: '₹7 LPA' };
+export const OPENINGS_BY_CODE: Record<string, string> = {
+  PD: '4,000+ jobs in India',
+  DV: '3,500+ DV openings',
+  AL: '3,000+ opportunities',
+};
+
 export const proficiencyLevels: ProficiencyLevel[] = [
   {
     key: 'beginner',

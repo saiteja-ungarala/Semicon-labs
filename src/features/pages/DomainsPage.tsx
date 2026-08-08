@@ -8,6 +8,7 @@ import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import { SampleChallenges } from '@/features/home/sections/SampleChallenges';
 import { FinalCta } from '@/features/home/sections/FinalCta';
 import { useDomains, type DomainSummary } from '@/features/curriculum/api';
+import { OPENINGS_BY_CODE, PAY_BY_CODE } from '@/data/curriculum';
 import { breadcrumbSchema } from '@/lib/seo';
 
 // Per-domain chip artwork for the card banners (client-supplied chip imagery).
@@ -17,22 +18,14 @@ const CARD_ART: Record<string, string> = {
   'analog-layout': '/images/chips/chip-ember2.jpg',
 };
 
-// Domain-specific hiring stats (PD / DV / Analog Layout).
-const payByCode: Record<string, string> = { PD: '₹9 LPA', DV: '₹11 LPA', AL: '₹7 LPA' };
-const openingsByCode: Record<string, string> = {
-  PD: '4,000+ jobs in India',
-  DV: '3,500+ DV openings',
-  AL: '3,000+ opportunities',
-};
-
 /** Marketing proof-points per domain card (client-provided claims). */
 const proofRows = (d: DomainSummary) => [
   { label: 'Skill tracks', value: `${d.stats.skills}` },
   { label: 'Modules', value: `${d.stats.modules}` },
   { label: 'Real world scenarios', value: `${d.stats.testcases}+` },
   { label: 'Supported by', value: 'SIEMENS · Cadence · Synopsys' },
-  { label: 'Avg. industry pay', value: payByCode[d.code] ?? '₹9 LPA' },
-  { label: 'Active openings', value: openingsByCode[d.code] ?? '3,000+' },
+  { label: 'Avg. industry pay', value: PAY_BY_CODE[d.code] ?? '₹9 LPA' },
+  { label: 'Active openings', value: OPENINGS_BY_CODE[d.code] ?? '3,000+' },
 ];
 
 function DomainBigCard({ domain }: { domain: DomainSummary }) {
@@ -156,6 +149,7 @@ export default function DomainsPage() {
         bgImage="/images/chips/ember-traces.jpg"
       >
         {totals && (
+          <div className="flex flex-wrap items-start justify-between gap-x-10 gap-y-6 lg:flex-nowrap">
           <div className="flex flex-wrap gap-x-10 gap-y-3">
             {[
               [totals.skills, 'skill tracks'],
@@ -168,6 +162,23 @@ export default function DomainsPage() {
                 <div className="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-white/60">{l}</div>
               </div>
             ))}
+          </div>
+
+          {/* Industry context, right-aligned against the counts */}
+          <dl className="shrink-0 space-y-3 border-l border-white/15 pl-6 lg:min-w-[280px]">
+            <div>
+              <dt className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-white/50">
+                Avg salary of a VLSI engineer
+              </dt>
+              <dd className="font-mono text-xl font-bold text-amber-300">10+ LPA</dd>
+            </div>
+            <div>
+              <dt className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-white/50">
+                Avg active jobs across all domains
+              </dt>
+              <dd className="font-mono text-xl font-bold text-amber-300">9000+</dd>
+            </div>
+          </dl>
           </div>
         )}
       </PageHero>
