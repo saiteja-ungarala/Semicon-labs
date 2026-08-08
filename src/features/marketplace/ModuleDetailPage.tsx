@@ -123,19 +123,19 @@ export default function ModuleDetailPage() {
             <div className="flex flex-wrap items-center gap-2">
               <Badge tone="blue">{module.difficulty}</Badge>
               <Badge tone="neutral">{Math.round(module.durationMin / 60)} hours</Badge>
-              {module._count && <Badge tone="sky">{module._count.challenges} lab testcases</Badge>}
+              {module._count && <Badge tone="sky">{module._count.challenges} real world scenarios</Badge>}
               <ToolBadge tool={module.toolVendor ?? null} />
             </div>
 
             <h2 className="mt-7 text-2xl font-bold">What you'll work on</h2>
             <p className="mt-3 text-pretty text-ink-dim">{module.description}</p>
 
-            {/* ---- The lab testcases: full inventory, locked until owned ---- */}
+            {/* ---- The real world scenarios: full inventory, locked until owned ---- */}
             {tcData && tcData.testcases.length > 0 && (
               <div className="mt-10">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
                   <h2 className="text-2xl font-bold">
-                    Inside this module — {tcData.testcases.length} lab testcases
+                    Inside this module — {tcData.testcases.length} real world scenarios
                   </h2>
                   {!module.owned && (
                     <span className="font-mono text-[11px] uppercase tracking-wider text-ink-faint">
@@ -157,7 +157,7 @@ export default function ModuleDetailPage() {
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-44 items-end justify-center bg-gradient-to-t from-panel via-panel/90 to-transparent pb-6">
                       <div className="pointer-events-auto text-center">
                         <p className="text-sm font-bold text-ink">
-                          {tcData.testcases.length - FREE_PREVIEW} more testcases are waiting inside.
+                          {tcData.testcases.length - FREE_PREVIEW} more real world scenarios are waiting inside.
                         </p>
                         <Button
                           onClick={() => navigate(`/checkout?module=${module.slug}`)}

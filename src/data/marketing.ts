@@ -38,7 +38,7 @@ export const pricingPlans: PricingPlan[] = [
     cadence: 'session',
     featured: true,
     badge: 'Most Popular',
-    tagline: '5+ user minimum. Session = 1 month',
+    tagline: '2+ user minimum. Session = 1 month',
     features: [
       'All domain modules',
       'Self-paced learning',
@@ -54,7 +54,7 @@ export const pricingPlans: PricingPlan[] = [
     name: 'Corporate',
     priceMonthly: 0,
     cadence: 'session',
-    tagline: '25+ user minimum',
+    tagline: '10+ license minimum',
     features: [
       'All domain modules',
       'Self-paced learning',
