@@ -18,10 +18,17 @@ const offset: Record<Direction, { x?: number; y?: number }> = {
  * the document — which showed up as a few pixels of horizontal scroll on a
  * phone. Vertical offsets cannot do that.
  */
+const NARROW_MQ = '(max-width: 639px)';
+
 function useNarrow() {
-  const [narrow, setNarrow] = useState(false);
+  // Read synchronously on the FIRST render: framer resolves the `initial`
+  // variant at mount, so a value that only arrives in an effect lands too late
+  // and the element keeps the sideways offset it was never meant to have.
+  const [narrow, setNarrow] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(NARROW_MQ).matches,
+  );
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 639px)');
+    const mq = window.matchMedia(NARROW_MQ);
     const sync = () => setNarrow(mq.matches);
     sync();
     mq.addEventListener('change', sync);
