@@ -45,7 +45,6 @@ export const pricingPlans: PricingPlan[] = [
       'Completion certification included',
       'Tool switching',
       'Reader access add-on',
-      'Custom loyalty programs',
     ],
     cta: { label: 'Get Started', to: '/register?plan=team' },
   },
@@ -62,7 +61,6 @@ export const pricingPlans: PricingPlan[] = [
       'Labs billed via tokens',
       'Tool switching',
       'Client admin roles',
-      'Custom loyalty programs',
       'Reader access add-on',
       'Quarterly billing terms',
     ],
@@ -139,9 +137,9 @@ export const faqs: Faq[] = [
   },
   {
     category: 'learning',
-    question: 'What is the difference between Skills and Competencies?',
+    question: 'What is the difference between Skills and Modules?',
     answer:
-      'Skills are certification paths made up of Competencies, Lab Testcases, and a Quiz. Once you complete all of these, you earn a certificate for that skill. If you complete only a Competency, you cannot earn a certificate.',
+      'Skills are certification paths made up of Modules, Real world scenarios, and a Quiz. Once you complete all of these, you earn a certificate for that skill. If you complete only a Module, you cannot earn a certificate.',
   },
   {
     category: 'billing',

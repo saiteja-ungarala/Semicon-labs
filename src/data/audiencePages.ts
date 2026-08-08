@@ -141,7 +141,6 @@ export const audiencePages: AudiencePage[] = [
         'Self-paced learning + completion certification',
         'Tool switching across vendors',
         'Reader access add-on available',
-        'Custom loyalty programs for your team',
       ],
       cta: { label: 'View plans & pricing', to: '/pricing' },
     },
@@ -186,10 +185,6 @@ export const audiencePages: AudiencePage[] = [
       {
         title: 'Just-in-time upskilling without delivery disruption',
         copy: 'Engineers skill up in parallel with delivery — no pulling teams off projects for training weeks.',
-      },
-      {
-        title: '10× more cost-efficient — with recognition built in',
-        copy: 'A fraction of traditional training cost, plus a loyalty system that lets you reward top performers with 5% of your subscription.',
       },
     ],
     pricing: {

@@ -150,8 +150,8 @@ export default function DomainsPage() {
       />
       <PageHero
         eyebrow="engineering domains"
-        title="Real challenges, straight from industry."
-        lede="Every domain is broken down the way real teams work: skills, modules, and the exact real world scenarios engineers debug on live silicon. Pick your lane."
+        title="Industry Challenges That Prepare You for Placements"
+        lede="Experience real-world engineering scenarios with domain-specific skills, modules, and scenario based problems inspired by industry workflows. Develop the debugging, validation, and problem-solving skills required to confidently tackle VLSI interviews and placement opportunities."
         crumbs={[{ name: 'Home', to: '/' }, { name: 'Domains' }]}
         bgImage="/images/chips/ember-traces.jpg"
       >

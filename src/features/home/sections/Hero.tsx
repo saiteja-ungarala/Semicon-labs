@@ -137,7 +137,8 @@ export function Hero() {
               </span>
             </span>
             <span className="mx-auto mt-5 block max-w-2xl text-[clamp(1.1rem,2vw,1.4rem)] font-medium leading-relaxed text-ink-dim">
-              for solving industry-grade projects on leading EDA tools.
+              Solve Real-Time Industry Projects, Master Practical Skills, and Build a Successful
+              VLSI Career
             </span>
           </motion.h1>
 

@@ -39,7 +39,7 @@ export const audiences: Audience[] = [
       'Training a group of engineers together. Give your whole cohort the same hands-on, validated challenge experience with shared progress tracking.',
     points: [
       'Group seats with shared progress',
-      'Every PD & DV modules included',
+      'Every PD & DV module included',
       'Onboarding built for training cohorts',
     ],
     cta: { label: 'For Teams', to: '/who-we-serve/teams' },
