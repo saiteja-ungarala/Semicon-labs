@@ -71,7 +71,7 @@ export const primaryNav: NavItem[] = [
     children: [
       { label: 'Physical Design', to: '/domains/physical-design', description: 'Synthesis · PnR · CTS · STA · PV' },
       { label: 'Design Verification', to: '/domains/design-verification', description: 'Verilog · SV · UVM · Coverage' },
-      { label: 'Analog Layout', to: '/domains/analog-layout', description: 'Coming soon — join the waitlist' },
+      { label: 'Analog Layout', to: '/domains/analog-layout', description: 'Custom layout · Matching · Signoff' },
     ],
   },
   { label: 'Pricing', to: '/pricing' },

@@ -40,7 +40,7 @@ export const audiencePages: AudiencePage[] = [
     eyebrow: 'who we serve · individuals',
     title: 'Individuals',
     lede:
-      "Whether you're a VLSI-trained fresher preparing for your first semiconductor opportunity or a working professional ready to level up — Semicon Labs moves with you. Learn when you can, wherever you are, with real VLSI labs, industry EDA tools, and workflows built around real execution.",
+      "Whether you're a VLSI-trained fresher aiming for your first placement or a working professional looking to upskill — Semicon Labs helps you build industry-ready expertise through real VLSI labs, EDA tools, practical workflows, and AI-powered mock interviews designed for placement readiness.",
     sectionEyebrow: 'more than industry tools',
     sectionTitle: 'A complete VLSI learning experience.',
     sectionLede:

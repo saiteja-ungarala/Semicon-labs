@@ -149,7 +149,7 @@ export const proficiencyLevels: ProficiencyLevel[] = [
     title: 'Assessment Challenges',
     challengeType: 'Assessment',
     description:
-      'You solve a new problem independently, evaluating trade-offs across multiple constraints from start to finish — demonstrating practical competency and engineering judgment.',
+      'You solve a new problem independently, evaluating trade-offs across multiple constraints from start to finish — demonstrating practical capability and engineering judgment.',
   },
 ];
 
@@ -197,6 +197,6 @@ export const comparison: { aspect: string; traditional: string; semicon: string 
   { aspect: 'The material', traditional: 'Isolated, simplified examples', semicon: 'Industry-inspired challenges from real projects' },
   { aspect: 'What you build', traditional: 'Recall & tool familiarity', semicon: 'Investigation, judgment & trade-off evaluation' },
   { aspect: 'Feedback', traditional: 'Completion checkmarks', semicon: 'Objective validation against engineering outcomes' },
-  { aspect: 'What it measures', traditional: 'Hours completed', semicon: 'Demonstrated competency, level by level' },
+  { aspect: 'What it measures', traditional: 'Hours completed', semicon: 'Demonstrated capability, level by level' },
   { aspect: 'What it prepares you for', traditional: 'Interviews', semicon: 'Real semiconductor projects' },
 ];

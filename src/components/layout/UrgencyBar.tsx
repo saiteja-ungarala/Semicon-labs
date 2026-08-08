@@ -1,20 +1,10 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-const STORAGE_KEY = 'sl-urgency-dismissed';
 
 const MESSAGE = 'Hurry Up !! Launching on 15th August · Limited Registrations — only for the first 1,000 users';
 
-/** Top announcement bar — rolling marquee. Dismissible; state persists for the session. */
+/** Top announcement bar — rolling marquee. Always shown: the dismiss control
+ *  was removed at the client's request, so there is no way to restore it. */
 export function UrgencyBar() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setVisible(sessionStorage.getItem(STORAGE_KEY) !== '1');
-  }, []);
-
-  if (!visible) return null;
-
   // Two copies only: the track translates by exactly one copy's width, so the
   // loop is seamless. The ~70vw trailing gap means a message has almost left
   // the screen before the next one enters — at most two are ever in view.

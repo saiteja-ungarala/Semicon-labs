@@ -16,7 +16,6 @@ const PricingPage = lazy(() => import('@/features/pages/PricingPage'));
 const FaqPage = lazy(() => import('@/features/pages/FaqPage'));
 const ContactPage = lazy(() => import('@/features/pages/ContactPage'));
 const CareersPage = lazy(() => import('@/features/pages/CareersPage'));
-const ResourcesPage = lazy(() => import('@/features/pages/ResourcesPage'));
 const LegalPage = lazy(() => import('@/features/pages/LegalPage'));
 const NotFoundPage = lazy(() => import('@/features/pages/NotFoundPage'));
 
@@ -69,7 +68,6 @@ export const router = createBrowserRouter([
       { path: 'faq', element: <FaqPage /> },
       { path: 'contact', element: <ContactPage /> },
       { path: 'careers', element: <CareersPage /> },
-      { path: 'resources', element: <ResourcesPage /> },
       { path: 'privacy', element: <LegalPage kind="privacy" /> },
       { path: 'terms', element: <LegalPage kind="terms" /> },
       { path: 'refund', element: <LegalPage kind="refund" /> },

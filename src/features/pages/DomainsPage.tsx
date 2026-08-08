@@ -118,7 +118,7 @@ function DomainBigCard({ domain }: { domain: DomainSummary }) {
         arrow
         className="mt-6 w-full transition-transform duration-300 group-hover:-translate-y-0.5"
       >
-        Explore {domain.code} — {domain.stats.testcases}+ labs inside
+        Explore {domain.code} — {domain.stats.testcases}+ real world scenarios
       </Button>
       </div>
     </div>

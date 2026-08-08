@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { cn } from '@/lib/cn';
 
@@ -11,6 +11,30 @@ const offset: Record<Direction, { x?: number; y?: number }> = {
   right: { x: -24 },
   none: {},
 };
+
+/**
+ * Below `sm` a horizontal reveal is swapped for a vertical one. An element
+ * waiting off-screen sits at its start offset, and a sideways offset widens
+ * the document — which showed up as a few pixels of horizontal scroll on a
+ * phone. Vertical offsets cannot do that.
+ */
+function useNarrow() {
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)');
+    const sync = () => setNarrow(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+  return narrow;
+}
+
+function offsetFor(direction: Direction, reduce: boolean, narrow: boolean) {
+  if (reduce) return {};
+  if (narrow && (direction === 'left' || direction === 'right')) return offset.up;
+  return offset[direction];
+}
 
 interface RevealProps {
   as?: 'div' | 'section' | 'li' | 'span' | 'article';
@@ -31,10 +55,11 @@ export function Reveal({
   children,
 }: RevealProps) {
   const reduce = useReducedMotion();
+  const narrow = useNarrow();
   const MotionTag = motion[as];
 
   const variants: Variants = {
-    hidden: { opacity: 0, ...(reduce ? {} : offset[direction]) },
+    hidden: { opacity: 0, ...offsetFor(direction, !!reduce, narrow) },
     show: {
       opacity: 1,
       x: 0,
@@ -89,11 +114,12 @@ export function RevealItem({
   children: ReactNode;
 }) {
   const reduce = useReducedMotion();
+  const narrow = useNarrow();
   return (
     <motion.div
       className={cn(className)}
       variants={{
-        hidden: { opacity: 0, ...(reduce ? {} : offset[direction]) },
+        hidden: { opacity: 0, ...offsetFor(direction, !!reduce, narrow) },
         show: { opacity: 1, x: 0, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
       }}
     >

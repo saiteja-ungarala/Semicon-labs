@@ -7,9 +7,15 @@ import { cn } from '@/lib/cn';
 
 /**
  * The client's pricing model (semiconlabs-pricing-white.html), rebuilt in the
- * site's design system: Individual / Teams / Corporate tabs, Basic vs Pro
- * tiers ("same labs, more power on Pro"), top-up packs and volume discounts.
- * All prices exclude 18% GST.
+ * site's design system.
+ *
+ * WARNING: that reference file predates the Aug-2026 copy pass. It still holds
+ * the 92-95%-vs-in-house claim, the performance-loyalty-rewards bullet and the
+ * per-license/contract-terms/loyalty-pool sentence — all three of which the
+ * client had removed. Do not copy them back when syncing with it.
+ *
+ * Layout: Individual / Teams / Corporate tabs, Basic vs Pro tiers ("same labs,
+ * more power on Pro"), top-up packs and volume discounts.
  */
 
 type TabId = 'individual' | 'teams' | 'corporate';

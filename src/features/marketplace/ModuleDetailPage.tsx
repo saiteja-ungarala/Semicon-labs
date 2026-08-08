@@ -164,7 +164,7 @@ export default function ModuleDetailPage() {
                           className="mt-3"
                           arrow
                         >
-                          Unlock all {tcData.testcases.length} labs — {formatMoney(net, module.currency)}
+                          Unlock all {tcData.testcases.length} real world scenarios — {formatMoney(net, module.currency)}
                         </Button>
                       </div>
                     </div>
