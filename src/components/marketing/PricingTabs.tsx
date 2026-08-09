@@ -230,52 +230,61 @@ function TeamsPanel() {
   return (
     <>
       <Banner
-        left={<><b className="text-blue-600">1 session</b> = 1 seat, 1 month, 240 lab hours. Minimum 2 sessions.</>}
+        left={<><b className="text-blue-600">1 session</b> = 1 login, 1 month, 240 lab hours. Minimum 2 sessions.</>}
+        right="Excl. GST"
       />
       <div className="mx-auto mt-8 grid max-w-3xl gap-5 md:grid-cols-2">
         <TierCard
           name="Basic"
           tag="Standard compute · per session"
           price="₹11,000"
-          priceSub="/ session / month · excl. GST"
+          priceSub="per session / month · + GST"
           feats={[
-            { yes: true, text: '240 lab hours per seat, per month' },
-            { yes: true, text: 'Admin allocates seats across the team' },
-            { yes: true, text: 'Standard-complexity labs, all domains' },
-            { yes: true, text: 'AI chatbot + ticketing support' },
-            { yes: true, text: 'Up to 40% off at scale' },
+            { yes: true, text: <>240 lab hours per login, per month</> },
+            { yes: true, text: <>Standard computing and design capacity</> },
+            { yes: true, text: <><Hl>5%</Hl> off for every second session · max 40%</> },
+            { yes: true, text: <>Extra hours at <Hl>₹90</Hl>/hour</> },
+            { yes: true, text: <>Data storage <Hl>₹500</Hl>/login/month</> },
           ]}
           cta={{ label: 'Start a Basic team', to: '/register?plan=team-basic' }}
         />
         <TierCard
           pro
           name="Pro"
-          tag="Higher compute · per session"
-          badge="+20%"
+          tag="Bigger computing · bigger design"
+          badge="Most Popular"
           price="₹12,500"
-          priceSub="/ session / month · excl. GST"
+          priceSub="per session / month · + GST"
           feats={[
-            { yes: true, text: 'Everything in Basic' },
-            { yes: true, text: 'Higher VM compute for large-block work' },
-            { yes: true, text: 'Advanced / complex / signoff-flow labs' },
-            { yes: true, text: 'Tool switching across EDA vendors' },
+            { yes: true, text: <>Everything in Basic</> },
+            { yes: true, text: <>Bigger computing and bigger design capacity</> },
+            { yes: true, text: <><Hl>10%</Hl> off for every additional session · max 40%</> },
+            { yes: true, text: <>Extra hours at <Hl>₹90</Hl>/hour</> },
+            { yes: true, text: <>Data storage <Hl>₹500</Hl>/login/month</> },
           ]}
           cta={{ label: 'Start a Pro team', to: '/register?plan=team-pro' }}
         />
       </div>
 
-      <SubHead>Volume discount · scales with sessions</SubHead>
+      <SubHead>What one session includes</SubHead>
       <SpecTable
-        head={['Sessions', 'Discount', 'Basic /session', 'Pro /session']}
+        head={['', 'Basic', 'Pro']}
         rows={[
-          ['2 (minimum)', <Num>—</Num>, <Num>₹11,000</Num>, <Num>₹12,500</Num>],
-          ['3', <Hl>10% off</Hl>, <Num>₹9,900</Num>, <Num>₹11,250</Num>],
-          ['4', <Hl>20% off</Hl>, <Num>₹8,800</Num>, <Num>₹10,000</Num>],
-          ['5', <Hl>30% off</Hl>, <Num>₹7,700</Num>, <Num>₹8,750</Num>],
-          ['6+', <Hl>40% off (max)</Hl>, <Num>₹6,600</Num>, <Num>₹7,500</Num>],
+          ['Price per session', <Num>₹11,000 + GST</Num>, <Num>₹12,500 + GST</Num>],
+          ['Session length', <Num>1 month</Num>, <Num>1 month</Num>],
+          ['Lab hours included', <Num>240 hrs / month</Num>, <Num>240 hrs / month</Num>],
+          ['Computing & design', 'Standard', <Hl>Bigger</Hl>],
+          ['Volume discount', <>5% every second session</>, <>10% every additional session</>],
+          ['Discount cap', <Num>40%</Num>, <Num>40%</Num>],
+          ['Extra lab hours', <Num>₹90 / hour</Num>, <Num>₹90 / hour</Num>],
+          ['Data storage per login', <Num>₹500 / month</Num>, <Num>₹500 / month</Num>],
         ]}
       />
-      <Note>Data holding after a session lapses: ₹500/month per team-member login. All prices exclude 18% GST.</Note>
+
+      <Note>
+        Minimum 2 sessions. Individuals and Corporates pay <b className="text-ink">+20%</b> for a Pro
+        account. All prices exclude 18% GST.
+      </Note>
     </>
   );
 }
