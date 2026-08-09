@@ -14,7 +14,6 @@ interface RegisterForm {
   lastName: string;
   contact: string;
   email: string;
-  password: string;
   sources: string[];
 }
 
@@ -53,7 +52,14 @@ export default function RegisterPage() {
         'sl-signup-meta',
         JSON.stringify({ contact: values.contact, sources: values.sources, email: values.email }),
       );
-      const { user, accessToken } = await registerRequest(values);
+      // The password field was removed from this form at the client's request.
+      // The account API still requires one, so we mint a strong random secret;
+      // the member sets their own later via "Forgot password".
+      const generatedPassword = Array.from(crypto.getRandomValues(new Uint8Array(18)))
+        .map((n) => n.toString(36))
+        .join('')
+        .slice(0, 24);
+      const { user, accessToken } = await registerRequest({ ...values, password: generatedPassword });
       setAuth(user, accessToken);
       navigate(from, { replace: true });
     } catch (err) {
@@ -66,7 +72,7 @@ export default function RegisterPage() {
       <Seo title="Create account" path="/register" noindex />
       <AuthShell
         title="Create your account"
-        subtitle="Start with a free challenge — no credit card required."
+        subtitle="Tell us who you are and we’ll set your account up."
         footer={
           <>
             Already have an account?{' '}
@@ -115,18 +121,6 @@ export default function RegisterPage() {
             {...register('email', {
               required: 'Enter your email',
               pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Enter a valid email' },
-            })}
-          />
-          <TextField
-            label="Password"
-            type="password"
-            autoComplete="new-password"
-            placeholder="At least 8 characters"
-            hint="Use at least 8 characters."
-            error={errors.password?.message}
-            {...register('password', {
-              required: 'Choose a password',
-              minLength: { value: 8, message: 'At least 8 characters' },
             })}
           />
           <fieldset>

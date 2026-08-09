@@ -35,8 +35,8 @@ const recruiters: RecruiterLogo[] = [
 
 // One shared drawing box. Bounding BOTH dimensions is what makes a wide
 // wordmark and a stacked glyph read as the same size.
-const LOGO_BOX = 'max-h-6 max-w-[104px] object-contain';
-const LOGO_BOX_SQUARE = 'max-h-9 max-w-[104px] object-contain';
+const LOGO_BOX = 'max-h-9 max-w-[136px] object-contain mix-blend-multiply';
+const LOGO_BOX_SQUARE = 'max-h-12 max-w-[136px] object-contain mix-blend-multiply';
 
 export function SkillsMarquee() {
   // Duplicate the track so the -50% translate loops seamlessly.
@@ -73,7 +73,7 @@ export function SkillsMarquee() {
           {track.map((r, i) => (
             <span
               key={`${r.name}-${i}`}
-              className="flex h-12 w-44 shrink-0 items-center justify-center px-6"
+              className="flex h-16 w-52 shrink-0 items-center justify-center px-6"
               title={r.name}
             >
               {r.src ? (
@@ -84,7 +84,7 @@ export function SkillsMarquee() {
                   className={`${r.square ? LOGO_BOX_SQUARE : LOGO_BOX} opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0`}
                 />
               ) : (
-                <span className="whitespace-nowrap font-display text-[17px] font-extrabold tracking-tight text-ink/40">
+                <span className="whitespace-nowrap font-display text-[22px] font-extrabold tracking-tight text-ink/45">
                   {r.name}
                 </span>
               )}

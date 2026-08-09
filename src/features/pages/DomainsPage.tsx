@@ -164,19 +164,19 @@ export default function DomainsPage() {
             ))}
           </div>
 
-          {/* Industry context, right-aligned against the counts */}
-          <dl className="shrink-0 space-y-3 border-l border-white/15 pl-6 lg:min-w-[280px]">
+          {/* Industry context: statement, with its figure beneath and right-aligned */}
+          <dl className="shrink-0 space-y-4 border-l border-white/15 pl-6 text-right lg:min-w-[300px]">
             <div>
-              <dt className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-white/50">
+              <dt className="text-[13.5px] leading-snug text-white/70">
                 Avg salary of a VLSI engineer
               </dt>
-              <dd className="font-mono text-xl font-bold text-amber-300">10+ LPA</dd>
+              <dd className="mt-1 font-mono text-2xl font-bold text-amber-300">10+ LPA</dd>
             </div>
             <div>
-              <dt className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-white/50">
+              <dt className="text-[13.5px] leading-snug text-white/70">
                 Avg active jobs across all domains
               </dt>
-              <dd className="font-mono text-xl font-bold text-amber-300">9000+</dd>
+              <dd className="mt-1 font-mono text-2xl font-bold text-amber-300">9000+</dd>
             </div>
           </dl>
           </div>

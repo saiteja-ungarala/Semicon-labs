@@ -86,15 +86,14 @@ export function IitPrograms() {
   return (
     <Section alt className="overflow-hidden">
       <div
-        className="grid items-center gap-10 lg:grid-cols-[1.35fr_1fr] lg:gap-16"
+        className="grid items-center gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-14"
         style={{ ['--seal' as string]: '#2E1EE0', ['--seal-soft' as string]: 'rgba(46,30,224,0.35)' }}
       >
         <Reveal>
           <p className="eyebrow text-blue">institutional programs</p>
-          <h2 className="mt-4 text-display-md">
-            Powering IIT Certifications &amp;
-            <br className="hidden sm:block" />{' '}
-            <span className="text-gradient">M.Tech Programs with Semicon Labs</span>
+          <h2 className="mt-4 max-w-[20ch] text-balance text-display-md lg:max-w-none">
+            Powering IIT Certifications &amp;{' '}
+            <span className="text-gradient">M.Tech Programs</span> with Semicon Labs
           </h2>
           <p className="mt-6 max-w-[62ch] text-pretty leading-relaxed text-ink-dim">
             Our industry-grade VLSI labs are used in IIT certification and M.Tech programs, providing
@@ -115,11 +114,6 @@ export function IitPrograms() {
               style={{ background: 'radial-gradient(circle, rgba(46,30,224,0.16), transparent 65%)' }}
             />
             <CertificationSeal />
-            <div className="pointer-events-none absolute inset-0 grid place-items-center">
-              <span className="mt-[62px] font-mono text-[10.5px] font-bold uppercase tracking-[0.2em] text-blue">
-                IIT · M.Tech
-              </span>
-            </div>
           </div>
         </Reveal>
       </div>
