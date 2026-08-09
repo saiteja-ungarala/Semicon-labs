@@ -147,9 +147,24 @@ export default function DomainsPage() {
         lede="Experience real-world engineering scenarios with domain-specific skills, modules, and scenario based problems inspired by industry workflows. Develop the debugging, validation, and problem-solving skills required to confidently tackle VLSI interviews and placement opportunities."
         crumbs={[{ name: 'Home', to: '/' }, { name: 'Domains' }]}
         bgImage="/images/chips/ember-traces.jpg"
+        aside={
+          <dl className="space-y-6 border-l border-white/15 pl-8 text-right">
+            <div>
+              <dt className="font-mono text-[12px] uppercase tracking-wider text-white/60">
+                Avg salary of a VLSI engineer
+              </dt>
+              <dd className="mt-1.5 font-mono text-[38px] font-bold leading-none text-amber-300">10+ LPA</dd>
+            </div>
+            <div>
+              <dt className="font-mono text-[12px] uppercase tracking-wider text-white/60">
+                Avg active jobs across all domains
+              </dt>
+              <dd className="mt-1.5 font-mono text-[38px] font-bold leading-none text-amber-300">9000+</dd>
+            </div>
+          </dl>
+        }
       >
         {totals && (
-          <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-8 lg:flex-nowrap">
           <div className="flex flex-wrap gap-x-10 gap-y-3">
             {[
               [totals.skills, 'skill tracks'],
@@ -162,24 +177,6 @@ export default function DomainsPage() {
                 <div className="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-white/60">{l}</div>
               </div>
             ))}
-          </div>
-
-          {/* Industry context — same type scale as the counts opposite, and
-              bottom-aligned with them so both rows share a baseline */}
-          <dl className="shrink-0 space-y-5 border-l border-white/15 pl-7 text-right">
-            <div>
-              <dt className="font-mono text-[11px] uppercase tracking-wider text-white/55">
-                Avg salary of a VLSI engineer
-              </dt>
-              <dd className="mt-1 font-mono text-3xl font-bold text-amber-300">10+ LPA</dd>
-            </div>
-            <div>
-              <dt className="font-mono text-[11px] uppercase tracking-wider text-white/55">
-                Avg active jobs across all domains
-              </dt>
-              <dd className="mt-1 font-mono text-3xl font-bold text-amber-300">9000+</dd>
-            </div>
-          </dl>
           </div>
         )}
       </PageHero>

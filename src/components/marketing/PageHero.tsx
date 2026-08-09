@@ -24,6 +24,8 @@ interface PageHeroProps {
   artAlt?: string;
   /** Full-bleed dark background image — flips the hero typography to light. */
   bgImage?: string;
+  /** Content pinned to the right of the title block (desktop only). */
+  aside?: ReactNode;
 }
 
 /** Consistent inner-page header with breadcrumb, eyebrow, title and lede. */
@@ -38,6 +40,7 @@ export function PageHero({
   art,
   artAlt = '',
   bgImage,
+  aside,
 }: PageHeroProps) {
   const dark = Boolean(bgImage);
   return (
@@ -120,6 +123,7 @@ export function PageHero({
             </ol>
           </nav>
         )}
+        <div className={aside ? 'gap-10 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start lg:gap-16' : undefined}>
         <Reveal>
           {eyebrow && <p className={cn('eyebrow', dark && 'text-amber-300')}>{eyebrow}</p>}
           {/* Plain template string: twMerge would treat text-white as conflicting
@@ -130,6 +134,9 @@ export function PageHero({
           )}
           {children && <div className="mt-8">{children}</div>}
         </Reveal>
+        {/* Sits level with the title rather than under the copy */}
+        {aside && <div className="mt-10 lg:mt-2 lg:shrink-0">{aside}</div>}
+        </div>
       </Container>
     </section>
   );
