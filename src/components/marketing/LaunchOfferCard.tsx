@@ -28,8 +28,14 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
           <h2 className={cn("font-display font-bold text-ink leading-tight mb-2", isRail ? "text-xl" : "text-2xl sm:text-3xl")}>Everything you need to<br />break into VLSI.</h2>
           <div className="flex items-center justify-center gap-3 mt-3">
             <span className={cn("font-mono font-bold text-ink leading-none", isRail ? "text-3xl" : "text-4xl")}>₹99</span>
-            <span className="text-blue-500 text-[9px] sm:text-[10px] font-bold tracking-widest uppercase max-w-[130px] text-left leading-snug">
-              Fully redeemable on your first purchase
+            <span className={cn('text-left leading-snug', isRail ? 'max-w-[190px]' : 'max-w-[300px]')}>
+              <span className="block text-[12px] font-semibold text-ink sm:text-[13.5px]">
+                Pay just <b className="text-blue-600">₹99</b> to pre-book your spot and unlock{' '}
+                <b className="text-blue-600">200 lab hours</b> at the price of 100 hours
+              </span>
+              <span className="mt-1 block text-[9px] font-bold uppercase tracking-widest text-blue-500 sm:text-[10px]">
+                Fully redeemable on your first purchase
+              </span>
             </span>
           </div>
         </div>
@@ -76,10 +82,7 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
           </div>
         </div>
 
-        {/* Explainer text */}
-        <p className={cn("text-ink-dim text-center mt-4 leading-relaxed", isRail ? "text-[10px] max-w-sm" : "text-[11px] sm:text-xs max-w-2xl")}>
-          Reserve today and lock the launch rate — <b>200 hours for the price of 100</b>. Once the 1,000 seats are gone, 100 hours cost ₹9,000 and 200 hours cost ₹18,000.
-        </p>
+        
 
         {/* Benefits Pills (Grid Layout) */}
         <div className={cn("w-full mt-5 grid gap-2", isRail ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 sm:gap-3")}>
