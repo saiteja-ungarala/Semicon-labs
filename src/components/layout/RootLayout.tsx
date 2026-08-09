@@ -1,5 +1,5 @@
 ﻿import { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { UrgencyBar } from './UrgencyBar';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -10,6 +10,7 @@ import { useSessionBootstrap } from '@/features/auth/useSessionBootstrap';
 
 /** Public marketing/app shell: announcement bar, nav, page, footer. */
 export function RootLayout() {
+  const { pathname } = useLocation();
   // Restore any existing session (silent refresh) once on load.
   useSessionBootstrap();
 
@@ -26,7 +27,11 @@ export function RootLayout() {
       <Navbar />
       <main id="main">
         <Suspense fallback={<RouteFallback />}>
-          <Outlet />
+          {/* Keyed by pathname so a route that only changes a param (e.g.
+              /who-we-serve/individuals -> /teams) remounts. Without this the
+              scroll-reveal observers, which fire once, never re-run and the
+              new page's content stays at opacity 0. */}
+          <Outlet key={pathname} />
         </Suspense>
       </main>
       <Footer />
