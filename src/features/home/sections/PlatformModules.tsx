@@ -20,7 +20,7 @@ const benefits = [
   { icon: '/icons/access247.png', title: '24x7 Access Your Labs Anytime, Anywhere', copy: 'The lab is open whenever you are — no seat queue, no lab hours.', without: 'waiting for a lab seat' },
   { icon: '/icons/library.svg', title: 'Lifetime free VLSI premium Library', copy: 'The reference material stays yours, forever.', without: 'scattered PDFs' },
   { icon: '/icons/certification.png', title: 'Validated Industry Certification', copy: 'Certification backed by solves the platform actually verified.', without: 'an unverified PDF' },
-  { icon: '/icons/placements.svg', title: 'Access to placement community', copy: 'A 290+ recruiter network that sees your verified skills.', without: 'cold-applying alone' },
+  { icon: '/icons/placements.svg', title: 'Access to placement community', copy: 'A recruiter network that sees your verified skills.', without: 'cold-applying alone' },
 ];
 
 const scatter: [number, number, number][] = [

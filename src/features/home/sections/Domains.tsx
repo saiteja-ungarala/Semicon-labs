@@ -93,7 +93,6 @@ export function Domains() {
             <span className="text-gradient">Prepare You for Placements</span>
           </>
         }
-        lede="Experience real-world engineering scenarios with domain-specific skills, modules, and scenario based problems inspired by industry workflows. Develop the debugging, validation, and problem-solving skills required to confidently tackle VLSI interviews and placement opportunities."
       />
       <RevealGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.1}>
         {isLoading

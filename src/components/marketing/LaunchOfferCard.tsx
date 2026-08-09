@@ -84,7 +84,7 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
         {/* Benefits Pills (Grid Layout) */}
         <div className={cn("w-full mt-5 grid gap-2", isRail ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 sm:gap-3")}>
           <BenefitPill text={<>Pre-book <b>₹99</b> unlocks <b>100 + 100 hours free</b></>} badge="Save ₹9k" />
-          <BenefitPill text={<>Access to <b>Recruiter Placement Community</b></>} badge="290+ Network" />
+          <BenefitPill text={<>Access to <b>Recruiter Placement Community</b></>} badge="Network" />
           <BenefitPill text={<>Lifetime access to premium <b>VLSI learning library</b></>} badge="Worth ₹1L" />
           <BenefitPill text={<>Unlock <b>AI-powered learning</b>, on us</>} badge="Free" />
         </div>

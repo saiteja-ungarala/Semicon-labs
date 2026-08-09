@@ -1,5 +1,5 @@
 /**
- * Recruiter band — "Partnered with 290+ Recruiters" over a continuous
+ * Recruiter band — "Partnered with Top Recruiters" over a continuous
  * marquee of the companies our placement network hires into.
  */
 
@@ -51,7 +51,7 @@ export function SkillsMarquee() {
             AI-Powered Career Accelerator
           </span>
           <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-sky px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white shadow-md">
-            Partnered with 290+ Recruiters
+            Partnered with Top Recruiters
           </span>
         </div>
         
