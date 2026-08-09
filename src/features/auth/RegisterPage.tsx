@@ -12,9 +12,24 @@ import { AuthShell, FormBanner } from './AuthShell';
 interface RegisterForm {
   firstName: string;
   lastName: string;
+  contact: string;
   email: string;
   password: string;
+  sources: string[];
 }
+
+/** Where people find us — multi-select, because most hear from more than one. */
+const SOURCES = [
+  'LinkedIn',
+  'Instagram',
+  'YouTube',
+  'Facebook',
+  'WhatsApp',
+  'Friend or colleague',
+  'College / institute',
+  'Google search',
+  'Other',
+];
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -27,11 +42,17 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterForm>();
+  } = useForm<RegisterForm>({ defaultValues: { sources: [] } });
 
   const onSubmit = handleSubmit(async (values) => {
     setError('');
     try {
+      // The account API only takes the credential fields; the contact number
+      // and attribution ride along for the checkout step and lead export.
+      sessionStorage.setItem(
+        'sl-signup-meta',
+        JSON.stringify({ contact: values.contact, sources: values.sources, email: values.email }),
+      );
       const { user, accessToken } = await registerRequest(values);
       setAuth(user, accessToken);
       navigate(from, { replace: true });
@@ -61,16 +82,30 @@ export default function RegisterPage() {
             <TextField
               label="First name"
               autoComplete="given-name"
+              placeholder="Ananya"
               error={errors.firstName?.message}
               {...register('firstName', { required: 'Required' })}
             />
             <TextField
               label="Last name"
               autoComplete="family-name"
+              placeholder="Sharma"
               error={errors.lastName?.message}
               {...register('lastName', { required: 'Required' })}
             />
           </div>
+          <TextField
+            label="Contact number"
+            type="tel"
+            inputMode="numeric"
+            autoComplete="tel"
+            placeholder="98765 43210"
+            error={errors.contact?.message}
+            {...register('contact', {
+              required: 'We need a contact number',
+              pattern: { value: /^[+\d][\d\s-]{7,15}$/, message: 'Enter a valid phone number' },
+            })}
+          />
           <TextField
             label="Email"
             type="email"
@@ -94,6 +129,25 @@ export default function RegisterPage() {
               minLength: { value: 8, message: 'At least 8 characters' },
             })}
           />
+          <fieldset>
+            <legend className="mb-2 block text-sm font-medium text-ink">
+              How did you get to know about us?
+            </legend>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+              {SOURCES.map((src) => (
+                <label key={src} className="flex cursor-pointer items-center gap-2.5 text-[13.5px] text-ink-dim">
+                  <input
+                    type="checkbox"
+                    value={src}
+                    {...register('sources')}
+                    className="h-4 w-4 shrink-0 rounded border-line-strong text-blue accent-blue focus:ring-2 focus:ring-blue"
+                  />
+                  {src}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
           <Button type="submit" className="w-full" disabled={isSubmitting} arrow={!isSubmitting}>
             {isSubmitting ? 'Creating account…' : 'Create account'}
           </Button>
