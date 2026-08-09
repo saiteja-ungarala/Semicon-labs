@@ -15,7 +15,7 @@ const claimRows = (d: DomainSummary) => [
   { label: 'Skill tracks', value: `${d.stats.skills}` },
   { label: 'Modules', value: `${d.stats.modules}` },
   { label: 'Real world scenarios', value: `${d.stats.testcases}+` },
-  { label: 'Supported by', value: 'SIEMENS · Cadence · Synopsys' },
+  { label: 'Supported by', value: 'Cadence · Synopsys · Siemens' },
   { label: 'Avg. industry pay', value: PAY_BY_CODE[d.code] ?? '₹9 LPA' },
   { label: 'Active openings', value: OPENINGS_BY_CODE[d.code] ?? '3,000+' },
 ];

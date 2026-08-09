@@ -23,7 +23,7 @@ const proofRows = (d: DomainSummary) => [
   { label: 'Skill tracks', value: `${d.stats.skills}` },
   { label: 'Modules', value: `${d.stats.modules}` },
   { label: 'Real world scenarios', value: `${d.stats.testcases}+` },
-  { label: 'Supported by', value: 'SIEMENS · Cadence · Synopsys' },
+  { label: 'Supported by', value: 'Cadence · Synopsys · Siemens' },
   { label: 'Avg. industry pay', value: PAY_BY_CODE[d.code] ?? '₹9 LPA' },
   { label: 'Active openings', value: OPENINGS_BY_CODE[d.code] ?? '3,000+' },
 ];
@@ -149,7 +149,7 @@ export default function DomainsPage() {
         bgImage="/images/chips/ember-traces.jpg"
       >
         {totals && (
-          <div className="flex flex-wrap items-start justify-between gap-x-10 gap-y-6 lg:flex-nowrap">
+          <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-8 lg:flex-nowrap">
           <div className="flex flex-wrap gap-x-10 gap-y-3">
             {[
               [totals.skills, 'skill tracks'],
@@ -164,16 +164,20 @@ export default function DomainsPage() {
             ))}
           </div>
 
-          {/* Industry context: compact, lifted to sit beside the lede rather
-              than hanging off the bottom of the hero */}
-          <dl className="shrink-0 space-y-2.5 border-l border-white/15 pl-5 text-right lg:-mt-24 lg:min-w-[230px] xl:-mt-28">
+          {/* Industry context — same type scale as the counts opposite, and
+              bottom-aligned with them so both rows share a baseline */}
+          <dl className="shrink-0 space-y-5 border-l border-white/15 pl-7 text-right">
             <div>
-              <dt className="text-[12px] leading-snug text-white/65">Avg salary of a VLSI engineer</dt>
-              <dd className="mt-0.5 font-mono text-lg font-bold text-amber-300">10+ LPA</dd>
+              <dt className="font-mono text-[11px] uppercase tracking-wider text-white/55">
+                Avg salary of a VLSI engineer
+              </dt>
+              <dd className="mt-1 font-mono text-3xl font-bold text-amber-300">10+ LPA</dd>
             </div>
             <div>
-              <dt className="text-[12px] leading-snug text-white/65">Avg active jobs across all domains</dt>
-              <dd className="mt-0.5 font-mono text-lg font-bold text-amber-300">9000+</dd>
+              <dt className="font-mono text-[11px] uppercase tracking-wider text-white/55">
+                Avg active jobs across all domains
+              </dt>
+              <dd className="mt-1 font-mono text-3xl font-bold text-amber-300">9000+</dd>
             </div>
           </dl>
           </div>
