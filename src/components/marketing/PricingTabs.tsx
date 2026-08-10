@@ -200,20 +200,6 @@ function SpecTable({ head, rows }: { head: string[]; rows: ReactNode[][] }) {
   );
 }
 
-/** Basic vs Pro capability matrix, used by both the Teams and Corporate tabs. */
-function CompareTable({ rows }: { rows: { cap: string; basic: boolean; pro: boolean }[] }) {
-  return (
-    <SpecTable
-      head={['Feature', 'Basic', 'Pro']}
-      rows={rows.map((r) => [
-        r.cap,
-        <div className="text-center"><Dot yes={r.basic} /></div>,
-        <div className="text-center"><Dot yes={r.pro} /></div>,
-      ])}
-    />
-  );
-}
-
 const Hl = ({ children }: { children: ReactNode }) => (
   <span className="font-mono font-bold text-blue">{children}</span>
 );
@@ -300,48 +286,10 @@ function TeamsPanel() {
         ]}
       />
 
-      <SubHead>Differences · Basic vs Pro</SubHead>
-      <CompareTable rows={PACK_COMPARE} />
-
       <Note>
-        Prices are per session. Maximum discount 30%. Data holding grace period is 2 weeks after a
-        session lapses; keep it longer with Data Backup at ₹500/month. GST charged at 18%.
+        Prices are per session. Maximum discount 30%. GST charged at 18%.
       </Note>
     </>
-  );
-}
-
-/** Client's Basic vs Pro sheet. Shared rows first, Pro-only rows last, so the
- *  ticks read as a solid block and the differences sit together at the end. */
-const PACK_COMPARE: { cap: string; basic: boolean; pro: boolean }[] = [
-  { cap: 'Standard VM compute', basic: true, pro: true },
-  { cap: 'Domain-specific certifications', basic: true, pro: true },
-  { cap: 'Standard labs', basic: true, pro: true },
-  { cap: 'Dedicated Admin and Manager accounts', basic: true, pro: true },
-  { cap: 'Automated practical evaluation', basic: true, pro: true },
-  { cap: 'Ticketing support', basic: true, pro: true },
-  { cap: 'Team users tracking', basic: true, pro: true },
-  { cap: 'Certification upon completing skills', basic: true, pro: true },
-  { cap: 'Higher VM compute (bigger labs)', basic: false, pro: true },
-  { cap: 'Complex / high-end designs', basic: false, pro: true },
-  { cap: 'Tool switching (change EDA vendor)', basic: false, pro: true },
-];
-const CORP_COMPARE = PACK_COMPARE;
-
-const CORP_DISCOUNTS: { label: string; width: number; pct: string }[] = [
-  { label: '10 licenses', width: 0, pct: '0%' },
-  { label: '15', width: 12.5, pct: '5%' },
-  { label: '20', width: 25, pct: '10%' },
-  { label: '30', width: 50, pct: '20%' },
-  { label: '40', width: 75, pct: '30%' },
-  { label: '50+', width: 100, pct: '40%' },
-];
-
-function Dot({ yes }: { yes: boolean }) {
-  return yes ? (
-    <span className="inline-flex h-[22px] w-[22px] items-center justify-center rounded-full bg-blue text-[11.5px] font-bold text-white">✓</span>
-  ) : (
-    <span className="inline-flex h-[22px] w-[22px] items-center justify-center rounded-full bg-line text-[12px] text-ink-faint">–</span>
   );
 }
 
@@ -375,27 +323,6 @@ function CorporatePanel() {
         </div>
       </div>
 
-      <SubHead>Basic vs Pro — what changes</SubHead>
-      <CompareTable rows={CORP_COMPARE} />
-
-      <SubHead>Volume discount shape</SubHead>
-      <div className="mx-auto max-w-3xl rounded-2xl border border-line bg-void px-7 py-6">
-        {CORP_DISCOUNTS.map((d, i) => (
-          <div key={d.label} className={cn('flex items-center gap-4', i > 0 && 'mt-3')}>
-            <div className="w-[92px] shrink-0 font-mono text-[11.5px] text-ink-dim">{d.label}</div>
-            <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-line">
-              <motion.div
-                className="h-full rounded-full bg-gradient-to-r from-blue-600 to-sky"
-                initial={{ width: 0 }}
-                whileInView={{ width: `${d.width}%` }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.8, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-              />
-            </div>
-            <div className="w-9 shrink-0 text-right font-mono text-[11.5px] font-bold text-blue">{d.pct}</div>
-          </div>
-        ))}
-      </div>
     </>
   );
 }
