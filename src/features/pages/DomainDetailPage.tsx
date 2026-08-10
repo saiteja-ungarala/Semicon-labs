@@ -338,15 +338,16 @@ export default function DomainDetailPage() {
           </div>
         </Section>
       ) : (
-        <Section>
+        // Full-bleed so the row can exceed the 1200px page container: a 512px
+        // offer card alongside the content needs more room than that.
+        <Section bleed>
+          <div className="mx-auto w-full max-w-content px-5 sm:px-6 lg:px-8 xl:max-w-[1400px]">
           <SectionHead
             eyebrow="the full curriculum — one page"
             title={`Every skill, module and real world scenario in ${domain.code}.`}
             lede="Skill → modules → real world scenarios. Expand anything; the numbers are live from the catalog, not marketing."
           />
-          {/* Wider than the page container: a 512px offer card inside 1200px
-              squeezed the skills column to ~640px and the rows wrapped badly. */}
-          <div className="mx-auto grid w-full max-w-[1160px] gap-10 xl:max-w-[1400px] xl:grid-cols-[minmax(0,1fr)_512px] xl:gap-14">
+          <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_512px] xl:gap-14">
             <div className="min-w-0 space-y-4">
               {domain.skills.map((skill, i) => (
                 <SkillBlock
@@ -359,6 +360,7 @@ export default function DomainDetailPage() {
               ))}
             </div>
             <PricingRail />
+          </div>
           </div>
         </Section>
       )}

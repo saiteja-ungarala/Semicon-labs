@@ -59,9 +59,12 @@ export default function AudiencePage() {
         </div>
       </PageHero>
 
-      <Section>
+        {/* Full-bleed so the row can exceed the 1200px page container: a 512px
+            offer card alongside the content needs more room than that. */}
+      <Section bleed>
+        <div className="mx-auto w-full max-w-content px-5 sm:px-6 lg:px-8 xl:max-w-[1400px]">
         <SectionHead eyebrow={page.sectionEyebrow} title={page.sectionTitle} lede={page.sectionLede} />
-        <div className="mx-auto grid w-full max-w-[1160px] gap-10 xl:max-w-[1400px] xl:grid-cols-[minmax(0,1fr)_512px] xl:gap-14">
+        <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_512px] xl:gap-14">
           {/* Numbered value props */}
           <div className="min-w-0">
             <RevealGroup stagger={0.06}>
@@ -122,6 +125,7 @@ export default function AudiencePage() {
           </aside>
         </div>
         {page.slug === 'corporates' && <CorporateEnquiryForm />}
+        </div>
       </Section>
 
       <FinalCta />
