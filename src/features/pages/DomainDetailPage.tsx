@@ -231,7 +231,9 @@ function SkillBlock({
 function PricingRail() {
   return (
     <aside className="lg:sticky lg:top-24 lg:self-start">
-      <LaunchOfferCard variant="rail" />
+      <div className="mx-auto w-full max-w-lg">
+                <LaunchOfferCard variant="full" />
+              </div>
     </aside>
   );
 }
@@ -342,7 +344,7 @@ export default function DomainDetailPage() {
             title={`Every skill, module and real world scenario in ${domain.code}.`}
             lede="Skill → modules → real world scenarios. Expand anything; the numbers are live from the catalog, not marketing."
           />
-          <div className="grid gap-10 lg:grid-cols-[1fr_340px] lg:gap-12">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_512px] lg:gap-12">
             <div className="min-w-0 space-y-4">
               {domain.skills.map((skill, i) => (
                 <SkillBlock

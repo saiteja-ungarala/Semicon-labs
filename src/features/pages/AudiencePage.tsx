@@ -61,7 +61,7 @@ export default function AudiencePage() {
 
       <Section>
         <SectionHead eyebrow={page.sectionEyebrow} title={page.sectionTitle} lede={page.sectionLede} />
-        <div className="grid gap-10 lg:grid-cols-[1fr_340px] lg:gap-12">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_512px] lg:gap-12">
           {/* Numbered value props */}
           <div className="min-w-0">
             <RevealGroup stagger={0.06}>
@@ -85,7 +85,9 @@ export default function AudiencePage() {
               their plan card. */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
             {page.slug === 'individuals' ? (
-              <LaunchOfferCard variant="rail" />
+              <div className="mx-auto w-full max-w-lg">
+                <LaunchOfferCard variant="full" />
+              </div>
             ) : (
             <div className="gradient-border relative overflow-hidden rounded-2xl border border-transparent bg-panel p-7 shadow-card">
               {page.pricing.popular && (
