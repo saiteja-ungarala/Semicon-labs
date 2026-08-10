@@ -3,7 +3,6 @@ import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { PricingTabs } from '@/components/marketing/PricingTabs';
 import { ComparisonTable } from '@/components/marketing/ComparisonTable';
-import { PreBookForm } from '@/components/marketing/PreBookForm';
 import { FaqAccordion } from '@/components/marketing/FaqAccordion';
 import { Reveal } from '@/components/motion/Reveal';
 import { faqs } from '@/data/marketing';
@@ -36,7 +35,6 @@ export default function PricingPage() {
       <Section>
         <Reveal>
           <PricingTabs />
-          <PreBookForm />
         </Reveal>
       </Section>
 
