@@ -200,6 +200,22 @@ function SpecTable({ head, rows }: { head: string[]; rows: ReactNode[][] }) {
   );
 }
 
+/** Basic vs Pro capabilities from the client's sheet. Shared rows first so the
+ *  ticks read as a block and the three Pro-only rows land together at the end. */
+const TEAM_CAPABILITIES: { cap: string; basic: boolean; pro: boolean }[] = [
+  { cap: 'Standard VM compute', basic: true, pro: true },
+  { cap: 'Domain-specific certifications', basic: true, pro: true },
+  { cap: 'Standard labs', basic: true, pro: true },
+  { cap: 'Dedicated Admin and Manager accounts', basic: true, pro: true },
+  { cap: 'Automated practical evaluation', basic: true, pro: true },
+  { cap: 'Ticketing support', basic: true, pro: true },
+  { cap: 'Team users tracking', basic: true, pro: true },
+  { cap: 'Certification upon completing skills', basic: true, pro: true },
+  { cap: 'Higher VM compute (bigger labs)', basic: false, pro: true },
+  { cap: 'Complex / high-end designs', basic: false, pro: true },
+  { cap: 'Tool switching (change EDA vendor)', basic: false, pro: true },
+];
+
 const Hl = ({ children }: { children: ReactNode }) => (
   <span className="font-mono font-bold text-blue">{children}</span>
 );
@@ -233,18 +249,13 @@ function TeamsPanel() {
         left={<><b className="text-blue-600">1 session</b> = 1 user seat × 1 month × 240 lab hours. Minimum 2 sessions.</>}
         right="Max 30% discount"
       />
-      <div className="mx-auto mt-8 grid max-w-3xl gap-5 md:grid-cols-2">
+      <div className="mx-auto mt-8 grid max-w-3xl items-start gap-5 md:grid-cols-2">
         <TierCard
           name="Basic"
           tag="Standard compute · per session"
           price="₹12,000"
           priceSub="per session · excl. GST · ₹14,160 incl."
-          feats={[
-            { yes: true, text: <>240 lab hours per seat, per month</> },
-            { yes: true, text: <>Standard computing and design capacity</> },
-            { yes: true, text: <>Volume discount up to <Hl>30%</Hl></> },
-            { yes: true, text: <>Data holding grace period: <Hl>2 weeks</Hl></> },
-          ]}
+          feats={TEAM_CAPABILITIES.map((c) => ({ yes: c.basic, text: <>{c.cap}</> }))}
           cta={{ label: 'Start a Basic team', to: '/register?plan=team-basic' }}
         />
         <TierCard
@@ -254,40 +265,38 @@ function TeamsPanel() {
           badge="Most Popular"
           price="₹13,500"
           priceSub="per session · excl. GST · ₹15,930 incl."
-          feats={[
-            { yes: true, text: <>Everything in Basic</> },
-            { yes: true, text: <>Bigger computing and bigger design capacity</> },
-            { yes: true, text: <>Volume discount up to <Hl>30%</Hl></> },
-            { yes: true, text: <>Data holding grace period: <Hl>2 weeks</Hl></> },
-          ]}
+          feats={TEAM_CAPABILITIES.map((c) => ({ yes: c.pro, text: <>{c.cap}</> }))}
           cta={{ label: 'Start a Pro team', to: '/register?plan=team-pro' }}
         />
       </div>
 
-      <SubHead>Basic · ₹12,000 base</SubHead>
+      <SubHead>Basic · ₹12,000 per session</SubHead>
       <SpecTable
-        head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. GST']}
+        head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. 18% GST']}
         rows={[
-          [<Num>2</Num>, <Num>0%</Num>, <Hl>₹12,000</Hl>, <Num>₹14,160</Num>],
-          [<Num>3</Num>, <Num>10%</Num>, <Hl>₹10,800</Hl>, <Num>₹12,744</Num>],
-          [<Num>4</Num>, <Num>20%</Num>, <Hl>₹9,600</Hl>, <Num>₹11,328</Num>],
-          [<Num>5</Num>, <Num>30%</Num>, <Hl>₹8,400</Hl>, <Num>₹9,912</Num>],
+          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹12,000</Hl>, <Num>₹14,160</Num>],
+          [<Num>2</Num>, <Num>0%</Num>, <Hl>₹24,000</Hl>, <Num>₹28,320</Num>],
+          [<Num>3</Num>, <Num>10%</Num>, <Hl>₹32,400</Hl>, <Num>₹38,232</Num>],
+          [<Num>4</Num>, <Num>20%</Num>, <Hl>₹38,400</Hl>, <Num>₹45,312</Num>],
+          [<Num>5</Num>, <Num>30%</Num>, <Hl>₹42,000</Hl>, <Num>₹49,560</Num>],
         ]}
       />
 
-      <SubHead>Pro · ₹13,500 base</SubHead>
+      <SubHead>Pro · ₹13,500 per session</SubHead>
       <SpecTable
-        head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. GST']}
+        head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. 18% GST']}
         rows={[
-          [<Num>2</Num>, <Num>0%</Num>, <Hl>₹13,500</Hl>, <Num>₹15,930</Num>],
-          [<Num>3</Num>, <Num>10%</Num>, <Hl>₹12,150</Hl>, <Num>₹14,337</Num>],
-          [<Num>4</Num>, <Num>20%</Num>, <Hl>₹10,800</Hl>, <Num>₹12,744</Num>],
-          [<Num>5</Num>, <Num>30%</Num>, <Hl>₹9,450</Hl>, <Num>₹11,151</Num>],
+          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹13,500</Hl>, <Num>₹15,930</Num>],
+          [<Num>2</Num>, <Num>0%</Num>, <Hl>₹27,500</Hl>, <Num>₹32,450</Num>],
+          [<Num>3</Num>, <Num>10%</Num>, <Hl>₹36,450</Hl>, <Num>₹43,011</Num>],
+          [<Num>4</Num>, <Num>20%</Num>, <Hl>₹43,200</Hl>, <Num>₹50,976</Num>],
+          [<Num>5</Num>, <Num>30%</Num>, <Hl>₹47,250</Hl>, <Num>₹55,755</Num>],
         ]}
       />
 
       <Note>
-        Prices are per session. Maximum discount 30%. GST charged at 18%.
+        Prices shown are the total for the number of sessions. Maximum discount 30%. GST charged at
+        18%.
       </Note>
     </>
   );

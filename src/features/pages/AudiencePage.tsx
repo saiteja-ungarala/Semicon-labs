@@ -61,7 +61,7 @@ export default function AudiencePage() {
 
       <Section>
         <SectionHead eyebrow={page.sectionEyebrow} title={page.sectionTitle} lede={page.sectionLede} />
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_512px] lg:gap-12">
+        <div className="mx-auto grid w-full max-w-[1160px] gap-10 xl:max-w-[1400px] xl:grid-cols-[minmax(0,1fr)_512px] xl:gap-14">
           {/* Numbered value props */}
           <div className="min-w-0">
             <RevealGroup stagger={0.06}>

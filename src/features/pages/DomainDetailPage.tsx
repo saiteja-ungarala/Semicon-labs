@@ -344,7 +344,9 @@ export default function DomainDetailPage() {
             title={`Every skill, module and real world scenario in ${domain.code}.`}
             lede="Skill → modules → real world scenarios. Expand anything; the numbers are live from the catalog, not marketing."
           />
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_512px] lg:gap-12">
+          {/* Wider than the page container: a 512px offer card inside 1200px
+              squeezed the skills column to ~640px and the rows wrapped badly. */}
+          <div className="mx-auto grid w-full max-w-[1160px] gap-10 xl:max-w-[1400px] xl:grid-cols-[minmax(0,1fr)_512px] xl:gap-14">
             <div className="min-w-0 space-y-4">
               {domain.skills.map((skill, i) => (
                 <SkillBlock
