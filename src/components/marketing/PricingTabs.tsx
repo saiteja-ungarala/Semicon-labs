@@ -230,21 +230,20 @@ function TeamsPanel() {
   return (
     <>
       <Banner
-        left={<><b className="text-blue-600">1 session</b> = 1 login, 1 month, 240 lab hours. Minimum 2 sessions.</>}
-        right="Excl. GST"
+        left={<><b className="text-blue-600">1 session</b> = 1 user seat × 1 month × 240 lab hours. Minimum 2 sessions.</>}
+        right="Max 30% discount"
       />
       <div className="mx-auto mt-8 grid max-w-3xl gap-5 md:grid-cols-2">
         <TierCard
           name="Basic"
           tag="Standard compute · per session"
-          price="₹11,000"
-          priceSub="per session / month · + GST"
+          price="₹12,000"
+          priceSub="per session · excl. GST · ₹14,160 incl."
           feats={[
-            { yes: true, text: <>240 lab hours per login, per month</> },
+            { yes: true, text: <>240 lab hours per seat, per month</> },
             { yes: true, text: <>Standard computing and design capacity</> },
-            { yes: true, text: <><Hl>5%</Hl> off for every second session · max 40%</> },
-            { yes: true, text: <>Extra hours at <Hl>₹90</Hl>/hour</> },
-            { yes: true, text: <>Data storage <Hl>₹500</Hl>/login/month</> },
+            { yes: true, text: <>Volume discount up to <Hl>30%</Hl></> },
+            { yes: true, text: <>Data holding grace period: <Hl>2 weeks</Hl></> },
           ]}
           cta={{ label: 'Start a Basic team', to: '/register?plan=team-basic' }}
         />
@@ -253,37 +252,43 @@ function TeamsPanel() {
           name="Pro"
           tag="Bigger computing · bigger design"
           badge="Most Popular"
-          price="₹12,500"
-          priceSub="per session / month · + GST"
+          price="₹13,500"
+          priceSub="per session · excl. GST · ₹15,930 incl."
           feats={[
             { yes: true, text: <>Everything in Basic</> },
             { yes: true, text: <>Bigger computing and bigger design capacity</> },
-            { yes: true, text: <><Hl>10%</Hl> off for every additional session · max 40%</> },
-            { yes: true, text: <>Extra hours at <Hl>₹90</Hl>/hour</> },
-            { yes: true, text: <>Data storage <Hl>₹500</Hl>/login/month</> },
+            { yes: true, text: <>Volume discount up to <Hl>30%</Hl></> },
+            { yes: true, text: <>Data holding grace period: <Hl>2 weeks</Hl></> },
           ]}
           cta={{ label: 'Start a Pro team', to: '/register?plan=team-pro' }}
         />
       </div>
 
-      <SubHead>What one session includes</SubHead>
+      <SubHead>Basic · ₹12,000 base</SubHead>
       <SpecTable
-        head={['', 'Basic', 'Pro']}
+        head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. GST']}
         rows={[
-          ['Price per session', <Num>₹11,000 + GST</Num>, <Num>₹12,500 + GST</Num>],
-          ['Session length', <Num>1 month</Num>, <Num>1 month</Num>],
-          ['Lab hours included', <Num>240 hrs / month</Num>, <Num>240 hrs / month</Num>],
-          ['Computing & design', 'Standard', <Hl>Bigger</Hl>],
-          ['Volume discount', <>5% every second session</>, <>10% every additional session</>],
-          ['Discount cap', <Num>40%</Num>, <Num>40%</Num>],
-          ['Extra lab hours', <Num>₹90 / hour</Num>, <Num>₹90 / hour</Num>],
-          ['Data storage per login', <Num>₹500 / month</Num>, <Num>₹500 / month</Num>],
+          [<Num>2</Num>, <Num>0%</Num>, <Hl>₹12,000</Hl>, <Num>₹14,160</Num>],
+          [<Num>3</Num>, <Num>10%</Num>, <Hl>₹10,800</Hl>, <Num>₹12,744</Num>],
+          [<Num>4</Num>, <Num>20%</Num>, <Hl>₹9,600</Hl>, <Num>₹11,328</Num>],
+          [<Num>5</Num>, <Num>30%</Num>, <Hl>₹8,400</Hl>, <Num>₹9,912</Num>],
+        ]}
+      />
+
+      <SubHead>Pro · ₹13,500 base</SubHead>
+      <SpecTable
+        head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. GST']}
+        rows={[
+          [<Num>2</Num>, <Num>0%</Num>, <Hl>₹13,500</Hl>, <Num>₹15,930</Num>],
+          [<Num>3</Num>, <Num>10%</Num>, <Hl>₹12,150</Hl>, <Num>₹14,337</Num>],
+          [<Num>4</Num>, <Num>20%</Num>, <Hl>₹10,800</Hl>, <Num>₹12,744</Num>],
+          [<Num>5</Num>, <Num>30%</Num>, <Hl>₹9,450</Hl>, <Num>₹11,151</Num>],
         ]}
       />
 
       <Note>
-        Minimum 2 sessions. Individuals and Corporates pay <b className="text-ink">+20%</b> for a Pro
-        account. All prices exclude 18% GST.
+        Prices are per session. Maximum discount 30%. Data holding grace period is 2 weeks after a
+        session lapses; keep it longer with Data Backup at ₹500/month. GST charged at 18%.
       </Note>
     </>
   );

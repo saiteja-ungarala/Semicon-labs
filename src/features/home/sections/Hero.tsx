@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
+import { Modal } from '@/components/ui/Modal';
+import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
 
 // The rotating slot after "…the industry's" cycles the real EDA vendor logos,
 // in full colour, with the same slide transition the headlines used.
@@ -68,6 +70,7 @@ function RegistrationsBar() {
 export function Hero() {
   const reduce = useReducedMotion();
   const [headlineIndex, setHeadlineIndex] = useState(0);
+  const [pricingOpen, setPricingOpen] = useState(false);
 
   useEffect(() => {
     if (reduce) return;
@@ -174,7 +177,12 @@ export function Hero() {
             <Button to="/domains" size="lg" arrow className="h-12 w-full px-8 text-[15px] shadow-glow sm:w-auto">
               Explore Skills
             </Button>
-            <Button to="/pricing" size="lg" variant="secondary" className="h-12 w-full bg-white px-8 text-[15px] hover:bg-void-2 sm:w-auto">
+            <Button
+              size="lg"
+              variant="secondary"
+              onClick={() => setPricingOpen(true)}
+              className="h-12 w-full bg-white px-8 text-[15px] hover:bg-void-2 sm:w-auto"
+            >
               View Pricing
             </Button>
           </motion.div>
@@ -224,6 +232,9 @@ export function Hero() {
           </motion.div>
         </motion.div>
       </Container>
+      <Modal open={pricingOpen} onClose={() => setPricingOpen(false)} label="Individual pricing">
+        <LaunchOfferCard variant="full" />
+      </Modal>
     </section>
   );
 }

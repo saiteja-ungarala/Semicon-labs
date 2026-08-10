@@ -123,7 +123,7 @@ export function PageHero({
             </ol>
           </nav>
         )}
-        <div className={aside ? 'gap-10 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start lg:gap-16' : undefined}>
+        <div className={aside ? 'gap-10 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-16' : undefined}>
         <Reveal>
           {eyebrow && <p className={cn('eyebrow', dark && 'text-amber-300')}>{eyebrow}</p>}
           {/* Plain template string: twMerge would treat text-white as conflicting
@@ -135,7 +135,7 @@ export function PageHero({
           {children && <div className="mt-8">{children}</div>}
         </Reveal>
         {/* Sits level with the title rather than under the copy */}
-        {aside && <div className="mt-10 lg:mt-2 lg:shrink-0">{aside}</div>}
+        {aside && <div className="mt-10 lg:mt-0 lg:shrink-0">{aside}</div>}
         </div>
       </Container>
     </section>

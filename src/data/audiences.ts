@@ -54,7 +54,6 @@ export const audiences: Audience[] = [
     points: [
       'Admin roles & usage reporting',
       'Custom rollout and billing terms',
-      'Labs provisioned via tokens',
     ],
     cta: { label: 'For Corporates', to: '/who-we-serve/corporates' },
   },
