@@ -16,7 +16,7 @@ import {
   type SkillSummary,
 } from '@/features/curriculum/api';
 import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
-import { OPENINGS_BY_CODE, PAY_BY_CODE, proficiencyLevels } from '@/data/curriculum';
+import { OPENINGS_BY_CODE, PAY_BY_CODE, proficiencyLevels, upModules, upSkills, upTestcases } from '@/data/curriculum';
 import { breadcrumbSchema, courseSchema } from '@/lib/seo';
 import { cn } from '@/lib/cn';
 
@@ -303,9 +303,9 @@ export default function DomainDetailPage() {
         ) : (
           <div className="flex flex-wrap items-center gap-x-10 gap-y-3">
             {[
-              [domain.stats.skills, 'skills'],
-              [domain.stats.modules, 'modules'],
-              [domain.stats.testcases, 'real world scenarios'],
+              [upSkills(domain.stats.skills), 'skills'],
+              [upModules(domain.stats.modules), 'modules'],
+              [upTestcases(domain.stats.testcases), 'real world scenarios'],
               [PAY_BY_CODE[domain.code] ?? '₹9 LPA', 'avg. industry pay'],
               [OPENINGS_BY_CODE[domain.code] ?? '3,000+', 'active openings'],
             ].map(([v, l]) => (

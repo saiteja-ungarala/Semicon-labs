@@ -126,6 +126,16 @@ export interface ProficiencyLevel {
   description: string;
 }
 
+/**
+ * Client-directed uplift on the published catalog counts (Aug 2026). The API
+ * serves what is actually seeded; these offsets are what the marketing pages
+ * display. Set every value to 0 to show the raw catalog numbers again.
+ */
+export const COUNT_UPLIFT = { skills: 5, modules: 10, testcases: 30 };
+export const upSkills = (n: number) => n + COUNT_UPLIFT.skills;
+export const upModules = (n: number) => n + COUNT_UPLIFT.modules;
+export const upTestcases = (n: number) => n + COUNT_UPLIFT.testcases;
+
 /** Per-domain hiring stats (client-provided). One source for the home page,
  *  the domains index and every domain detail page. */
 export const PAY_BY_CODE: Record<string, string> = { PD: '₹9 LPA', DV: '₹11 LPA', AL: '₹7 LPA' };

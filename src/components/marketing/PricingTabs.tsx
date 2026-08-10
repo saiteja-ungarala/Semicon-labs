@@ -200,6 +200,20 @@ function SpecTable({ head, rows }: { head: string[]; rows: ReactNode[][] }) {
   );
 }
 
+/** Basic vs Pro capability matrix, used by both the Teams and Corporate tabs. */
+function CompareTable({ rows }: { rows: { cap: string; basic: boolean; pro: boolean }[] }) {
+  return (
+    <SpecTable
+      head={['Feature', 'Basic', 'Pro']}
+      rows={rows.map((r) => [
+        r.cap,
+        <div className="text-center"><Dot yes={r.basic} /></div>,
+        <div className="text-center"><Dot yes={r.pro} /></div>,
+      ])}
+    />
+  );
+}
+
 const Hl = ({ children }: { children: ReactNode }) => (
   <span className="font-mono font-bold text-blue">{children}</span>
 );
@@ -286,6 +300,9 @@ function TeamsPanel() {
         ]}
       />
 
+      <SubHead>Differences · Basic vs Pro</SubHead>
+      <CompareTable rows={PACK_COMPARE} />
+
       <Note>
         Prices are per session. Maximum discount 30%. Data holding grace period is 2 weeks after a
         session lapses; keep it longer with Data Backup at ₹500/month. GST charged at 18%.
@@ -294,15 +311,22 @@ function TeamsPanel() {
   );
 }
 
-const CORP_COMPARE: { cap: string; basic: boolean; pro: boolean }[] = [
-  { cap: 'Full problem library, all domains', basic: true, pro: true },
-  { cap: 'Standard-complexity labs', basic: true, pro: true },
-  { cap: 'Advanced / complex / signoff labs', basic: false, pro: true },
-  { cap: 'Higher VM compute for large-block work', basic: false, pro: true },
-  { cap: 'Tool switching across EDA vendors', basic: false, pro: true },
-  { cap: 'Certifications + progress tracking', basic: true, pro: true },
-  { cap: 'AI chatbot + ticketing support', basic: true, pro: true },
+/** Client's Basic vs Pro sheet. Shared rows first, Pro-only rows last, so the
+ *  ticks read as a solid block and the differences sit together at the end. */
+const PACK_COMPARE: { cap: string; basic: boolean; pro: boolean }[] = [
+  { cap: 'Standard VM compute', basic: true, pro: true },
+  { cap: 'Domain-specific certifications', basic: true, pro: true },
+  { cap: 'Standard labs', basic: true, pro: true },
+  { cap: 'Dedicated Admin and Manager accounts', basic: true, pro: true },
+  { cap: 'Automated practical evaluation', basic: true, pro: true },
+  { cap: 'Ticketing support', basic: true, pro: true },
+  { cap: 'Team users tracking', basic: true, pro: true },
+  { cap: 'Certification upon completing skills', basic: true, pro: true },
+  { cap: 'Higher VM compute (bigger labs)', basic: false, pro: true },
+  { cap: 'Complex / high-end designs', basic: false, pro: true },
+  { cap: 'Tool switching (change EDA vendor)', basic: false, pro: true },
 ];
+const CORP_COMPARE = PACK_COMPARE;
 
 const CORP_DISCOUNTS: { label: string; width: number; pct: string }[] = [
   { label: '10 licenses', width: 0, pct: '0%' },
@@ -352,14 +376,7 @@ function CorporatePanel() {
       </div>
 
       <SubHead>Basic vs Pro — what changes</SubHead>
-      <SpecTable
-        head={['Capability', 'Basic', 'Pro']}
-        rows={CORP_COMPARE.map((r) => [
-          r.cap,
-          <div className="text-center"><Dot yes={r.basic} /></div>,
-          <div className="text-center"><Dot yes={r.pro} /></div>,
-        ])}
-      />
+      <CompareTable rows={CORP_COMPARE} />
 
       <SubHead>Volume discount shape</SubHead>
       <div className="mx-auto max-w-3xl rounded-2xl border border-line bg-void px-7 py-6">

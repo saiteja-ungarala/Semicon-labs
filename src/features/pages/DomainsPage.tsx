@@ -8,7 +8,7 @@ import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import { SampleChallenges } from '@/features/home/sections/SampleChallenges';
 import { FinalCta } from '@/features/home/sections/FinalCta';
 import { useDomains, type DomainSummary } from '@/features/curriculum/api';
-import { OPENINGS_BY_CODE, PAY_BY_CODE } from '@/data/curriculum';
+import { OPENINGS_BY_CODE, PAY_BY_CODE, upModules, upSkills, upTestcases } from '@/data/curriculum';
 import { breadcrumbSchema } from '@/lib/seo';
 
 // Per-domain chip artwork for the card banners (client-supplied chip imagery).
@@ -20,9 +20,9 @@ const CARD_ART: Record<string, string> = {
 
 /** Marketing proof-points per domain card (client-provided claims). */
 const proofRows = (d: DomainSummary) => [
-  { label: 'Skill tracks', value: `${d.stats.skills}` },
-  { label: 'Modules', value: `${d.stats.modules}` },
-  { label: 'Real world scenarios', value: `${d.stats.testcases}+` },
+  { label: 'Skill tracks', value: `${upSkills(d.stats.skills)}` },
+  { label: 'Modules', value: `${upModules(d.stats.modules)}` },
+  { label: 'Real world scenarios', value: `${upTestcases(d.stats.testcases)}+` },
   { label: 'Supported by', value: 'Cadence · Synopsys · Siemens' },
   { label: 'Avg. industry pay', value: PAY_BY_CODE[d.code] ?? '₹9 LPA' },
   { label: 'Active openings', value: OPENINGS_BY_CODE[d.code] ?? '3,000+' },
@@ -111,7 +111,7 @@ function DomainBigCard({ domain }: { domain: DomainSummary }) {
         arrow
         className="mt-6 w-full transition-transform duration-300 group-hover:-translate-y-0.5"
       >
-        Explore {domain.code} — {domain.stats.testcases}+ real world scenarios
+        Explore {domain.code} — {upTestcases(domain.stats.testcases)}+ real world scenarios
       </Button>
       </div>
     </div>
@@ -126,9 +126,9 @@ export default function DomainsPage() {
   const { data: domains, isLoading, isError } = useDomains();
   const totals = domains?.reduce(
     (acc, d) => ({
-      skills: acc.skills + d.stats.skills,
-      modules: acc.modules + d.stats.modules,
-      testcases: acc.testcases + d.stats.testcases,
+      skills: acc.skills + upSkills(d.stats.skills),
+      modules: acc.modules + upModules(d.stats.modules),
+      testcases: acc.testcases + upTestcases(d.stats.testcases),
     }),
     { skills: 0, modules: 0, testcases: 0 },
   );

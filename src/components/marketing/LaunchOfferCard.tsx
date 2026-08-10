@@ -1,6 +1,6 @@
-import { type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Button } from '@/components/ui/Button';
-import { usePlanHref } from '@/lib/checkoutPath';
+import { PreBookDialog } from './PreBookDialog';
 import { cn } from '@/lib/cn';
 
 /**
@@ -9,8 +9,8 @@ import { cn } from '@/lib/cn';
  */
 
 export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail' }) {
-  const planHref = usePlanHref();
   const isRail = variant === 'rail';
+  const [payOpen, setPayOpen] = useState(false);
 
   return (
     <div className={cn("relative w-full mx-auto rounded-2xl bg-panel shadow-card border border-line overflow-hidden flex flex-col", isRail ? "max-w-[400px]" : "max-w-[800px]")}>
@@ -94,9 +94,10 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
 
         {/* CTA */}
         <div className="w-full mt-6">
-          <Button to={planHref('/register?plan=individual-launch')} arrow variant="primary" className="w-full h-12 text-base">
+          <Button onClick={() => setPayOpen(true)} arrow variant="primary" className="w-full h-12 text-base">
             Grab it for ₹99
           </Button>
+          <PreBookDialog open={payOpen} onClose={() => setPayOpen(false)} />
           
         </div>
       </div>

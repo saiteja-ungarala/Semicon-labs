@@ -3,7 +3,7 @@ import { Section, SectionHead } from '@/components/ui/Section';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
-import { OPENINGS_BY_CODE, PAY_BY_CODE } from '@/data/curriculum';
+import { OPENINGS_BY_CODE, PAY_BY_CODE, upModules, upSkills, upTestcases } from '@/data/curriculum';
 import { useDomains, type DomainSummary } from '@/features/curriculum/api';
 
 /**
@@ -12,9 +12,9 @@ import { useDomains, type DomainSummary } from '@/features/curriculum/api';
  */
 
 const claimRows = (d: DomainSummary) => [
-  { label: 'Skill tracks', value: `${d.stats.skills}` },
-  { label: 'Modules', value: `${d.stats.modules}` },
-  { label: 'Real world scenarios', value: `${d.stats.testcases}+` },
+  { label: 'Skill tracks', value: `${upSkills(d.stats.skills)}` },
+  { label: 'Modules', value: `${upModules(d.stats.modules)}` },
+  { label: 'Real world scenarios', value: `${upTestcases(d.stats.testcases)}+` },
   { label: 'Supported by', value: 'Cadence · Synopsys · Siemens' },
   { label: 'Avg. industry pay', value: PAY_BY_CODE[d.code] ?? '₹9 LPA' },
   { label: 'Active openings', value: OPENINGS_BY_CODE[d.code] ?? '3,000+' },

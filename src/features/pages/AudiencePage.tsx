@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { Seo } from '@/components/seo/Seo';
+import { CorporateEnquiryForm } from '@/components/marketing/CorporateEnquiryForm';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Badge } from '@/components/ui/Badge';
@@ -118,6 +119,7 @@ export default function AudiencePage() {
             )}
           </aside>
         </div>
+        {page.slug === 'corporates' && <CorporateEnquiryForm />}
       </Section>
 
       <FinalCta />
