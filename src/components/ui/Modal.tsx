@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 /**
@@ -44,7 +45,7 @@ export function Modal({ open, onClose, label, children }: ModalProps) {
     };
   }, [open, onClose]);
 
-  return (
+  const tree = (
     <AnimatePresence>
       {open && (
         <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-4 sm:items-center sm:p-6">
@@ -85,4 +86,7 @@ export function Modal({ open, onClose, label, children }: ModalProps) {
       )}
     </AnimatePresence>
   );
+
+  // Portalled to <body> so no transformed ancestor can trap or clip it.
+  return typeof document === 'undefined' ? tree : createPortal(tree, document.body);
 }

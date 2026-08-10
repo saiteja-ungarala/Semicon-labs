@@ -3,6 +3,36 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Section } from '@/components/ui/Section';
 import { testimonials } from '@/data/marketing';
 
+/** Five-star row with half-star support, drawn from the review's rating. */
+function Stars({ rating }: { rating: number }) {
+  return (
+    <div
+      className="flex items-center justify-center gap-1"
+      role="img"
+      aria-label={`Rated ${rating} out of 5`}
+    >
+      {[1, 2, 3, 4, 5].map((i) => {
+        const fill = Math.max(0, Math.min(1, rating - i + 1));
+        return (
+          <svg key={i} viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
+            <defs>
+              <linearGradient id={`star-${i}-${String(rating).replace('.', '_')}`}>
+                <stop offset={`${fill * 100}%`} stopColor="#F5A623" />
+                <stop offset={`${fill * 100}%`} stopColor="#E6E7F4" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4 6.2 20.5l1.1-6.5L2.6 9.4l6.5-.9L12 2.6Z"
+              fill={`url(#star-${i}-${String(rating).replace('.', '_')})`}
+            />
+          </svg>
+        );
+      })}
+      <span className="ml-1.5 font-mono text-[11.5px] font-bold text-ink-dim">{rating.toFixed(1)}</span>
+    </div>
+  );
+}
+
 export function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -39,7 +69,8 @@ export function Testimonials() {
               
               <div className="mt-10 flex items-center justify-center gap-6">
                 <div className="text-right">
-                  <div className="font-semibold text-ink">{testimonials[currentIndex].name}</div>
+                  <Stars rating={testimonials[currentIndex].rating} />
+                  <div className="mt-2 font-semibold text-ink">{testimonials[currentIndex].name}</div>
                   <div className="font-mono text-xs text-ink-dim">{testimonials[currentIndex].role}</div>
                 </div>
                 
