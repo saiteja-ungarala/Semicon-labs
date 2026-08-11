@@ -37,15 +37,34 @@ const field = (bad: boolean) =>
 
 export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [sending, setSending] = useState(false);
+  // The address the link went to. Comparing it against the live field value is
+  // what resets the button when the buyer edits their email — no effect needed.
+  const [verifiedFor, setVerifiedFor] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
+    watch,
+    trigger,
     formState: { errors },
   } = useForm<Fields>({ defaultValues: { source: SOURCES[0] } });
 
+  const emailValue = (watch('email') ?? '').trim().toLowerCase();
+  const verifySent = verifiedFor !== null && verifiedFor === emailValue;
+
+  const onVerify = async () => {
+    // Only the trigger lives here — the client's team owns sending the mail and
+    // recording the confirmation. Wire that call in place of this handler.
+    if (!(await trigger('email'))) return;
+    setVerifiedFor(emailValue);
+    console.info('Verify email requested:', emailValue);
+  };
+
   const onSubmit = handleSubmit((data) => {
     setSending(true);
-    sessionStorage.setItem('sl-prebook', JSON.stringify({ ...data, plan: 'individual-launch' }));
+    sessionStorage.setItem(
+      'sl-prebook',
+      JSON.stringify({ ...data, emailVerifyRequested: verifySent, plan: 'individual-launch' }),
+    );
     window.location.assign('/checkout?plan=individual-launch');
   });
 
@@ -102,20 +121,48 @@ export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () =>
             {errors.contact && <span className="mt-1.5 block text-xs text-danger">{errors.contact.message}</span>}
           </label>
 
-          <label className="block sm:col-span-2">
-            <span className="mb-1.5 block text-sm font-medium text-ink">Email</span>
-            <input
-              type="email"
-              {...register('email', {
-                required: 'We need an email for your receipt',
-                pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Enter a valid email' },
-              })}
-              className={field(!!errors.email)}
-              placeholder="you@example.com"
-              autoComplete="email"
-            />
+          <div className="sm:col-span-2">
+            <label htmlFor="prebook-email" className="mb-1.5 block text-sm font-medium text-ink">
+              Email
+            </label>
+            <div className="flex items-start gap-2">
+              <input
+                id="prebook-email"
+                type="email"
+                {...register('email', {
+                  required: 'We need an email for your receipt',
+                  pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Enter a valid email' },
+                })}
+                className={cn(field(!!errors.email), 'min-w-0 flex-1')}
+                placeholder="you@example.com"
+                autoComplete="email"
+              />
+              <button
+                type="button"
+                onClick={onVerify}
+                disabled={verifySent}
+                className={cn(
+                  'flex h-[46px] shrink-0 items-center gap-1.5 rounded-xl border px-4 text-[13px] font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue/40',
+                  verifySent
+                    ? 'cursor-default border-blue/30 bg-blue/5 text-blue'
+                    : 'border-blue/45 bg-blue/5 text-blue hover:bg-blue/10',
+                )}
+              >
+                {verifySent && (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                )}
+                {verifySent ? 'Sent' : 'Verify email'}
+              </button>
+            </div>
             {errors.email && <span className="mt-1.5 block text-xs text-danger">{errors.email.message}</span>}
-          </label>
+            {verifySent && !errors.email && (
+              <span className="mt-1.5 block text-xs text-blue" role="status">
+                Verification link sent to {verifiedFor}. Edit the address to send again.
+              </span>
+            )}
+          </div>
 
           <label className="block sm:col-span-2">
             <span className="mb-1.5 block text-sm font-medium text-ink">How did you get to know about us?</span>
