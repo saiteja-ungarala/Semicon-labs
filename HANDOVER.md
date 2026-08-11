@@ -64,10 +64,44 @@ console. These are your integration points.
 
 | # | Form | File | What happens today | What it needs |
 |---|---|---|---|---|
-| 1 | **₹99 pre-book** (dialog) | `web/src/components/marketing/PreBookDialog.tsx` | Saves `{name, contact, email, source}` to `sessionStorage` under key **`sl-prebook`**, then navigates to `/checkout?plan=individual-launch`. | Persist the lead, then take over the payment step. |
+| 1 | **₹99 pre-book** (dialog) | `web/src/components/marketing/PreBookDialog.tsx` | Saves `{name, contact, email, source, emailVerifyRequested}` to `sessionStorage` under key **`sl-prebook`**, then navigates to `/checkout?plan=individual-launch`. | Persist the lead, wire the **Verify email** button (see §3.1), then take over payment. |
 | 2 | **Corporate enquiry** | `web/src/components/marketing/CorporateEnquiryForm.tsx` | `console.info('Corporate enquiry:', data)` — nothing is stored. | An endpoint to receive it (name, email, contact, organization, requirement, source). |
 | 3 | **Contact** | `web/src/features/pages/ContactPage.tsx` | `console.info('Contact submission:', data)` — nothing is stored. | An endpoint to receive it. |
 | 4 | **Register** | `web/src/features/auth/RegisterPage.tsx` | **Works** — posts to `POST /api/v1/auth/register`. | See the caveat below. |
+
+### 3.1 The "Verify email" button — and the flow that already exists
+
+The pre-book dialog has a **Verify email** button beside the email field. Today
+it only validates the address and switches to a "Sent" state; **no mail leaves
+the server.** The handler is `onVerify` in `PreBookDialog.tsx` — put your call
+there. Editing the address returns the button to its unsent state, so a changed
+email can never sit behind a stale confirmation.
+
+Before you build anything: **a complete email-verification flow already exists**
+and you should reuse it rather than write a second one.
+
+| Piece | Location |
+|---|---|
+| Token model | `VerificationToken` in `prisma/schema.prisma` (hashed, 24-hour expiry, single-use via `usedAt`) |
+| Issue + send | `sendVerification()` in `server/src/services/auth.service.ts` |
+| Email body | `verificationEmail()` in `server/src/utils/mailer.ts` |
+| Consume token | `POST /api/v1/auth/verify-email` |
+| Landing page | `web/src/features/auth/VerifyEmailPage.tsx` |
+
+It already runs automatically on registration. Two things stop it working for
+the pre-book dialog:
+
+1. **No mail is actually sent anywhere yet.** `sendMail()` only creates a real
+   SMTP transport when **both `SMTP_HOST` and `SMTP_USER`** are set. Without
+   them it logs the message — including the verification link — to the server
+   console and returns successfully. Nothing is failing loudly; it is simply
+   not sending. Set the SMTP variables and this flow starts working, including
+   password reset.
+2. **`sendVerification()` takes a `User`,** but someone using the pre-book
+   dialog has no account yet. You will need either an endpoint that accepts a
+   bare email address, or to create the user record at pre-book time. There is
+   also **no resend endpoint** — worth adding while you are here, since
+   registration's verification mail currently cannot be re-triggered.
 
 ### Register caveat — please read
 
@@ -156,24 +190,31 @@ To take a copy of live data instead of seeding: `pg_dump` from Railway.
 
 1. The three forms above do not persist anything.
 2. Payment is untested against a real Easebuzz account.
-3. Contact number and attribution from signup are not stored.
-4. Analog Layout is flagged "coming soon"; its real curriculum (8 skills, 58
+3. **No outbound email is configured.** `SMTP_HOST`/`SMTP_USER` are unset, so
+   account verification and password-reset mails are logged to the server
+   console instead of being delivered. This is the single change that unblocks
+   the most: set them and both flows start working.
+4. Contact number and attribution from signup are not stored.
+5. Analog Layout is flagged "coming soon"; its real curriculum (8 skills, 58
    modules) is extracted at `server/scripts/analog-layout-extract.txt` but not
    yet imported.
-5. The published catalog counts on the marketing pages carry a deliberate
+6. The published catalog counts on the marketing pages carry a deliberate
    uplift (+5 skills, +10 modules, +30 scenarios per domain) set in
    `web/src/data/curriculum.ts` as `COUNT_UPLIFT`. The API serves the real
    numbers. Set the uplift to zeroes to show raw counts.
-6. Default admin credentials from the seed — **change these in production**:
+7. Default admin credentials from the seed — **change these in production**:
    `admin@semiconlabs.com` / `ChangeMe!2026`.
 
 ---
 
 ## 8. Suggested order of work
 
-1. Add a `leads` (or `enquiries`) table and one endpoint per form; point the
+1. **Set the SMTP variables.** One config change, and verification + password
+   reset both start delivering. Nothing else here is as cheap.
+2. Add a `leads` (or `enquiries`) table and one endpoint per form; point the
    three forms at it. Quickest visible win.
-2. Extend register to accept and store contact number + attribution.
-3. Get Easebuzz working end to end in test mode, then switch to production keys.
+3. Wire the pre-book **Verify email** button (§3.1) and add a resend endpoint.
+4. Extend register to accept and store contact number + attribution.
+5. Get Easebuzz working end to end in test mode, then switch to production keys.
 4. Read `sl-prebook` from `sessionStorage` on the checkout page so the buyer is
    not asked for the same four details twice.
