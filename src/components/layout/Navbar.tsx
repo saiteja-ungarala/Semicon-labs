@@ -43,7 +43,9 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 transition-all duration-500 ease-out',
+        // Stickiness lives on the wrapper in RootLayout so the announcement
+        // ticker stays pinned alongside this bar rather than scrolling away.
+        'transition-all duration-500 ease-out',
         scrolled
           ? 'bg-white/70 backdrop-blur-xl border-b border-line shadow-[0_4px_30px_rgba(0,0,0,0.02)]'
           : 'bg-transparent border-b border-transparent',

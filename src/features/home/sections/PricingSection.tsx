@@ -1,8 +1,13 @@
 import { Section, SectionHead } from '@/components/ui/Section';
 import { Reveal } from '@/components/motion/Reveal';
-import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
+import { PricingTabs } from '@/components/marketing/PricingTabs';
 
-/** Pricing — simplified to only show the Launch Offer Card */
+/**
+ * The full pricing set on the homepage — the same Individual / Teams /
+ * Corporate tabs the pricing page shows, so nothing is hidden behind a second
+ * click (client direction, Aug 2026). The ₹99 launch offer still leads, since
+ * it is the Individual tab's own content.
+ */
 export function PricingSection() {
   return (
     <Section id="pricing">
@@ -14,11 +19,11 @@ export function PricingSection() {
             Everything you need to <span className="text-gradient">break into VLSI.</span>
           </>
         }
-        lede="Reserve today and lock the launch rate — 200 hours for the price of 100. Once the 1,000 seats are gone, regular pricing applies."
+        lede="Individual, team and corporate plans — the same labs and tools throughout, priced for how you learn."
       />
       <Reveal>
-        <div className="mx-auto mt-8 max-w-lg">
-          <LaunchOfferCard variant="full" />
+        <div className="mt-8">
+          <PricingTabs />
         </div>
       </Reveal>
     </Section>

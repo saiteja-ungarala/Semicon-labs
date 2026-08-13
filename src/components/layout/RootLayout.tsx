@@ -23,8 +23,12 @@ export function RootLayout() {
       >
         Skip to content
       </a>
-      <UrgencyBar />
-      <Navbar />
+      {/* Ticker and nav pin together: the announcement used to scroll out of
+          view and never come back. One sticky wrapper keeps them as a unit. */}
+      <div className="sticky top-0 z-50">
+        <UrgencyBar />
+        <Navbar />
+      </div>
       <main id="main">
         <Suspense fallback={<RouteFallback />}>
           {/* Keyed by pathname so a route that only changes a param (e.g.

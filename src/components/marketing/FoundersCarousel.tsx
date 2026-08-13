@@ -13,6 +13,12 @@ interface Founder {
   role: string;
   exp: string;
   photo: string | null; // null → initials card until the photo arrives
+  /**
+   * Per-photo framing. The sources are already 4:5, so object-cover shows the
+   * whole frame including whatever empty studio background it carries — these
+   * shots vary, so the zoom is set per portrait rather than globally.
+   */
+  imgClass?: string;
 }
 
 // Names, experience and backgrounds from the client's founder bio table
@@ -20,8 +26,10 @@ interface Founder {
 const founders: Founder[] = [
   { name: 'Sudheer Anala', role: 'Co-Founder & CEO', exp: 'Ex-NVIDIA (Tegra) · 24+ years', photo: '/images/founders/founder-4.png' },
   { name: 'Ravi Chakka', role: 'Co-Founder & CTO', exp: 'Ex-Synopsys, Intel & AMD · 20+ years', photo: '/images/founders/founder-2.png' },
-  { name: 'Sashikanth Challa', role: 'Head of Software', exp: 'Ex-Apple & eBay · 20+ years', photo: '/images/founders/founder-5.png' },
-  { name: 'Srikanth Anumalasetty', role: 'Synthesis & STA Expert', exp: 'Ex-AMD & Xilinx · 15+ years', photo: '/images/founders/founder-1.png' },
+  // Tighter crop: this portrait carries a lot of empty wall either side.
+  { name: 'Sashikanth Challa', role: 'Head of Software', exp: 'Ex-Apple & eBay · 20+ years', photo: '/images/founders/founder-5.png', imgClass: 'scale-[1.3] origin-top' },
+  // Zoomed so the frame ends around the folded hands rather than mid-torso.
+  { name: 'Srikanth Anumalasetty', role: 'Synthesis & STA Expert', exp: 'Ex-AMD & Xilinx · 15+ years', photo: '/images/founders/founder-1.png', imgClass: 'scale-[1.3] origin-top' },
   { name: 'Bharath Devireddy', role: 'Senior Design Engineer', exp: 'Ex-Marvell & AMD · 15+ years', photo: '/images/founders/founder-3.png' },
 ];
 
@@ -86,6 +94,7 @@ export function FoundersCarousel() {
                       className={cn(
                         'h-full w-full object-cover transition-all duration-700',
                         abs === 0 ? 'grayscale-0' : 'grayscale',
+                        f.imgClass,
                       )}
                     />
                   ) : (

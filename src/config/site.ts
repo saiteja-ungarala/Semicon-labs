@@ -93,9 +93,7 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
     title: 'Company',
     items: [
       { label: 'About', to: '/about' },
-      { label: 'Careers', to: '/careers' },
       { label: 'Contact', to: '/contact' },
-      { label: 'FAQ', to: '/faq' },
     ],
   },
   {
