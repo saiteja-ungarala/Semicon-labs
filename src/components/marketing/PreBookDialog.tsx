@@ -37,6 +37,7 @@ const field = (bad: boolean) =>
 
 export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [sending, setSending] = useState(false);
+  const [done, setDone] = useState(false);
   // The address the link went to. Comparing it against the live field value is
   // what resets the button when the buyer edits their email — no effect needed.
   const [verifiedFor, setVerifiedFor] = useState<string | null>(null);
@@ -61,11 +62,15 @@ export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () =>
 
   const onSubmit = handleSubmit((data) => {
     setSending(true);
-    sessionStorage.setItem(
-      'sl-prebook',
-      JSON.stringify({ ...data, emailVerifyRequested: verifySent, plan: 'individual-launch' }),
-    );
-    window.location.assign('/checkout?plan=individual-launch');
+    // No payment gateway in the static build, so the seat is reserved as an
+    // enquiry and the buyer is told someone will follow up. THIS is where the
+    // payment call goes once a gateway is connected — the collected details
+    // are already in `data`.
+    const payload = { ...data, emailVerifyRequested: verifySent, plan: 'individual-launch' };
+    sessionStorage.setItem('sl-prebook', JSON.stringify(payload));
+    console.info('Pre-book request:', payload);
+    setSending(false);
+    setDone(true);
   });
 
   return (
@@ -92,6 +97,23 @@ export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () =>
           </p>
         </div>
 
+        {done ? (
+          <div className="px-7 py-10 text-center sm:px-9">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue/10 text-blue">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            </div>
+            <h3 className="mt-5 font-display text-[22px] font-bold text-ink">Your seat is reserved</h3>
+            <p className="mx-auto mt-3 max-w-[46ch] text-pretty text-[14px] leading-relaxed text-ink-dim">
+              Thanks — we have your details. Our team will contact you shortly with the payment link to
+              confirm your ₹99 pre-book and unlock your 200 lab hours.
+            </p>
+            <Button onClick={onClose} variant="primary" className="mt-7 h-11 px-8">
+              Done
+            </Button>
+          </div>
+        ) : (
         <form onSubmit={onSubmit} noValidate className="grid gap-4 px-7 py-7 sm:grid-cols-2 sm:px-9">
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink">Name</span>
@@ -177,13 +199,14 @@ export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () =>
 
           <div className="sm:col-span-2">
             <Button type="submit" arrow={!sending} disabled={sending} className="h-12 w-full text-[15px]">
-              {sending ? 'Taking you to payment…' : 'Pay now — ₹99'}
+              {sending ? 'Reserving your seat…' : 'Pay now — ₹99'}
             </Button>
             <p className="mt-3 text-center text-[12px] text-ink-faint">
               Secure checkout · your seat is held as soon as payment clears.
             </p>
           </div>
         </form>
+        )}
       </div>
     </Modal>
   );

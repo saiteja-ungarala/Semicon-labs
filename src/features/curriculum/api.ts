@@ -1,5 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { api } from '@/lib/api';
+import { loadCatalog, requireEntry } from '@/data/catalog';
+
+/**
+ * These hooks used to call the API. The site now ships static, so they read a
+ * frozen snapshot of those same endpoints instead — identical payloads, so no
+ * consuming component changed. See src/data/catalog.ts to restore a backend.
+ */
 
 // ---------------------------------------------------------------- types
 
@@ -79,14 +85,13 @@ export interface ModuleTestcases {
 
 // ---------------------------------------------------------------- hooks
 
+const STALE = 5 * 60 * 1000;
+
 export function useDomains() {
   return useQuery({
     queryKey: ['domains'],
-    queryFn: async () => {
-      const { data } = await api.get<{ data: DomainSummary[] }>('/domains');
-      return data.data;
-    },
-    staleTime: 5 * 60 * 1000,
+    queryFn: async () => (await loadCatalog()).domains as unknown as DomainSummary[],
+    staleTime: STALE,
   });
 }
 
@@ -95,10 +100,10 @@ export function useDomain(slug: string | undefined) {
     enabled: Boolean(slug),
     queryKey: ['domain', slug],
     queryFn: async () => {
-      const { data } = await api.get<{ data: DomainSummary }>(`/domains/${slug}`);
-      return data.data;
+      const { domainBySlug } = await loadCatalog();
+      return requireEntry(domainBySlug[slug!], `Domain "${slug}"`) as DomainSummary;
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: STALE,
   });
 }
 
@@ -107,10 +112,10 @@ export function useSkill(domainSlug: string | undefined, skillSlug: string | und
     enabled: Boolean(domainSlug && skillSlug),
     queryKey: ['skill', domainSlug, skillSlug],
     queryFn: async () => {
-      const { data } = await api.get<{ data: SkillDetail }>(`/domains/${domainSlug}/skills/${skillSlug}`);
-      return data.data;
+      const { skillBySlug } = await loadCatalog();
+      return requireEntry(skillBySlug[`${domainSlug}/${skillSlug}`], `Skill "${skillSlug}"`) as SkillDetail;
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: STALE,
   });
 }
 
@@ -119,10 +124,10 @@ export function useModuleTestcases(moduleSlug: string | undefined) {
     enabled: Boolean(moduleSlug),
     queryKey: ['module-testcases', moduleSlug],
     queryFn: async () => {
-      const { data } = await api.get<{ data: ModuleTestcases }>(`/modules/${moduleSlug}/testcases`);
-      return data.data;
+      const { testcasesByModule } = await loadCatalog();
+      return requireEntry(testcasesByModule[moduleSlug!], `Testcases for "${moduleSlug}"`) as ModuleTestcases;
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: STALE,
   });
 }
 

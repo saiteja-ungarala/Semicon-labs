@@ -1,10 +1,62 @@
 # Semicon Labs — developer handover
 
-For the team taking over **form submission** and **payment integration**.
+For the team taking over **form submission**, **authentication** and
+**payment integration**.
 
-> **Please do not ask for a "build zip".** The build output (`web/dist`) is
-> minified, bundled JavaScript with no source in it. You cannot add a form
-> handler or a payment gateway to it. Everything below is source.
+> **Please do not ask for a "build zip" to integrate against.** The build output
+> (`web/dist`) is minified, bundled JavaScript with no source in it. You cannot
+> add a form handler or a payment gateway to it. Everything below is source.
+
+---
+
+## 0. Architecture — read this first
+
+**The site ships static. There is no backend behind it.** (Client direction,
+August 2026.)
+
+The entire catalog — 3 domains, 19 skills, 70 modules, 732 real-world scenarios,
+with prices, durations and difficulty — is **hardcoded** in
+`web/src/data/catalog-snapshot.json`. That file is a verbatim capture of every
+curriculum and marketplace endpoint the UI used to call, so the pages render
+exactly what they rendered when a server was wired up. No API, no database, no
+hosting bill: `npm run build` produces a folder of files that any static host
+serves.
+
+**Every screen and button is still present and fully built**, including sign-up,
+log-in, checkout, payments and the dashboard. They are simply not connected to
+anything. That is deliberate — they are yours to wire to your own API.
+
+| Area | Data source now | Needs your API? |
+|---|---|---|
+| Domains, skills, modules, scenarios | `catalog-snapshot.json` | No |
+| Marketplace (`/modules`) | `catalog-snapshot.json` | Browsing no · buying yes |
+| Sign-up, log-in, password reset, email verification | — | **Yes** |
+| Checkout & payments | — | **Yes** |
+| Dashboard, purchases, orders, profile | — | **Yes** |
+| Contact / corporate / ₹99 pre-book forms | — | **Yes** |
+
+Anything in the last four rows currently shows: *"This action needs an API,
+which is not connected in this build."* — raised by `ApiNotConnectedError` in
+`web/src/lib/api.ts` before any request is sent.
+
+### Connecting your API
+
+Set one environment variable and those screens come back to life:
+
+```
+VITE_API_URL=https://api.your-domain.com
+```
+
+Leave it empty (the default) and the site stays fully static. The endpoints the
+app expects, and their exact request/response shapes, are the typed interfaces
+in each `web/src/features/<area>/api.ts`.
+
+### The old backend still exists
+
+`saiteja-ungarala/Semicon-labs-backend` (Node + Express + Prisma + PostgreSQL)
+is intact and implements all of the above — auth with refresh tokens, Easebuzz
+checkout, orders, invoices. It is **not deployed** and nothing points at it, but
+it is a working reference and may be faster to adopt than to rewrite. See §4–§6.
 
 ---
 
@@ -12,9 +64,9 @@ For the team taking over **form submission** and **payment integration**.
 
 | Part | Repository | Notes |
 |---|---|---|
-| Frontend | `saiteja-ungarala/Semicon-labs` | React 19 + Vite + TypeScript + Tailwind. Deployed on Vercel. |
-| Backend | `saiteja-ungarala/Semicon-labs-backend` | Node + Express + Prisma. Deployed on Railway. |
-| Database | *(inside the backend repo)* | PostgreSQL. Schema in `prisma/schema.prisma`, migrations in `prisma/migrations`, seed data in `prisma/catalog.json`. |
+| Frontend | `saiteja-ungarala/Semicon-labs` | React 19 + Vite + TypeScript + Tailwind. **This is the whole product now.** |
+| Backend *(optional/reference)* | `saiteja-ungarala/Semicon-labs-backend` | Node + Express + Prisma. Not deployed. Kept in case you adopt it. |
+| Database *(optional)* | *(inside the backend repo)* | PostgreSQL. Schema in `prisma/schema.prisma`, migrations in `prisma/migrations`, catalog in `prisma/catalog.json`. |
 
 Either clone the repositories (preferred — you get history and can raise PRs) or
 use the source archives supplied alongside this file. The archives contain
@@ -24,50 +76,80 @@ tracked files only: **no `node_modules`, no `dist`, and no `.env`.**
 
 ## 2. Running it locally
 
-### Backend
+### Frontend — this is all you need
+
+```bash
+cd web
+npm install
+npm run dev                   # http://localhost:5173
+npm run build                 # produces web/dist — deploy this folder anywhere
+```
+
+No database, no API, no `.env` required. Deploying `dist` needs exactly one
+host rule: **rewrite all unmatched paths to `/index.html`**, or every page
+except the homepage returns 404. For Apache, a `.htaccess` in the web root:
+
+```apache
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+```
+
+### Changing catalog content
+
+The catalog is one JSON file, `web/src/data/catalog-snapshot.json`. Small edits
+(a title, a price) can be made there directly. For a bulk content change, the
+pipeline that produced it is:
+
+1. Edit the source workbook (e.g. `PD_Labs_Structured.xlsx`)
+2. `cd server && npx tsx scripts/import-catalog.ts` → rewrites `prisma/catalog.json`
+3. Seed a database and run the API (§3), then re-snapshot:
+   ```bash
+   cd web
+   API_BASE=http://localhost:4000/api/v1 node scripts/snapshot-api.mjs src/data/catalog-snapshot.json
+   API_BASE=http://localhost:4000/api/v1 node scripts/snapshot-sorts.mjs src/data/catalog-snapshot.json
+   ```
+
+That last step needs the backend running **locally** — only as a build-time
+tool, not in production.
+
+### Backend (optional — only if you adopt it)
 
 ```bash
 cd server
 npm install
 cp .env.example .env          # then fill in the values (see §5)
 npx prisma migrate deploy     # creates the schema
-npm run db:seed               # loads the catalog (3 domains, 18 skills, 68 modules, 727 scenarios)
+npm run db:seed               # loads the catalog (3 domains, 19 skills, 70 modules, 732 scenarios)
 npm run dev                   # http://localhost:4000
 ```
 
 You need a PostgreSQL instance. Any will do — a local install, Docker, or a
 hosted one. `docker-compose.yml` at the repo root starts one on port 5433.
 
-### Frontend
+To point the site at it, set `VITE_API_URL=/api` in `web/.env` — the dev server
+proxies `/api` to `VITE_API_PROXY`. Note this makes the **auth, checkout and
+dashboard** screens live again; the catalog keeps reading the static snapshot
+either way.
 
-```bash
-cd web
-npm install
-npm run dev                   # http://localhost:5173
-```
-
-In development the frontend calls the API directly. In production, Vercel
-rewrites `/api/*` to Railway (see `web/vercel.json`) so the browser makes
-same-origin requests and no CORS is involved. **Leave `VITE_API_URL` unset on
-Vercel** — setting it bypasses the rewrite and reintroduces CORS.
-
-Useful commands: `npm run build` (what Vercel runs), `npx tsc -b` (types),
-`npx eslint src` (lint).
+Useful commands: `npm run build`, `npx tsc -b` (types), `npx eslint src` (lint).
 
 ---
 
 ## 3. The four forms — current state
 
-Three of these are **not yet wired to a backend**. They validate correctly and
-show success states, but the submitted data is only written to the browser
-console. These are your integration points.
+**None of these reach a server.** They validate correctly and show proper
+success states, but the submitted data only reaches the browser console and
+`sessionStorage`. These are your integration points — every one has the
+collected data already assembled, so wiring each is a single call.
 
 | # | Form | File | What happens today | What it needs |
 |---|---|---|---|---|
-| 1 | **₹99 pre-book** (dialog) | `web/src/components/marketing/PreBookDialog.tsx` | Saves `{name, contact, email, source, emailVerifyRequested}` to `sessionStorage` under key **`sl-prebook`**, then navigates to `/checkout?plan=individual-launch`. | Persist the lead, wire the **Verify email** button (see §3.1), then take over payment. |
+| 1 | **₹99 pre-book** (dialog) | `web/src/components/marketing/PreBookDialog.tsx` | Saves `{name, contact, email, source, emailVerifyRequested}` to `sessionStorage` under key **`sl-prebook`**, then shows a "Your seat is reserved — we'll be in touch" confirmation. **It no longer goes to checkout**, because there is no payment gateway. | Persist the lead, wire the **Verify email** button (§3.1), then start payment from `onSubmit`. |
 | 2 | **Corporate enquiry** | `web/src/components/marketing/CorporateEnquiryForm.tsx` | `console.info('Corporate enquiry:', data)` — nothing is stored. | An endpoint to receive it (name, email, contact, organization, requirement, source). |
 | 3 | **Contact** | `web/src/features/pages/ContactPage.tsx` | `console.info('Contact submission:', data)` — nothing is stored. | An endpoint to receive it. |
-| 4 | **Register** | `web/src/features/auth/RegisterPage.tsx` | **Works** — posts to `POST /api/v1/auth/register`. | See the caveat below. |
+| 4 | **Register / log in** | `web/src/features/auth/` | Posts to `/auth/register` etc., which only exist if you set `VITE_API_URL`. Unset, they show "not connected". | Your auth API — see the caveat below. |
 
 ### 3.1 The "Verify email" button — and the flow that already exists
 
@@ -149,6 +231,16 @@ STRIPE` and defaults to `EASEBUZZ`.
 
 ## 5. Environment variables
 
+### Frontend (`web/.env`) — the only one that matters for the static build
+
+| Variable | Purpose |
+|---|---|
+| `VITE_API_URL` | **Empty by default.** Empty = fully static, server-backed screens show "not connected". Set to your API base to switch auth/checkout/dashboard back on. |
+| `VITE_SITE_URL` | Public origin, used for canonical URLs, sitemap and Open Graph. |
+| `VITE_API_PROXY` | Dev-server proxy target when `VITE_API_URL=/api`. Dev only. |
+
+### Backend — only if you adopt the reference API
+
 Never commit `.env`. `server/.env.example` lists every key; the ones that matter:
 
 | Variable | Purpose |
@@ -188,33 +280,45 @@ To take a copy of live data instead of seeding: `pg_dump` from Railway.
 
 ## 7. Known gaps
 
-1. The three forms above do not persist anything.
-2. Payment is untested against a real Easebuzz account.
-3. **No outbound email is configured.** `SMTP_HOST`/`SMTP_USER` are unset, so
-   account verification and password-reset mails are logged to the server
-   console instead of being delivered. This is the single change that unblocks
-   the most: set them and both flows start working.
-4. Contact number and attribution from signup are not stored.
-5. Analog Layout is flagged "coming soon"; its real curriculum (8 skills, 58
+1. **No API is connected.** Auth, checkout, dashboard and all four forms show
+   "not connected" until you set `VITE_API_URL`. This is by design, not a bug.
+2. The four forms do not persist anything anywhere.
+3. Payment is untested against a real Easebuzz account, and is not reachable
+   from the static build at all.
+4. **No outbound email is configured** in the reference backend.
+   `SMTP_HOST`/`SMTP_USER` are unset, so account verification and
+   password-reset mails are logged to the server console rather than sent.
+5. Contact number and attribution from signup are not stored — the register
+   endpoint accepts neither.
+6. Analog Layout is flagged "coming soon"; its real curriculum (8 skills, 58
    modules) is extracted at `server/scripts/analog-layout-extract.txt` but not
    yet imported.
-6. The published catalog counts on the marketing pages carry a deliberate
+7. The published catalog counts on the marketing pages carry a deliberate
    uplift (+5 skills, +10 modules, +30 scenarios per domain) set in
-   `web/src/data/curriculum.ts` as `COUNT_UPLIFT`. The API serves the real
+   `web/src/data/curriculum.ts` as `COUNT_UPLIFT`. The snapshot holds the real
    numbers. Set the uplift to zeroes to show raw counts.
-7. Default admin credentials from the seed — **change these in production**:
-   `admin@semiconlabs.com` / `ChangeMe!2026`.
+8. **Every module in the marketplace is priced ₹499 with zero ratings** — the
+   seed never varied them, so all four sort options produce the same order.
+   Real prices go in `catalog-snapshot.json` as `priceMinor`, in paise.
+9. Two typos carried over from the source workbook and visible on the site:
+   `PEX - starrc` (lowercase, while its own scenarios say "StarXtract") and
+   `Dummy Fill BEOL- Calibre` (missing space before the dash).
+10. Default admin credentials in the reference seed — change before any
+    production use: `admin@semiconlabs.com` / `ChangeMe!2026`.
 
 ---
 
 ## 8. Suggested order of work
 
-1. **Set the SMTP variables.** One config change, and verification + password
-   reset both start delivering. Nothing else here is as cheap.
-2. Add a `leads` (or `enquiries`) table and one endpoint per form; point the
-   three forms at it. Quickest visible win.
+1. **Stand up an API and set `VITE_API_URL`.** Everything below depends on it.
+   Adopting `Semicon-labs-backend` gets you auth, orders and Easebuzz already
+   written — see §0.
+2. Add a `leads` (or `enquiries`) table and one endpoint per form, then point
+   the four forms at it. Quickest visible win, and the ₹99 flow starts
+   capturing real buyers instead of dropping them.
 3. Wire the pre-book **Verify email** button (§3.1) and add a resend endpoint.
-4. Extend register to accept and store contact number + attribution.
-5. Get Easebuzz working end to end in test mode, then switch to production keys.
-4. Read `sl-prebook` from `sessionStorage` on the checkout page so the buyer is
-   not asked for the same four details twice.
+4. Set the SMTP variables so verification and password reset actually deliver.
+5. Extend register to accept and store contact number + attribution.
+6. Get your gateway working end to end in test mode, then switch to production
+   keys. Payment starts from `onSubmit` in `PreBookDialog.tsx`, where the
+   buyer's details are already collected.
