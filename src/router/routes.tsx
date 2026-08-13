@@ -25,7 +25,6 @@ const ModuleDetailPage = lazy(() => import('@/features/marketplace/ModuleDetailP
 
 // Auth
 const LoginPage = lazy(() => import('@/features/auth/LoginPage'));
-const RegisterPage = lazy(() => import('@/features/auth/RegisterPage'));
 const ForgotPasswordPage = lazy(() => import('@/features/auth/ForgotPasswordPage'));
 const ResetPasswordPage = lazy(() => import('@/features/auth/ResetPasswordPage'));
 const VerifyEmailPage = lazy(() => import('@/features/auth/VerifyEmailPage'));
@@ -78,7 +77,6 @@ export const router = createBrowserRouter([
 
       // Auth
       { path: 'login', element: <LoginPage /> },
-      { path: 'register', element: <RegisterPage /> },
       { path: 'forgot-password', element: <ForgotPasswordPage /> },
       { path: 'reset-password', element: <ResetPasswordPage /> },
       { path: 'verify-email', element: <VerifyEmailPage /> },

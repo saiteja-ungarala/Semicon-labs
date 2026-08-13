@@ -94,11 +94,13 @@ interface TierCardProps {
   price: string;
   priceSub: string;
   feats: { yes: boolean; text: ReactNode }[];
-  cta: { label: string; to: string };
+  /** Omit `to` for a button that is styled and visible but goes nowhere yet. */
+  cta: { label: string; to?: string };
 }
 
 function TierCard({ pro, name, tag, badge, priceWas, price, priceSub, feats, cta }: TierCardProps) {
   const planHref = usePlanHref();
+  const href = cta.to ? (cta.to.startsWith('/register') ? planHref(cta.to) : cta.to) : undefined;
   return (
     <div
       className={cn(
@@ -144,14 +146,17 @@ function TierCard({ pro, name, tag, badge, priceWas, price, priceSub, feats, cta
         ))}
       </ul>
 
-      <Button
-        to={cta.to.startsWith('/register') ? planHref(cta.to) : cta.to}
-        variant={pro ? 'primary' : 'secondary'}
-        arrow={pro}
-        className="relative w-full"
-      >
-        {cta.label}
-      </Button>
+      {/* With no destination this is a plain <button> that does nothing — the
+          integration point for whoever wires up purchasing. */}
+      {href ? (
+        <Button to={href} variant={pro ? 'primary' : 'secondary'} arrow={pro} className="relative w-full">
+          {cta.label}
+        </Button>
+      ) : (
+        <Button variant={pro ? 'primary' : 'secondary'} arrow={pro} className="relative w-full">
+          {cta.label}
+        </Button>
+      )}
     </div>
   );
 }
@@ -257,7 +262,7 @@ function TeamsPanel() {
           price="₹12,000"
           priceSub="per session · excl. GST · ₹14,160 incl."
           feats={TEAM_CAPABILITIES.map((c) => ({ yes: c.basic, text: <>{c.cap}</> }))}
-          cta={{ label: 'Start a Basic team', to: '/register?plan=team-basic' }}
+          cta={{ label: 'Start a Basic team' }}
         />
         <TierCard
           pro
@@ -267,7 +272,7 @@ function TeamsPanel() {
           price="₹13,500"
           priceSub="per session · excl. GST · ₹15,930 incl."
           feats={TEAM_CAPABILITIES.map((c) => ({ yes: c.pro, text: <>{c.cap}</> }))}
-          cta={{ label: 'Start a Pro team', to: '/register?plan=team-pro' }}
+          cta={{ label: 'Start a Pro team' }}
         />
       </div>
 

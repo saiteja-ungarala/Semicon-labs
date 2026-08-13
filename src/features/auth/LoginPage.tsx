@@ -47,8 +47,8 @@ export default function LoginPage() {
         footer={
           <>
             New to Semicon Labs?{' '}
-            <Link to="/register" className="font-semibold text-blue hover:underline">
-              Create an account
+            <Link to="/domains" className="font-semibold text-blue hover:underline">
+              Explore skills
             </Link>
           </>
         }

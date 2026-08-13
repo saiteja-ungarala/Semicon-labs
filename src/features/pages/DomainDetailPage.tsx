@@ -325,12 +325,14 @@ export default function DomainDetailPage() {
           <div className="mx-auto max-w-2xl rounded-3xl border-2 border-dashed border-line-strong bg-panel/40 p-12 text-center">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-navy">Opening next</p>
             <h2 className="mt-3 text-2xl font-bold text-ink">This domain is being built right now.</h2>
+            {/* No signup to point at any more, so the copy states the status
+                rather than asking for a registration. */}
             <p className="mt-3 text-ink-dim">
-              {domain.name} labs are in production with the same real-project standard as PD and DV. Register
-              once — you'll be first in when it opens, ahead of public seats.
+              {domain.name} labs are in production, built to the same real-project standard as
+              Physical Design and Design Verification. This domain opens soon.
             </p>
-            <Button to="/register" arrow className="mt-7">
-              Reserve first access
+            <Button variant="secondary" disabled className="mt-7">
+              Coming soon
             </Button>
           </div>
         </Section>
