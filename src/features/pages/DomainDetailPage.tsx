@@ -317,9 +317,6 @@ export default function DomainDetailPage() {
                 <div className="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-ink-faint">{l}</div>
               </div>
             ))}
-            <p className="max-w-xs text-[13px] leading-snug text-ink-dim">
-              Everything below is on this one page — expand a skill, open a module, read its exact real world scenarios.
-            </p>
           </div>
         )}
       </PageHero>
