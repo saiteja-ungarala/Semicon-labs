@@ -59,7 +59,8 @@ function TestcaseList({ moduleSlug }: { moduleSlug: string }) {
               ✓
             </span>
           )}
-          <span className="font-mono text-[10.5px] uppercase text-ink-faint">~{formatDuration(tc.estimatedMin)}</span>
+          {/* No per-scenario duration: the client's call — hours are quoted at
+              skill and module level, not for every individual scenario. */}
         </li>
       ))}
     </ul>

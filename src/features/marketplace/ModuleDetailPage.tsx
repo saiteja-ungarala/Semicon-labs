@@ -8,7 +8,7 @@ import { RouteFallback } from '@/components/feedback/RouteFallback';
 import { formatMoney, netPriceMinor } from '@/lib/money';
 import { breadcrumbSchema, courseSchema } from '@/lib/seo';
 import { DifficultyDots, LabTypeBadge, ToolBadge } from '@/components/curriculum/CurriculumBits';
-import { useModuleTestcases, formatDuration, type Testcase } from '@/features/curriculum/api';
+import { useModuleTestcases, type Testcase } from '@/features/curriculum/api';
 import { useModule } from './api';
 
 /** How many testcases stay fully readable before the locked treatment. */
@@ -44,11 +44,10 @@ function TestcaseRow({
           )}
         </div>
         <p className="mt-1.5 line-clamp-2 pl-7 text-[13px] leading-relaxed text-ink-dim">{tc.scenario}</p>
+        {/* Difficulty only — per-scenario durations are deliberately not shown;
+            hours are quoted at skill and module level instead. */}
         <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 pl-7">
           <DifficultyDots level={tc.difficulty} />
-          <span className="font-mono text-[10.5px] uppercase tracking-wide text-ink-faint">
-            ~{formatDuration(tc.estimatedMin)}
-          </span>
         </div>
       </div>
       {locked && (
