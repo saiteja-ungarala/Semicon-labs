@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { Seo } from '@/components/seo/Seo';
 import { CorporateEnquiryForm } from '@/components/marketing/CorporateEnquiryForm';
 import { Section, SectionHead } from '@/components/ui/Section';
@@ -151,12 +151,6 @@ export default function AudiencePage() {
               <Button to={page.pricing.cta.to} arrow className="mt-6 w-full">
                 {page.pricing.cta.label}
               </Button>
-              <p className="mt-3 text-center text-[11.5px] text-ink-faint">
-                Questions first?{' '}
-                <Link to="/contact" className="text-blue hover:underline">
-                  Talk to us →
-                </Link>
-              </p>
             </div>
             )}
           </aside>

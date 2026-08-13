@@ -209,7 +209,7 @@ export const audiencePages: AudiencePage[] = [
     pricing: {
       name: 'Corporate Plan',
       price: 'Custom',
-      priceNote: '25+ users · tailored rollout',
+      priceNote: '10+ users · tailored rollout',
       features: [
         'All domains, all modules, all vendors',
         'Self-paced learning + certification',
