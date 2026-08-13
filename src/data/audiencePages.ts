@@ -8,6 +8,15 @@ export interface AudiencePageFeature {
   copy: string;
 }
 
+/** A single tier shown side-by-side when a plan has more than one. */
+export interface AudiencePageTier {
+  name: string;
+  price: string;
+  /** Sits under the price, e.g. "₹14,160 incl. GST". */
+  note: string;
+  highlight?: boolean;
+}
+
 export interface AudiencePagePricing {
   name: string;
   price: string;
@@ -15,6 +24,14 @@ export interface AudiencePagePricing {
   popular?: boolean;
   features: string[];
   cta: { label: string; to: string };
+  /**
+   * Two-tier plans (Teams) render these instead of the single `price`, so the
+   * card carries the same numbers as the pricing page in a narrower column.
+   * `price`/`priceNote` stay as the fallback for one-tier audiences.
+   */
+  tiers?: AudiencePageTier[];
+  /** One line of small print under the tiers, e.g. the session definition. */
+  fineprint?: string;
 }
 
 export interface AudiencePage {
@@ -127,18 +144,24 @@ export const audiencePages: AudiencePage[] = [
         copy: 'Unified visibility into who has mastered what, with dynamic allocation as project demands shift.',
       },
     ],
+    // Numbers mirror the Teams tab on /pricing exactly — update both together.
     pricing: {
-      name: 'Team Plan',
-      price: '₹9,000',
-      priceNote: 'per session · session = 1 month · 5+ users',
+      name: 'Team Plans',
+      price: '₹12,000',
+      priceNote: 'per session · excl. GST',
       popular: true,
-      features: [
-        'All domain modules included',
-        'Self-paced learning + completion certification',
-        'Tool switching across vendors',
-        'Reader access add-on available',
+      tiers: [
+        { name: 'Basic', price: '₹12,000', note: '₹14,160 incl. GST' },
+        { name: 'Pro', price: '₹13,500', note: '₹15,930 incl. GST', highlight: true },
       ],
-      cta: { label: 'View plans & pricing', to: '/pricing' },
+      fineprint: '1 session = 1 seat × 1 month × 240 lab hours · minimum 2 sessions',
+      features: [
+        'Every PD & DV module included',
+        'Dedicated admin and manager accounts',
+        'Automated practical evaluation + certification',
+        'Up to 30% off at 5 sessions',
+      ],
+      cta: { label: 'View plans & pricing', to: '/pricing?plan=teams' },
     },
   },
   {

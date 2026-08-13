@@ -12,15 +12,24 @@ export function ScrollManager() {
   useEffect(() => {
     if (hash) {
       const id = hash.slice(1);
-      // Wait a frame so lazy content has mounted before we measure.
-      const raf = requestAnimationFrame(() => {
+      // Arriving from another route, the target sits inside a lazily-loaded
+      // page that has not mounted yet — a single frame lands before it exists
+      // and silently falls back to the top. Keep looking for a short while.
+      let raf = 0;
+      const deadline = performance.now() + 1500;
+      const look = () => {
         const el = document.getElementById(id);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'start' });
           return;
         }
+        if (performance.now() < deadline) {
+          raf = requestAnimationFrame(look);
+          return;
+        }
         window.scrollTo({ top: 0 });
-      });
+      };
+      raf = requestAnimationFrame(look);
       return () => cancelAnimationFrame(raf);
     }
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });

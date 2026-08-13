@@ -3,28 +3,23 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
 
-/** Corporate enquiry capture — sales follows up from here. */
+/**
+ * Corporate enquiry capture — sales follows up from here.
+ *
+ * Fields are the client's final spec (Aug 2026): POC name, POC number, company,
+ * licence count are required; location, website and the requirement note are
+ * optional. Deliberately no email field — the POC number is the contact route.
+ */
 
 interface Fields {
-  name: string;
-  email: string;
-  contact: string;
-  organization: string;
+  pocName: string;
+  pocNumber: string;
+  companyName: string;
+  licences: string;
+  location: string;
+  website: string;
   requirement: string;
-  source: string;
 }
-
-const SOURCES = [
-  'LinkedIn',
-  'Instagram',
-  'YouTube',
-  'Facebook',
-  'WhatsApp',
-  'Referral / word of mouth',
-  'Conference or event',
-  'Google search',
-  'Other',
-];
 
 const field = (bad: boolean) =>
   cn(
@@ -32,10 +27,27 @@ const field = (bad: boolean) =>
     bad ? 'border-danger/60 focus:border-danger' : 'border-line focus:border-blue/60',
   );
 
-function Row({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+function Row({
+  label,
+  error,
+  required,
+  children,
+}: {
+  label: string;
+  error?: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-medium text-ink">{label}</span>
+      <span className="mb-1.5 block text-sm font-medium text-ink">
+        {label}
+        {required && (
+          <span aria-hidden className="ml-0.5 text-danger">
+            *
+          </span>
+        )}
+      </span>
       {children}
       {error && <span className="mt-1.5 block text-xs text-danger">{error}</span>}
     </label>
@@ -49,7 +61,7 @@ export function CorporateEnquiryForm() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<Fields>({ defaultValues: { source: SOURCES[0] } });
+  } = useForm<Fields>();
 
   const onSubmit = handleSubmit(async (data) => {
     // Sales picks these up; the endpoint lands with the CMS work.
@@ -86,71 +98,73 @@ export function CorporateEnquiryForm() {
           </div>
         ) : (
           <form onSubmit={onSubmit} noValidate className="mt-7 grid gap-5 sm:grid-cols-2">
-            <Row label="Name" error={errors.name?.message}>
+            <Row label="POC Name" required error={errors.pocName?.message}>
               <input
-                {...register('name', { required: 'Please tell us your name' })}
-                className={field(!!errors.name)}
+                {...register('pocName', { required: 'Please add the point of contact' })}
+                className={field(!!errors.pocName)}
                 placeholder="Ananya Sharma"
                 autoComplete="name"
               />
             </Row>
-            <Row label="Email" error={errors.email?.message}>
-              <input
-                type="email"
-                {...register('email', {
-                  required: 'We need an email to reply',
-                  pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Enter a valid email' },
-                })}
-                className={field(!!errors.email)}
-                placeholder="you@company.com"
-                autoComplete="email"
-              />
-            </Row>
-            <Row label="Contact number" error={errors.contact?.message}>
+            <Row label="POC Number" required error={errors.pocNumber?.message}>
               <input
                 type="tel"
-                inputMode="numeric"
-                {...register('contact', {
+                inputMode="tel"
+                {...register('pocNumber', {
                   required: 'We need a contact number',
                   pattern: { value: /^[+\d][\d\s-]{7,15}$/, message: 'Enter a valid phone number' },
                 })}
-                className={field(!!errors.contact)}
+                className={field(!!errors.pocNumber)}
                 placeholder="98765 43210"
                 autoComplete="tel"
               />
             </Row>
-            <Row label="Organization name" error={errors.organization?.message}>
+            <Row label="Company Name" required error={errors.companyName?.message}>
               <input
-                {...register('organization', { required: 'Please add your organisation' })}
-                className={field(!!errors.organization)}
+                {...register('companyName', { required: 'Please add your company name' })}
+                className={field(!!errors.companyName)}
                 placeholder="Acme Semiconductors"
                 autoComplete="organization"
               />
             </Row>
+            <Row label="No. of Licences Required" required error={errors.licences?.message}>
+              <input
+                type="number"
+                inputMode="numeric"
+                min={1}
+                {...register('licences', {
+                  required: 'How many licences do you need?',
+                  min: { value: 1, message: 'At least one licence' },
+                })}
+                className={field(!!errors.licences)}
+                placeholder="25"
+              />
+            </Row>
+            <Row label="Location">
+              <input
+                {...register('location')}
+                className={field(false)}
+                placeholder="Hyderabad, India"
+                autoComplete="address-level2"
+              />
+            </Row>
+            <Row label="Website">
+              <input
+                {...register('website')}
+                className={field(false)}
+                placeholder="acmesemi.com"
+                autoComplete="url"
+              />
+            </Row>
 
             <div className="sm:col-span-2">
-              <Row label="Explain a line or two about your requirement" error={errors.requirement?.message}>
+              <Row label="Few lines about your requirement" error={errors.requirement?.message}>
                 <textarea
                   rows={4}
-                  {...register('requirement', {
-                    required: 'A short description helps us prepare',
-                    minLength: { value: 10, message: 'A little more detail, please' },
-                  })}
+                  {...register('requirement')}
                   className={cn(field(!!errors.requirement), 'resize-y')}
                   placeholder="e.g. 40 engineers across PD and DV, ramping a new team over two quarters."
                 />
-              </Row>
-            </div>
-
-            <div className="sm:col-span-2">
-              <Row label="How did you get to know about us?">
-                <select {...register('source')} className={field(false)}>
-                  {SOURCES.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
               </Row>
             </div>
 

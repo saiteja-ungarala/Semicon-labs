@@ -9,6 +9,7 @@ import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
 import { FinalCta } from '@/features/home/sections/FinalCta';
 import { audiencePages } from '@/data/audiencePages';
+import { cn } from '@/lib/cn';
 import { breadcrumbSchema } from '@/lib/seo';
 
 /**
@@ -99,10 +100,46 @@ export default function AudiencePage() {
                 </span>
               )}
               <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-faint">{page.pricing.name}</p>
-              <div className="mt-2 flex items-baseline gap-2">
-                <span className="font-mono text-5xl font-bold text-ink">{page.pricing.price}</span>
-              </div>
-              <p className="mt-1.5 text-[13px] text-ink-dim">{page.pricing.priceNote}</p>
+
+              {page.pricing.tiers ? (
+                <>
+                  {/* Two tiers side by side: the column is too narrow for the
+                      pricing page's full cards, but the numbers must match it. */}
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    {page.pricing.tiers.map((t) => (
+                      <div
+                        key={t.name}
+                        className={cn(
+                          'rounded-xl border p-4',
+                          t.highlight ? 'border-blue/40 bg-blue-soft/40' : 'border-line bg-void-2/60',
+                        )}
+                      >
+                        <p
+                          className={cn(
+                            'font-mono text-[10.5px] font-bold uppercase tracking-[0.14em]',
+                            t.highlight ? 'text-blue' : 'text-ink-faint',
+                          )}
+                        >
+                          {t.name}
+                        </p>
+                        <p className="mt-1.5 font-mono text-[26px] font-bold leading-none text-ink">{t.price}</p>
+                        <p className="mt-1 text-[11px] leading-snug text-ink-faint">per session</p>
+                        <p className="mt-1 text-[11px] leading-snug text-ink-dim">{t.note}</p>
+                      </div>
+                    ))}
+                  </div>
+                  {page.pricing.fineprint && (
+                    <p className="mt-3 text-[11.5px] leading-snug text-ink-faint">{page.pricing.fineprint}</p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="mt-2 flex items-baseline gap-2">
+                    <span className="font-mono text-5xl font-bold text-ink">{page.pricing.price}</span>
+                  </div>
+                  <p className="mt-1.5 text-[13px] text-ink-dim">{page.pricing.priceNote}</p>
+                </>
+              )}
               <ul className="mt-6 space-y-2.5 border-t border-line pt-5 text-sm text-ink-dim">
                 {page.pricing.features.map((f) => (
                   <li key={f} className="flex items-start gap-2.5">

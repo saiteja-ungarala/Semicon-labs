@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { LaunchOfferCard } from './LaunchOfferCard';
@@ -316,7 +317,9 @@ function CorporatePanel() {
           Corporate plans run on license volume and contract length — a quick chat with sales gets you a
           sharper number than any page can.
         </p>
-        <Button to="/contact?plan=corporate" arrow className="mt-6">
+        {/* Straight to the corporate enquiry form rather than the general
+            contact page, whose fields are wrong for a licence enquiry. */}
+        <Button to="/who-we-serve/corporates#corporate-enquiry" arrow className="mt-6">
           Talk to Sales
         </Button>
         <div className="mt-8 flex flex-wrap justify-center gap-x-11 gap-y-5">
@@ -339,7 +342,13 @@ function CorporatePanel() {
 /* ------------------------------------------------------------------ main */
 
 export function PricingTabs() {
-  const [tab, setTab] = useState<TabId>('individual');
+  // ?plan=teams / ?plan=corporate opens that tab directly, so links from the
+  // audience pages land on the prices they were promised rather than
+  // Individual. Unknown or missing values fall back to Individual.
+  const [params] = useSearchParams();
+  const requested = params.get('plan');
+  const initial = TABS.some((t) => t.id === requested) ? (requested as TabId) : 'individual';
+  const [tab, setTab] = useState<TabId>(initial);
 
   return (
     <div>

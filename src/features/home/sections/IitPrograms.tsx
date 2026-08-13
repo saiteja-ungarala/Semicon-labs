@@ -92,8 +92,8 @@ export function IitPrograms() {
         <Reveal>
           <p className="eyebrow text-blue">institutional programs</p>
           <h2 className="mt-4 max-w-[20ch] text-balance text-display-md lg:max-w-none">
-            Powering IIT Certifications &amp;{' '}
-            <span className="text-gradient">M.Tech Programs</span> with Semicon Labs
+            Our Industry-Grade Labs Powering{' '}
+            <span className="text-gradient">IIT Programs</span> is Now Open to You
           </h2>
           <p className="mt-6 max-w-[62ch] text-pretty leading-relaxed text-ink-dim">
             Our industry-grade VLSI labs are used in IIT certification and M.Tech programs, providing
