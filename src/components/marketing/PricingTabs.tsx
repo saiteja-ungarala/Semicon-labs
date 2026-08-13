@@ -317,9 +317,8 @@ function CorporatePanel() {
           Corporate plans run on license volume and contract length — a quick chat with sales gets you a
           sharper number than any page can.
         </p>
-        {/* Straight to the corporate enquiry form rather than the general
-            contact page, whose fields are wrong for a licence enquiry. */}
-        <Button to="/who-we-serve/corporates#corporate-enquiry" arrow className="mt-6">
+        {/* /contact is now the same enquiry form, so send them straight there. */}
+        <Button to="/contact" arrow className="mt-6">
           Talk to Sales
         </Button>
         <div className="mt-8 flex flex-wrap justify-center gap-x-11 gap-y-5">

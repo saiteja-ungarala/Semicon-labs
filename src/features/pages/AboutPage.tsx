@@ -6,11 +6,22 @@ import { FoundersCarousel } from '@/components/marketing/FoundersCarousel';
 import { FinalCta } from '@/features/home/sections/FinalCta';
 import { breadcrumbSchema } from '@/lib/seo';
 
+// The client's three audience segments (Aug 2026) — the same split the rest of
+// the site uses. Supporting copy is drawn from the Who We Serve pages so the
+// wording stays consistent; the headings are theirs verbatim.
 const audience = [
-  { title: 'Engineering students', copy: 'Preparing for a semiconductor career and want real exposure before day one.' },
-  { title: 'Recent graduates', copy: 'Seeking practical industry experience that coursework never provided.' },
-  { title: 'Career switchers', copy: 'Transitioning into Physical Design or Design Verification from an adjacent field.' },
-  { title: 'Working engineers', copy: 'Deepening expertise in specific domains and modules on the job.' },
+  {
+    title: 'VLSI Trained Freshers',
+    copy: 'Preparing for a first semiconductor role and want real project exposure before day one.',
+  },
+  {
+    title: 'VLSI Working Professionals',
+    copy: 'Deepening expertise in specific domains and modules while on the job.',
+  },
+  {
+    title: 'VLSI Organizations',
+    copy: 'Building semiconductor capability at scale — org-wide or across a department.',
+  },
 ];
 
 export default function AboutPage() {
@@ -87,7 +98,7 @@ export default function AboutPage() {
           eyebrow="who it's for"
           title="Designed for engineers who want real project readiness."
         />
-        <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
+        <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
           {audience.map((a) => (
             <RevealItem key={a.title}>
               <div className="h-full rounded-2xl border border-line bg-panel/60 p-6">
