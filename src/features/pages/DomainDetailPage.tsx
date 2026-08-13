@@ -297,12 +297,11 @@ export default function DomainDetailPage() {
         crumbs={[{ name: 'Home', to: '/' }, { name: 'Domains', to: '/domains' }, { name: domain.name }]}
       >
         {domain.comingSoon ? (
-          <div className="flex flex-wrap items-center gap-4">
-            <Badge tone="neutral">Coming soon</Badge>
-            <Button to="/register" arrow>
-              Join the {domain.code} waitlist
-            </Button>
-          </div>
+          // Only the status, no call to action — the client does not want a
+          // waitlist signup on a domain that has not opened.
+          <Button variant="secondary" disabled>
+            Coming soon
+          </Button>
         ) : (
           <div className="flex flex-wrap items-center gap-x-10 gap-y-3">
             {[

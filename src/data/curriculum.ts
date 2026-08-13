@@ -136,6 +136,20 @@ export const upSkills = (n: number) => n + COUNT_UPLIFT.skills;
 export const upModules = (n: number) => n + COUNT_UPLIFT.modules;
 export const upTestcases = (n: number) => n + COUNT_UPLIFT.testcases;
 
+/**
+ * Figures shown for a domain that has not launched yet. Its catalog is only a
+ * placeholder, so the counts come from the client rather than from the data —
+ * quoted verbatim, uplift not applied. Used on the home page and the domains
+ * index; the domain's own page stays deliberately bare until it opens.
+ */
+export const COMING_SOON_STATS: Record<string, { label: string; value: string }[]> = {
+  AL: [
+    { label: 'Skill tracks', value: '6' },
+    { label: 'Modules', value: '50+' },
+    { label: 'Real world scenarios', value: '130+' },
+  ],
+};
+
 /** Per-domain hiring stats (client-provided). One source for the home page,
  *  the domains index and every domain detail page. */
 export const PAY_BY_CODE: Record<string, string> = { PD: '₹9 LPA', DV: '₹11 LPA', AL: '₹7 LPA' };

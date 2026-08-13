@@ -8,7 +8,14 @@ import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import { SampleChallenges } from '@/features/home/sections/SampleChallenges';
 import { FinalCta } from '@/features/home/sections/FinalCta';
 import { useDomains, type DomainSummary } from '@/features/curriculum/api';
-import { OPENINGS_BY_CODE, PAY_BY_CODE, upModules, upSkills, upTestcases } from '@/data/curriculum';
+import {
+  COMING_SOON_STATS,
+  OPENINGS_BY_CODE,
+  PAY_BY_CODE,
+  upModules,
+  upSkills,
+  upTestcases,
+} from '@/data/curriculum';
 import { breadcrumbSchema } from '@/lib/seo';
 
 // Per-domain chip artwork for the card banners (client-supplied chip imagery).
@@ -49,9 +56,19 @@ function DomainBigCard({ domain }: { domain: DomainSummary }) {
             <Badge tone="neutral">Coming soon</Badge>
           </div>
           <h3 className="mt-3 text-xl font-bold text-ink">{domain.name}</h3>
-          <p className="mt-2 flex-1 text-sm text-ink-dim">{domain.tagline}</p>
-          <Button to="/register" variant="secondary" className="mt-6 w-full">
-            Join the waitlist
+          <p className="mt-2 text-sm text-ink-dim">{domain.tagline}</p>
+          {/* Client-supplied counts — the catalog behind this domain is a
+              placeholder until it launches. */}
+          <ul className="mt-5 flex-1 divide-y divide-line border-y border-line">
+            {(COMING_SOON_STATS[domain.code] ?? []).map((row) => (
+              <li key={row.label} className="flex items-center justify-between gap-3 py-2.5">
+                <span className="font-mono text-[10.5px] uppercase tracking-wider text-ink-faint">{row.label}</span>
+                <span className="text-right text-[13.5px] font-bold text-ink">{row.value}</span>
+              </li>
+            ))}
+          </ul>
+          <Button variant="secondary" disabled className="mt-6 w-full">
+            Coming soon
           </Button>
         </div>
       </div>

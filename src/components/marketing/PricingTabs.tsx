@@ -387,12 +387,16 @@ export function PricingTabs() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Applies to every plan, so it sits below the tabs rather than inside one */}
-      <p className="mx-auto mt-10 max-w-3xl border-t border-line pt-6 text-center text-[13px] leading-relaxed text-ink-dim">
-        After the subscription validity, your project data will be available for 2 weeks. To keep it
-        beyond the retention period, subscribe to{' '}
-        <b className="font-semibold text-ink">Data Backup for ₹500/month</b>.
-      </p>
+      {/* Sits below the tabs because it applies to the self-serve plans, but not
+          to Corporate — those run on a contract, so the ₹500/month backup
+          add-on does not apply and the client asked for it to be hidden there. */}
+      {tab !== 'corporate' && (
+        <p className="mx-auto mt-10 max-w-3xl border-t border-line pt-6 text-center text-[13px] leading-relaxed text-ink-dim">
+          After the subscription validity, your project data will be available for 2 weeks. To keep
+          it beyond the retention period, subscribe to{' '}
+          <b className="font-semibold text-ink">Data Backup for ₹500/month</b>.
+        </p>
+      )}
     </div>
   );
 }
