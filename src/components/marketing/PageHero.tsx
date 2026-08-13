@@ -123,7 +123,15 @@ export function PageHero({
             </ol>
           </nav>
         )}
-        <div className={aside ? 'gap-10 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-16' : undefined}>
+        {/* With right-hand artwork the copy column has to stop before it. The
+            title and lede carry their own max-widths, but the stats row below
+            them does not, so it used to run under the chip. */}
+        <div
+          className={cn(
+            aside && 'gap-10 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-16',
+            image && 'lg:max-w-[62%] xl:max-w-[64%]',
+          )}
+        >
         <Reveal>
           {eyebrow && <p className={cn('eyebrow', dark && 'text-amber-300')}>{eyebrow}</p>}
           {/* Plain template string: twMerge would treat text-white as conflicting
