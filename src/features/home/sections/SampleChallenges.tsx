@@ -40,7 +40,7 @@ export function SampleChallenges() {
               type="button"
               onClick={() => setFilter(f.key)}
               className={cn(
-                'rounded-full border px-4 py-2 font-mono text-xs uppercase tracking-wider transition',
+                'inline-flex min-h-11 items-center rounded-full border px-4 py-2 font-mono text-xs uppercase tracking-wider transition',
                 filter === f.key
                   ? 'border-blue bg-blue text-white'
                   : 'border-line text-ink-dim hover:border-ink-dim hover:text-ink',

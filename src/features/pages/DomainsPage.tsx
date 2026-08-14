@@ -207,7 +207,10 @@ export default function DomainsPage() {
             </Link>
           </p>
         )}
-        <RevealGroup className="grid gap-6 lg:grid-cols-3" stagger={0.1}>
+        {/* [&>*]:min-w-0 — grid children default to min-width:auto, so a long
+            stat value ("Cadence · Synopsys · Siemens") made the card wider than
+            a phone screen and scrolled the page sideways. */}
+        <RevealGroup className="grid gap-6 lg:grid-cols-3 [&>*]:min-w-0" stagger={0.1}>
           {isLoading
             ? [1, 2, 3].map((i) => (
                 <RevealItem key={i}>

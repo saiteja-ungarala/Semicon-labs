@@ -111,7 +111,9 @@ export function Domains() {
           </>
         }
       />
-      <RevealGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.1}>
+      {/* [&>*]:min-w-0 — see DomainsPage: grid children otherwise refuse to
+          shrink below their widest stat row and overflow narrow screens. */}
+      <RevealGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 [&>*]:min-w-0" stagger={0.1}>
         {isLoading
           ? [1, 2, 3].map((i) => (
               <RevealItem key={i}>

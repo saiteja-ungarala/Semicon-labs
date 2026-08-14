@@ -52,7 +52,11 @@ export function FoundersCarousel() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative mx-auto flex h-[460px] max-w-4xl items-center justify-center overflow-visible sm:h-[500px]">
+      {/* The deck fans cards out to either side with absolute offsets tuned for
+          desktop; on a phone those reach past the viewport and scroll the page
+          sideways. Clipping on the x-axis only keeps the fan intact while the
+          cards that sit outside simply disappear, which is the intent anyway. */}
+      <div className="relative mx-auto flex h-[460px] max-w-4xl items-center justify-center [overflow-x:clip] sm:h-[500px]">
         {founders.map((f, i) => {
           // Signed circular offset from the active card: ... -2 -1 0 1 2 ...
           let off = i - active;
@@ -117,18 +121,26 @@ export function FoundersCarousel() {
       </div>
 
       {/* Dots */}
-      <div className="mt-6 flex items-center justify-center gap-2">
+      {/* No gap: each button already carries its own 44px tap padding. */}
+      <div className="mt-6 flex items-center justify-center">
         {founders.map((f, i) => (
           <button
             key={f.name}
             type="button"
             aria-label={`Go to ${f.name}`}
             onClick={() => setActive(i)}
-            className={cn(
-              'h-2 rounded-full transition-all',
-              i === active ? 'w-7 bg-blue' : 'w-2 bg-line-strong hover:bg-ink-faint',
-            )}
-          />
+            // The dot stays 8px visually, but the button is padded to a 44px
+            // tap target — an 8px hit area is unusable on a phone.
+            className="grid h-11 w-11 place-items-center"
+          >
+            <span
+              aria-hidden
+              className={cn(
+                'block h-2 rounded-full transition-all',
+                i === active ? 'w-7 bg-blue' : 'w-2 bg-line-strong hover:bg-ink-faint',
+              )}
+            />
+          </button>
         ))}
       </div>
     </div>

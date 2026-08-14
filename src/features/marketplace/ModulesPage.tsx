@@ -71,7 +71,7 @@ export default function ModulesPage() {
                 type="button"
                 onClick={() => update({ domain: t.key })}
                 className={cn(
-                  'rounded-full border px-4 py-2 font-mono text-xs uppercase tracking-wider transition',
+                  'inline-flex min-h-11 items-center rounded-full border px-4 py-2 font-mono text-xs uppercase tracking-wider transition',
                   (filters.domain ?? '') === t.key
                     ? 'border-blue bg-blue text-white'
                     : 'border-line text-ink-dim hover:border-ink-dim hover:text-ink',
@@ -150,7 +150,7 @@ export default function ModulesPage() {
                       type="button"
                       onClick={() => update({ page: String(page) })}
                       className={cn(
-                        'h-9 w-9 rounded-lg border font-mono text-sm transition',
+                        'h-11 w-11 rounded-lg border font-mono text-sm transition',
                         page === data.pagination.page
                           ? 'border-blue bg-blue text-white'
                           : 'border-line text-ink-dim hover:border-ink-dim hover:text-ink',

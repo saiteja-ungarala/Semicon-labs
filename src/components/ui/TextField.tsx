@@ -20,7 +20,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
         ref={ref}
         id={fieldId}
         className={cn(
-          'w-full rounded-lg border bg-panel px-4 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:outline-none',
+          'w-full min-h-11 rounded-lg border bg-panel px-4 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:outline-none',
           error ? 'border-danger/60 focus:border-danger' : 'border-line focus:border-blue/60',
           className,
         )}

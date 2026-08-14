@@ -77,7 +77,7 @@ export function PlatformModules() {
             <button
               type="button"
               onClick={() => setWithout((v) => !v)}
-              className="group flex max-w-xs items-center gap-3 text-left"
+              className="group flex min-h-11 max-w-xs items-center gap-3 py-1 text-left"
               aria-pressed={without}
             >
             <span className="text-blue transition-colors">

@@ -26,7 +26,7 @@ export function Footer() {
               <ul className="space-y-3">
                 {col.items.map((item) => (
                   <li key={item.to + item.label}>
-                    <Link to={item.to} className="text-sm text-ink-dim transition hover:text-ink">
+                    <Link to={item.to} className="inline-flex min-h-9 items-center py-1 text-sm text-ink-dim transition hover:text-ink">
                       {item.label}
                     </Link>
                   </li>

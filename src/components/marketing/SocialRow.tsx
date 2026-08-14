@@ -7,7 +7,7 @@ import { cn } from '@/lib/cn';
  * hover, which reads as "these are real accounts" rather than stock chrome.
  */
 export function SocialRow({ className, size = 'md' }: { className?: string; size?: 'md' | 'lg' }) {
-  const box = size === 'lg' ? 'h-11 w-11' : 'h-10 w-10';
+  const box = size === 'lg' ? 'h-12 w-12' : 'h-11 w-11'; // 44px floor for touch
   const glyph = size === 'lg' ? 'h-[19px] w-[19px]' : 'h-[17px] w-[17px]';
 
   return (

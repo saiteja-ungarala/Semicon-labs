@@ -28,8 +28,11 @@ export function HeroVideo() {
           transition={{ duration: reduce ? 0 : 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-5xl"
         >
-          {/* soft brand glow under the shell */}
-          <div className="relative">
+          {/* soft brand glow under the shell. Clipped horizontally because the
+              glow is inset -2rem either side, which pushed the document wider
+              than the viewport on phones and gave the whole page a sideways
+              scroll. */}
+          <div className="relative [overflow-x:clip]">
             <div
               aria-hidden
               className="pointer-events-none absolute -inset-x-8 -bottom-6 top-10 rounded-[3rem] blur-3xl"

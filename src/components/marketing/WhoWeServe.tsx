@@ -108,7 +108,7 @@ export function WhoWeServe({ detailed = false }: WhoWeServeProps) {
                   <div className="mt-6 flex flex-wrap items-center gap-3 lg:min-h-[84px] lg:items-start">
                     <Link
                       to={a.cta.to}
-                      className="inline-flex max-w-full items-center gap-2 rounded-2xl bg-white px-5 py-2.5 text-left text-[13px] font-bold leading-snug text-[#0B0E24] transition-all hover:gap-3 hover:bg-[#EFEDFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0E24]"
+                      className="inline-flex min-h-11 max-w-full items-center gap-2 rounded-2xl bg-white px-5 py-2.5 text-left text-[13px] font-bold leading-snug text-[#0B0E24] transition-all hover:gap-3 hover:bg-[#EFEDFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0E24]"
                     >
                       {a.cta.label} <span aria-hidden>→</span>
                     </Link>

@@ -33,7 +33,7 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
                 Pay just <b className="text-blue-600">₹99</b> to pre-book your spot and unlock{' '}
                 <b className="text-blue-600">200 lab hours</b> at the price of 100 hours
               </span>
-              <span className="mt-1 block text-[9px] font-bold uppercase tracking-widest text-blue-500 sm:text-[10px]">
+              <span className="mt-1 block text-[10px] font-bold uppercase tracking-widest text-blue-500 sm:text-[10.5px]">
                 Fully redeemable on your first purchase
               </span>
             </span>
@@ -54,13 +54,20 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
               <span className="text-3xl font-mono font-bold">₹9,000</span>
             </div>
             
-            <div className="bg-white text-blue-600 text-[9px] font-bold tracking-wider uppercase px-3 py-1 rounded-full shadow-sm">
+            <div className="bg-white text-blue-600 text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-full shadow-sm">
               You Save ₹9,000
             </div>
           </div>
 
-          {/* VS Badge */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-7 h-7 bg-white border-2 border-blue-600 rounded-full flex items-center justify-center text-[10px] font-bold text-blue-600 shadow-md">
+          {/* VS badge — only meaningful when the two panels sit side by side.
+              Stacked (mobile, and the rail variant at any width) it lands on
+              top of the "You save" pill, so it is hidden there. */}
+          <div
+            className={cn(
+              'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-7 h-7 bg-white border-2 border-blue-600 rounded-full items-center justify-center text-[10px] font-bold text-blue-600 shadow-md',
+              isRail ? 'hidden' : 'hidden sm:flex',
+            )}
+          >
             vs
           </div>
 
