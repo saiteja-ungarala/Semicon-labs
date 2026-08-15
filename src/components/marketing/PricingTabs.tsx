@@ -280,7 +280,7 @@ function TeamsPanel() {
       <SpecTable
         head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. 18% GST']}
         rows={[
-          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹12,000</Hl>, <Num>₹14,160</Num>],
+          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹12,000</Hl>],
           [<Num>2</Num>, <Num>0%</Num>, <Hl>₹24,000</Hl>, <Num>₹28,320</Num>],
           [<Num>3</Num>, <Num>10%</Num>, <Hl>₹32,400</Hl>, <Num>₹38,232</Num>],
           [<Num>4</Num>, <Num>20%</Num>, <Hl>₹38,400</Hl>, <Num>₹45,312</Num>],
@@ -292,7 +292,7 @@ function TeamsPanel() {
       <SpecTable
         head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. 18% GST']}
         rows={[
-          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹13,500</Hl>, <Num>₹15,930</Num>],
+          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹13,500</Hl>, ],
           [<Num>2</Num>, <Num>0%</Num>, <Hl>₹27,500</Hl>, <Num>₹32,450</Num>],
           [<Num>3</Num>, <Num>10%</Num>, <Hl>₹36,450</Hl>, <Num>₹43,011</Num>],
           [<Num>4</Num>, <Num>20%</Num>, <Hl>₹43,200</Hl>, <Num>₹50,976</Num>],
