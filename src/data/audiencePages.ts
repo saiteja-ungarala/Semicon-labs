@@ -148,7 +148,7 @@ export const audiencePages: AudiencePage[] = [
     pricing: {
       name: 'Team Plans',
       price: '₹12,000',
-      priceNote: 'per session · excl. GST',
+      priceNote: 'per session · Including. GST',
       popular: true,
       tiers: [
         { name: 'Basic', price: '₹12,000', note: '₹14,160 incl. GST' },
