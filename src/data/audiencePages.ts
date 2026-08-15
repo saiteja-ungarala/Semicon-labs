@@ -151,8 +151,8 @@ export const audiencePages: AudiencePage[] = [
       priceNote: 'per session · Including. GST',
       popular: true,
       tiers: [
-        { name: 'Basic', price: '₹12,000', note: '₹14,160 incl. GST' },
-        { name: 'Pro', price: '₹13,500', note: '₹15,930 incl. GST', highlight: true },
+        { name: 'Basic', price: '₹12,000', note: 'incl. GST' },
+        { name: 'Pro', price: '₹13,500', note: ' incl. GST', highlight: true },
       ],
       fineprint: '1 session = 1 seat × 1 month × 240 lab hours · minimum 2 sessions',
       features: [
