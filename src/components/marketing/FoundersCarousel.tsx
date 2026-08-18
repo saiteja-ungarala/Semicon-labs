@@ -24,13 +24,13 @@ interface Founder {
 // Names, experience and backgrounds from the client's founder bio table
 // (2026-08-03); face ↔ photo mapping per their earlier WhatsApp review.
 const founders: Founder[] = [
-  { name: 'Sudheer Anala', role: 'Co-Founder & CEO', exp: 'Ex-NVIDIA (Tegra) · 24+ years', photo: '/images/founders/founder-4.png' },
-  { name: 'Ravi Chakka', role: 'Co-Founder & CTO', exp: 'Ex-Synopsys, Intel & AMD · 20+ years', photo: '/images/founders/founder-2.png' },
-  // Tighter crop: this portrait carries a lot of empty wall either side.
-  { name: 'Sashikanth Challa', role: 'Head of Software', exp: 'Ex-Apple & eBay · 20+ years', photo: '/images/founders/founder-5.png', imgClass: 'scale-[1.3] origin-top' },
+  { name: 'Ravi Chakka', role: 'Founder & CEO', exp: 'Ex-Synopsys, Intel & AMD · 20+ years in semicon', photo: '/images/founders/founder-2.png' },
   // Zoomed so the frame ends around the folded hands rather than mid-torso.
-  { name: 'Srikanth Anumalasetty', role: 'Synthesis & STA Expert', exp: 'Ex-AMD & Xilinx · 15+ years', photo: '/images/founders/founder-1.png', imgClass: 'scale-[1.3] origin-top' },
-  { name: 'Bharath Devireddy', role: 'Senior Design Engineer', exp: 'Ex-Marvell & AMD · 15+ years', photo: '/images/founders/founder-3.png' },
+  { name: 'Srikanth Anumalasetty', role: 'Head of Syn & STA', exp: 'Ex-AMD · 15+ years in semicon', photo: '/images/founders/founder-1.png', imgClass: 'scale-[1.3] origin-top' },
+  { name: 'Bharath Devireddy', role: 'Head of PD', exp: 'Ex-AMD & Marvell · 15+ years in semicon', photo: '/images/founders/founder-3.png' },
+  { name: 'Sudheer Anala', role: 'Head of RTL & DV', exp: 'Ex-NVIDIA · 25+ years in semicon', photo: '/images/founders/founder-4.png' },
+  // Tighter crop: this portrait carries a lot of empty wall either side.
+  { name: 'Sashikanth Challa', role: 'Head of Software', exp: 'Ex-Apple, Google & eBay · 20+ years in software', photo: '/images/founders/founder-5.png', imgClass: 'scale-[1.3] origin-top' },
 ];
 
 const AUTO_MS = 3200;

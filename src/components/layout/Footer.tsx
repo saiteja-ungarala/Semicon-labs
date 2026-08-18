@@ -24,13 +24,26 @@ export function Footer() {
                 {col.title}
               </h4>
               <ul className="space-y-3">
-                {col.items.map((item) => (
-                  <li key={item.to + item.label}>
-                    <Link to={item.to} className="inline-flex min-h-9 items-center py-1 text-sm text-ink-dim transition hover:text-ink">
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+                {col.items.map((item) => {
+                  const cls =
+                    'inline-flex min-h-9 items-center py-1 text-sm text-ink-dim transition hover:text-ink';
+                  // mailto:/tel: are not routes — Link would treat them as a
+                  // path and produce a dead in-app link.
+                  const external = /^(mailto:|tel:|https?:)/.test(item.to);
+                  return (
+                    <li key={item.to + item.label}>
+                      {external ? (
+                        <a href={item.to} className={cls}>
+                          {item.label}
+                        </a>
+                      ) : (
+                        <Link to={item.to} className={cls}>
+                          {item.label}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
           ))}

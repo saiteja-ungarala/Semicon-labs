@@ -148,11 +148,11 @@ export const audiencePages: AudiencePage[] = [
     pricing: {
       name: 'Team Plans',
       price: '₹12,000',
-      priceNote: 'per session · Including. GST',
+      priceNote: 'per session · excl. GST',
       popular: true,
       tiers: [
-        { name: 'Basic', price: '₹12,000', note: 'incl. GST' },
-        { name: 'Pro', price: '₹13,500', note: ' incl. GST', highlight: true },
+        { name: 'Basic', price: '₹12,000', note: '' },
+        { name: 'Pro', price: '₹13,500', note: '', highlight: true },
       ],
       fineprint: '1 session = 1 seat × 1 month × 240 lab hours · minimum 2 sessions',
       features: [

@@ -3,7 +3,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { UrgencyBar } from './UrgencyBar';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
-import { StickyMobileCta } from './StickyMobileCta';
 import { ScrollManager } from './ScrollManager';
 import { RouteFallback } from '@/components/feedback/RouteFallback';
 import { useSessionBootstrap } from '@/features/auth/useSessionBootstrap';
@@ -39,7 +38,6 @@ export function RootLayout() {
         </Suspense>
       </main>
       <Footer />
-      <StickyMobileCta />
     </>
   );
 }

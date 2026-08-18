@@ -94,6 +94,7 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
     items: [
       { label: 'About', to: '/about' },
       { label: 'Contact', to: '/contact' },
+      { label: 'support@semiconlabs.com', to: 'mailto:support@semiconlabs.com' },
     ],
   },
   {

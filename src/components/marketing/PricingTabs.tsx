@@ -19,9 +19,10 @@ import { cn } from '@/lib/cn';
  * more power on Pro"), top-up packs and volume discounts.
  */
 
-type TabId = 'individual' | 'teams' | 'corporate';
+type TabId = 'exclusive' | 'individual' | 'teams' | 'corporate';
 
 const TABS: { id: TabId; label: string }[] = [
+  { id: 'exclusive', label: 'Exclusive offers' },
   { id: 'individual', label: 'Individual' },
   { id: 'teams', label: 'Teams' },
   { id: 'corporate', label: 'Corporate' },
@@ -210,7 +211,6 @@ function SpecTable({ head, rows }: { head: string[]; rows: ReactNode[][] }) {
  *  ticks read as a block and the three Pro-only rows land together at the end. */
 const TEAM_CAPABILITIES: { cap: string; basic: boolean; pro: boolean }[] = [
   { cap: 'Standard VM compute', basic: true, pro: true },
-  { cap: 'Domain-specific certifications', basic: true, pro: true },
   { cap: 'Standard labs', basic: true, pro: true },
   { cap: 'Dedicated Admin and Manager accounts', basic: true, pro: true },
   { cap: 'Automated practical evaluation', basic: true, pro: true },
@@ -233,17 +233,102 @@ function Note({ children }: { children: ReactNode }) {
 
 /* ---------------------------------------------------------------- panels */
 
-function IndividualPanel() {
+/** The ₹99 launch offer — now its own "Exclusive offers" tab. */
+function ExclusiveOffersPanel() {
   return (
     <>
       <Banner
         left={<><b className="text-blue-600">🔥 Limited launch offer</b> — pre-book today, pay the launch rate later.</>}
         right="Only for First 1000 seats"
       />
-      {/* Individuals: a single pre-book card — no separate Basic/Pro split. */}
       <div className="mx-auto mt-8 max-w-lg">
         <LaunchOfferCard variant="full" />
       </div>
+    </>
+  );
+}
+
+/**
+ * Individual first-subscription packs (client sheet, Aug 2026). Same capability
+ * story as Teams minus the two rows that only mean anything to a team —
+ * dedicated admin accounts and team-wide user tracking.
+ */
+const INDIVIDUAL_CAPABILITIES: { cap: string; basic: boolean; pro: boolean }[] = [
+  { cap: 'Standard VM compute', basic: true, pro: true },
+  { cap: 'Standard labs', basic: true, pro: true },
+  { cap: 'Automated practical evaluation', basic: true, pro: true },
+  { cap: 'Ticketing support', basic: true, pro: true },
+  { cap: 'Certification upon completing skills', basic: true, pro: true },
+  { cap: 'Higher VM compute (bigger labs)', basic: false, pro: true },
+  { cap: 'Complex / high-end designs', basic: false, pro: true },
+  { cap: 'Tool switching (change EDA vendor)', basic: false, pro: true },
+];
+
+const PACK_HEAD = ['Pack', 'Hours', 'Base price', 'Validity', 'Data holding grace'];
+
+/** [pack, hours, price, validity, grace] */
+const BASIC_PACKS: string[][] = [
+  ['First 100', '100 hrs', '₹9,000', '2 months', '2 weeks'],
+  ['First 200', '200 hrs', '₹18,000', '4 months', '2 weeks'],
+  ['First 300', '300 hrs', '₹27,000', '6 months', '2 weeks'],
+  ['First 400', '400 hrs', '₹36,000', '8 months', '2 weeks'],
+  ['First 500', '500 hrs', '₹45,000', '10 months', '2 weeks'],
+];
+
+const PRO_PACKS: string[][] = [
+  ['First 100', '100 hrs', '₹10,000', '2 months', '2 weeks'],
+  ['First 200', '200 hrs', '₹20,000', '4 months', '2 weeks'],
+  ['First 300', '300 hrs', '₹30,000', '6 months', '2 weeks'],
+  ['First 400', '400 hrs', '₹40,000', '8 months', '2 weeks'],
+  ['First 500', '500 hrs', '₹50,000', '10 months', '2 weeks'],
+];
+
+const packRows = (packs: string[][]) =>
+  packs.map(([pack, hours, price, validity, grace]) => [
+    <Num>{pack}</Num>,
+    <Num>{hours}</Num>,
+    <Hl>{price}</Hl>,
+    <Num>{validity}</Num>,
+    <Num>{grace}</Num>,
+  ]);
+
+const INDIVIDUAL_REGISTER = 'https://vigyan.semiconlabs.com/register?tier=';
+
+function IndividualPanel() {
+  return (
+    <>
+      <Banner left={<><b className="text-blue-600">First subscription</b> — ₹90/hr, Pro at ₹100/hr.</>} />
+      <div className="mx-auto mt-8 grid max-w-3xl items-start gap-5 md:grid-cols-2">
+        <TierCard
+          name="Basic"
+          tag="Standard compute · ₹90/hr"
+          price="₹9,000"
+          priceSub="First 100 · 100 hrs · excl. GST"
+          feats={INDIVIDUAL_CAPABILITIES.map((c) => ({ yes: c.basic, text: <>{c.cap}</> }))}
+          cta={{ label: 'Start with Basic', to: `${INDIVIDUAL_REGISTER}basic` }}
+        />
+        <TierCard
+          pro
+          name="Pro"
+          tag="Bigger computing · ₹100/hr"
+          badge="Most Popular"
+          price="₹10,000"
+          priceSub="First 100 · 100 hrs · excl. GST"
+          feats={INDIVIDUAL_CAPABILITIES.map((c) => ({ yes: c.pro, text: <>{c.cap}</> }))}
+          cta={{ label: 'Start with Pro', to: `${INDIVIDUAL_REGISTER}pro` }}
+        />
+      </div>
+
+      <SubHead>Basic · ₹90 per hour</SubHead>
+      <SpecTable head={PACK_HEAD} rows={packRows(BASIC_PACKS)} />
+
+      <SubHead>Pro · ₹100 per hour</SubHead>
+      <SpecTable head={PACK_HEAD} rows={packRows(PRO_PACKS)} />
+
+      <Note>
+        Base price is calculated at ₹90/hr on Basic and ₹100/hr on Pro. Validity and the data
+        holding grace period apply per pack.
+      </Note>
     </>
   );
 }
@@ -260,7 +345,7 @@ function TeamsPanel() {
           name="Basic"
           tag="Standard compute · per session"
           price="₹12,000"
-          priceSub="per session · excl. GST · ₹14,160 incl."
+          priceSub="per session · excl. GST"
           feats={TEAM_CAPABILITIES.map((c) => ({ yes: c.basic, text: <>{c.cap}</> }))}
           cta={{ label: 'Start a Basic team' }}
         />
@@ -270,7 +355,7 @@ function TeamsPanel() {
           tag="Bigger computing · bigger design"
           badge="Most Popular"
           price="₹13,500"
-          priceSub="per session · excl. GST · ₹15,930 incl."
+          priceSub="per session · excl. GST"
           feats={TEAM_CAPABILITIES.map((c) => ({ yes: c.pro, text: <>{c.cap}</> }))}
           cta={{ label: 'Start a Pro team' }}
         />
@@ -280,7 +365,7 @@ function TeamsPanel() {
       <SpecTable
         head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. 18% GST']}
         rows={[
-          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹12,000</Hl>],
+          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹12,000</Hl>, <Num>₹14,160</Num>],
           [<Num>2</Num>, <Num>0%</Num>, <Hl>₹24,000</Hl>, <Num>₹28,320</Num>],
           [<Num>3</Num>, <Num>10%</Num>, <Hl>₹32,400</Hl>, <Num>₹38,232</Num>],
           [<Num>4</Num>, <Num>20%</Num>, <Hl>₹38,400</Hl>, <Num>₹45,312</Num>],
@@ -292,7 +377,7 @@ function TeamsPanel() {
       <SpecTable
         head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. 18% GST']}
         rows={[
-          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹13,500</Hl>, ],
+          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹13,500</Hl>, <Num>₹15,930</Num>],
           [<Num>2</Num>, <Num>0%</Num>, <Hl>₹27,500</Hl>, <Num>₹32,450</Num>],
           [<Num>3</Num>, <Num>10%</Num>, <Hl>₹36,450</Hl>, <Num>₹43,011</Num>],
           [<Num>4</Num>, <Num>20%</Num>, <Hl>₹43,200</Hl>, <Num>₹50,976</Num>],
@@ -351,7 +436,7 @@ export function PricingTabs() {
   // Individual. Unknown or missing values fall back to Individual.
   const [params] = useSearchParams();
   const requested = params.get('plan');
-  const initial = TABS.some((t) => t.id === requested) ? (requested as TabId) : 'individual';
+  const initial = TABS.some((t) => t.id === requested) ? (requested as TabId) : 'exclusive';
   const [tab, setTab] = useState<TabId>(initial);
 
   return (
@@ -386,6 +471,7 @@ export function PricingTabs() {
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
         >
+          {tab === 'exclusive' && <ExclusiveOffersPanel />}
           {tab === 'individual' && <IndividualPanel />}
           {tab === 'teams' && <TeamsPanel />}
           {tab === 'corporate' && <CorporatePanel />}
@@ -399,7 +485,10 @@ export function PricingTabs() {
         <p className="mx-auto mt-10 max-w-3xl border-t border-line pt-6 text-center text-[13px] leading-relaxed text-ink-dim">
           After the subscription validity, your project data will be available for 2 weeks. To keep
           it beyond the retention period, subscribe to{' '}
-          <b className="font-semibold text-ink">Data Backup for ₹500/month</b>.
+          <b className="font-semibold text-ink">
+            {tab === 'teams' ? 'Data Backup for ₹500/month/user' : 'Data Backup for ₹500/month'}
+          </b>
+          .
         </p>
       )}
     </div>

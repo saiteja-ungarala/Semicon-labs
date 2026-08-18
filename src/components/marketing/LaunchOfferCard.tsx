@@ -30,11 +30,11 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
             <span className={cn("font-mono font-bold text-ink leading-none", isRail ? "text-3xl" : "text-4xl")}>₹99</span>
             <span className={cn('text-left leading-snug', isRail ? 'max-w-[190px]' : 'max-w-[300px]')}>
               <span className="block text-[12px] font-semibold text-ink sm:text-[13.5px]">
-                Pay just <b className="text-blue-600">₹99</b> to pre-book your spot and unlock{' '}
+                Pay just <b className="text-blue-600">₹99</b> to book your spot and unlock{' '}
                 <b className="text-blue-600">200 lab hours</b> at the price of 100 hours
               </span>
               <span className="mt-1 block text-[10px] font-bold uppercase tracking-widest text-blue-500 sm:text-[10.5px]">
-                Fully redeemable on your first purchase
+                ₹99 fully redeemable on your first purchase · Valid till Sep 15th
               </span>
             </span>
           </div>
