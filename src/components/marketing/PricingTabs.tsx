@@ -208,12 +208,35 @@ function TierCard({ pro, name, tag, badge, priceWas, price, priceSub, feats, cta
 }
 
 /** Heading that opens a layout column. Identical on both sides of the
- *  Exclusive offers grid so the cards under them start on the same line. */
+ *  Exclusive offers grid so the cards under them start on the same line,
+ *  and centred so each one sits over the middle of what it labels. */
+const COL_HEAD = "mb-5 text-center font-display text-[19px] font-bold text-blue-600";
+
 function ColHead({ children }: { children: ReactNode }) {
+  return <h3 className={COL_HEAD}>{children}</h3>;
+}
+
+/** The two ways to buy are alternatives, so they are separated rather than
+ *  just spaced: a rule down the gap with an "or" sitting on it. It stacks
+ *  to a horizontal rule when the row does. */
+function OrDivider() {
   return (
-    <h3 className="mb-5 text-center font-display text-[19px] font-bold text-blue-600 lg:text-left">
-      {children}
-    </h3>
+    <div className="flex flex-col">
+      {/* Matches ColHead's box so the rule starts level with the cards
+          rather than with the headings above them. */}
+      <div aria-hidden className={cn(COL_HEAD, "hidden opacity-0 lg:block")}>
+        or
+      </div>
+      <div className="relative flex flex-1 items-center justify-center py-1 lg:w-10 lg:py-0">
+        <span
+          aria-hidden
+          className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-line lg:bottom-0 lg:left-1/2 lg:right-auto lg:top-0 lg:h-auto lg:w-px lg:-translate-x-1/2 lg:translate-y-0"
+        />
+        <span className="relative rounded-full border border-line bg-panel px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-ink-faint shadow-sm">
+          or
+        </span>
+      </div>
+    </div>
   );
 }
 
@@ -318,14 +341,16 @@ function ExclusiveOffersPanel() {
           one grid row, so the offer and the two plans share a top and a
           bottom edge — the offer used to start 48px higher, end 112px lower
           and run 1.9x the width of a plan card, which read as one big card
-          next to two small ones. */}
-      <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[minmax(0,460px)_minmax(0,1fr)] xl:gap-10">
+          next to two small ones. The middle column is the "or" rule. */}
+      <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,400px)_auto_minmax(0,1fr)] lg:gap-x-5 xl:grid-cols-[minmax(0,460px)_auto_minmax(0,1fr)] xl:gap-x-6">
         <div className="flex min-w-0 flex-col">
           <ColHead>Exclusive offer</ColHead>
-          <div className="flex flex-1 justify-center lg:justify-start">
+          <div className="flex flex-1 justify-center">
             <ExclusiveOfferCard />
           </div>
         </div>
+
+        <OrDivider />
 
         <div className="flex min-w-0 flex-col">
           <ColHead>Regular pricing plans</ColHead>
