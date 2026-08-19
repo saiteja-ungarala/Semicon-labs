@@ -44,24 +44,35 @@ function Banner({ left, right }: { left: ReactNode; right?: string }) {
 }
 
 /** The little "power level" dial from the client's design. */
-function PowerDial({ boosted }: { boosted?: boolean }) {
+function PowerDial({ boosted, onDark }: { boosted?: boolean; onDark?: boolean }) {
   return (
     <div className="flex items-center gap-3.5">
       <svg width="64" height="40" viewBox="0 0 64 40" aria-hidden>
-        <path d="M4 36 A28 28 0 0 1 60 36" fill="none" stroke="#E6E7F4" strokeWidth="7" strokeLinecap="round" />
         <path
           d="M4 36 A28 28 0 0 1 60 36"
           fill="none"
-          stroke={boosted ? '#2E1EE0' : '#8A90B0'}
+          stroke={onDark ? 'rgba(255,255,255,0.18)' : '#E6E7F4'}
+          strokeWidth="7"
+          strokeLinecap="round"
+        />
+        <path
+          d="M4 36 A28 28 0 0 1 60 36"
+          fill="none"
+          stroke={onDark ? '#A79BFF' : boosted ? '#2E1EE0' : '#2E1EE0'}
           strokeWidth="7"
           strokeLinecap="round"
           strokeDasharray="88"
           strokeDashoffset={boosted ? 9 : 53}
         />
       </svg>
-      <div className="font-mono text-[10.5px] uppercase tracking-wide text-ink-faint">
+      <div className={cn('font-mono text-[10.5px] uppercase tracking-wide', onDark ? 'text-white/55' : 'text-ink-faint')}>
         Power level
-        <b className={cn('mt-0.5 block font-display text-[13.5px] normal-case tracking-normal', boosted ? 'text-blue-600' : 'text-ink')}>
+        <b
+          className={cn(
+            'mt-0.5 block font-display text-[13.5px] normal-case tracking-normal',
+            onDark ? 'text-white' : 'text-blue-600',
+          )}
+        >
           {boosted ? 'Boosted' : 'Standard'}
         </b>
       </div>
@@ -69,14 +80,25 @@ function PowerDial({ boosted }: { boosted?: boolean }) {
   );
 }
 
-function Feat({ yes, children }: { yes: boolean; children: ReactNode }) {
+function Feat({ yes, children, onDark }: { yes: boolean; children: ReactNode; onDark?: boolean }) {
   return (
-    <li className={cn('flex items-start gap-2.5 text-[13.5px] leading-snug', yes ? 'text-ink' : 'text-ink-faint')}>
+    <li
+      className={cn(
+        'flex items-start gap-2.5 text-[13.5px] leading-snug',
+        onDark ? (yes ? 'text-white' : 'text-white/40') : yes ? 'text-ink' : 'text-ink-faint',
+      )}
+    >
       <span
         aria-hidden
         className={cn(
           'mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full text-[10.5px] font-bold',
-          yes ? 'bg-blue-soft text-blue' : 'bg-line text-ink-faint',
+          onDark
+            ? yes
+              ? 'bg-white/20 text-white'
+              : 'bg-white/10 text-white/40'
+            : yes
+              ? 'bg-blue text-white'
+              : 'bg-blue/10 text-blue/40',
         )}
       >
         {yes ? '✓' : '–'}
@@ -103,58 +125,81 @@ function TierCard({ pro, name, tag, badge, priceWas, price, priceSub, feats, cta
   const planHref = usePlanHref();
   const href = cta.to ? (cta.to.startsWith('/register') ? planHref(cta.to) : cta.to) : undefined;
   return (
+    // Both tiers are "lit": Basic is a blue-tinted card, Pro a deep gradient.
+    // The client's note was that Basic looked greyed out beside Pro — the
+    // ✓/– marks inside stay, since they are what says what Basic includes.
     <div
       className={cn(
-        'relative flex flex-col overflow-hidden rounded-3xl bg-panel p-7 transition-all duration-300 hover:-translate-y-1',
+        'relative flex flex-col overflow-hidden rounded-3xl p-7 transition-all duration-300 hover:-translate-y-1',
         pro
-          ? 'gradient-border border border-transparent shadow-glow hover:shadow-card-hover'
-          : 'border border-line shadow-card hover:border-blue/40 hover:shadow-card-hover',
+          ? 'border border-blue/40 bg-gradient-to-b from-[#241C7A] via-[#161046] to-[#0B0E24] text-white shadow-glow hover:shadow-card-hover'
+          : 'border border-blue/30 bg-blue-50 shadow-card hover:border-blue/60 hover:shadow-card-hover',
       )}
     >
-      {/* Featured tier gets the same soft radial crown as the offer cards */}
-      {pro && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{ background: 'radial-gradient(120% 60% at 50% -12%, rgba(46,30,224,0.10), transparent 55%)' }}
-        />
-      )}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: pro
+            ? 'radial-gradient(120% 60% at 50% -12%, rgba(255,255,255,0.16), transparent 58%)'
+            : 'radial-gradient(120% 60% at 50% -12%, rgba(46,30,224,0.10), transparent 55%)',
+        }}
+      />
       <div className="relative flex items-center justify-between">
-        <span className={cn('font-display text-[21px] font-bold', pro ? 'text-blue-600' : 'text-ink')}>{name}</span>
+        <span className={cn('font-display text-[21px] font-bold', pro ? 'text-white' : 'text-blue-600')}>{name}</span>
         {badge && (
-          <span className="rounded-full bg-blue px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide text-white shadow-sm">
+          <span
+            className={cn(
+              'rounded-full px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wide shadow-sm',
+              pro ? 'bg-white text-blue-600' : 'bg-blue text-white',
+            )}
+          >
             {badge}
           </span>
         )}
       </div>
-      <p className="relative mt-0.5 text-[13px] text-ink-dim">{tag}</p>
+      <p className={cn('relative mt-0.5 text-[13px]', pro ? 'text-white/70' : 'text-ink-dim')}>{tag}</p>
 
       <div className="relative my-5">
-        <PowerDial boosted={pro} />
+        <PowerDial boosted={pro} onDark={pro} />
       </div>
 
       <div className="relative flex items-baseline gap-2.5">
-        {priceWas && <span className="font-mono text-sm text-ink-faint line-through">{priceWas}</span>}
-        <span className={cn('font-mono text-[32px] font-bold', pro ? 'text-blue-600' : 'text-ink')}>{price}</span>
+        {priceWas && (
+          <span className={cn('font-mono text-sm line-through', pro ? 'text-white/45' : 'text-ink-faint')}>
+            {priceWas}
+          </span>
+        )}
+        <span className={cn('font-mono text-[32px] font-bold', pro ? 'text-white' : 'text-blue-600')}>{price}</span>
       </div>
-      <p className="relative mb-6 text-[12.5px] text-ink-dim">{priceSub}</p>
+      <p className={cn('relative mb-6 text-[12.5px]', pro ? 'text-white/65' : 'text-ink-dim')}>{priceSub}</p>
 
-      <ul className="relative mb-7 flex-1 space-y-2.5 border-t border-line pt-5">
+      <ul className={cn('relative mb-7 flex-1 space-y-2.5 border-t pt-5', pro ? 'border-white/15' : 'border-blue/20')}>
         {feats.map((f, i) => (
-          <Feat key={i} yes={f.yes}>
+          <Feat key={i} yes={f.yes} onDark={pro}>
             {f.text}
           </Feat>
         ))}
       </ul>
 
       {/* With no destination this is a plain <button> that does nothing — the
-          integration point for whoever wires up purchasing. */}
+          integration point for whoever wires up purchasing. On the dark Pro
+          card the brand-blue button all but disappears, so it flips to white. */}
       {href ? (
-        <Button to={href} variant={pro ? 'primary' : 'secondary'} arrow={pro} className="relative w-full">
+        <Button
+          to={href}
+          variant="primary"
+          arrow={pro}
+          className={cn('relative w-full', pro && 'bg-white text-blue-600 hover:bg-white/90')}
+        >
           {cta.label}
         </Button>
       ) : (
-        <Button variant={pro ? 'primary' : 'secondary'} arrow={pro} className="relative w-full">
+        <Button
+          variant="primary"
+          arrow={pro}
+          className={cn('relative w-full', pro && 'bg-white text-blue-600 hover:bg-white/90')}
+        >
           {cta.label}
         </Button>
       )}
@@ -162,18 +207,33 @@ function TierCard({ pro, name, tag, badge, priceWas, price, priceSub, feats, cta
   );
 }
 
-function SubHead({ children }: { children: ReactNode }) {
+function SubHead({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className="mx-auto mt-14 mb-4 flex max-w-3xl items-center gap-3 font-mono text-[11.5px] font-bold uppercase tracking-[0.12em] text-ink-faint">
+    <div
+      className={cn(
+        'mt-14 mb-4 flex items-center gap-3 font-mono text-[11.5px] font-bold uppercase tracking-[0.12em] text-ink-faint',
+        className ?? 'mx-auto max-w-3xl',
+      )}
+    >
       {children}
       <span aria-hidden className="h-px flex-1 bg-line" />
     </div>
   );
 }
 
-function SpecTable({ head, rows, narrow }: { head: string[]; rows: ReactNode[][]; narrow?: boolean }) {
+function SpecTable({
+  head,
+  rows,
+  narrow,
+  className,
+}: {
+  head: string[];
+  rows: ReactNode[][];
+  narrow?: boolean;
+  className?: string;
+}) {
   return (
-    <div className={cn('mx-auto overflow-x-auto', narrow ? 'max-w-2xl' : 'max-w-3xl')}>
+    <div className={cn('overflow-x-auto', className ?? (narrow ? 'mx-auto max-w-2xl' : 'mx-auto max-w-3xl'))}>
       <table className="w-full border-separate border-spacing-y-2 text-left">
         <thead>
           <tr>
@@ -241,8 +301,41 @@ function ExclusiveOffersPanel() {
         left={<><b className="text-blue-600">🔥 Limited launch offer</b> — pre-book today, pay the launch rate later.</>}
         right="Only for First 1000 seats"
       />
-      <div className="mx-auto mt-8 max-w-lg">
-        <LaunchOfferCard variant="full" />
+      {/* Offer on the left, the regular plans it applies to on the right, so
+          the ₹99 is read against what it actually buys. */}
+      <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)] lg:gap-10">
+        <div className="flex justify-center lg:justify-start">
+          <LaunchOfferCard variant="rail" />
+        </div>
+
+        <div className="min-w-0">
+          <h3 className="mb-5 text-center font-display text-[19px] font-bold text-blue-600 lg:text-left">
+            Regular pricing plans
+          </h3>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <TierCard
+              name="Basic"
+              tag="Standard compute · ₹90/hr"
+              price="₹9,000"
+              priceSub="100 hrs · excl. GST"
+              feats={INDIVIDUAL_CAPABILITIES.map((c) => ({ yes: c.basic, text: <>{c.cap}</> }))}
+              cta={{ label: 'Start with Basic', to: `${INDIVIDUAL_REGISTER}basic` }}
+            />
+            <TierCard
+              pro
+              name="Pro"
+              tag="Bigger computing · ₹100/hr"
+              badge="Most Popular"
+              price="₹10,000"
+              priceSub="100 hrs · excl. GST"
+              feats={INDIVIDUAL_CAPABILITIES.map((c) => ({ yes: c.pro, text: <>{c.cap}</> }))}
+              cta={{ label: 'Start with Pro', to: `${INDIVIDUAL_REGISTER}pro` }}
+            />
+          </div>
+          <p className="mt-4 text-center text-[12.5px] text-ink-faint lg:text-left">
+            Full pack pricing — 100 to 500 hours — is on the Individual tab.
+          </p>
+        </div>
       </div>
     </>
   );
@@ -319,11 +412,18 @@ function IndividualPanel() {
         />
       </div>
 
-      <SubHead>Basic plan packs</SubHead>
-      <SpecTable narrow head={PACK_HEAD} rows={packRows(BASIC_PACKS)} />
-
-      <SubHead>Pro plan packs</SubHead>
-      <SpecTable narrow head={PACK_HEAD} rows={packRows(PRO_PACKS)} />
+      {/* Side by side — the two pack tables are read against each other, so
+          stacking them put 5 rows of scrolling between the comparison. */}
+      <div className="mx-auto mt-2 grid max-w-6xl gap-x-10 gap-y-0 lg:grid-cols-2">
+        <div className="min-w-0">
+          <SubHead className="w-full">Basic plan packs</SubHead>
+          <SpecTable className="w-full" head={PACK_HEAD} rows={packRows(BASIC_PACKS)} />
+        </div>
+        <div className="min-w-0">
+          <SubHead className="w-full">Pro plan packs</SubHead>
+          <SpecTable className="w-full" head={PACK_HEAD} rows={packRows(PRO_PACKS)} />
+        </div>
+      </div>
 
       <Note>
         Base price is calculated at ₹90/hr on Basic and ₹100/hr on Pro. Validity and the data

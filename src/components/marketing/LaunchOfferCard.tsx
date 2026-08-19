@@ -13,7 +13,7 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
   const [payOpen, setPayOpen] = useState(false);
 
   return (
-    <div className={cn("relative w-full mx-auto rounded-2xl bg-panel shadow-card border border-line overflow-hidden flex flex-col", isRail ? "max-w-[400px]" : "max-w-[800px]")}>
+    <div className={cn("relative w-full mx-auto rounded-2xl bg-panel shadow-card border border-line overflow-hidden flex flex-col", isRail ? "max-w-[520px]" : "max-w-[800px]")}>
       {/* Top Banner */}
       <div className="bg-blue-600 py-2 text-center px-4">
         <span className="text-white text-[10px] sm:text-xs font-bold tracking-widest uppercase flex items-center justify-center gap-2">
@@ -21,19 +21,19 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
         </span>
       </div>
 
-      <div className={cn("p-5 flex flex-col items-center", isRail ? "p-5" : "sm:p-7")}>
+      <div className={cn("p-5 flex flex-col items-center", isRail ? "sm:p-6" : "sm:p-7")}>
         {/* Header Titles */}
         <div className="text-center mb-5 flex flex-col items-center">
           <div className="text-blue-500 text-[10px] font-bold tracking-widest uppercase mb-1.5">The Launch Offer</div>
-          <h2 className={cn("font-display font-bold text-ink leading-tight mb-2", isRail ? "text-xl" : "text-2xl sm:text-3xl")}>Everything you need to<br />break into VLSI.</h2>
+          <h2 className={cn("font-display font-bold text-ink leading-tight mb-2", isRail ? "text-xl sm:text-2xl" : "text-2xl sm:text-3xl")}>Everything you need to<br />break into VLSI.</h2>
           {/* The ₹99 is a reservation fee, not hours — the client rewrote this
               because buyers were reading it as "₹99 buys 200 lab hours". */}
           <div className="mt-3 flex flex-col items-center gap-2">
-            <span className={cn('font-mono font-bold text-ink leading-none', isRail ? 'text-3xl' : 'text-4xl')}>₹99</span>
+            <span className={cn('font-mono font-bold text-ink leading-none', isRail ? 'text-3xl sm:text-4xl' : 'text-4xl')}>₹99</span>
             <p
               className={cn(
                 'text-pretty text-center leading-relaxed text-ink-dim',
-                isRail ? 'max-w-[240px] text-[11.5px]' : 'max-w-[46ch] text-[12px] sm:text-[13px]',
+                isRail ? 'max-w-[44ch] text-[12px]' : 'max-w-[46ch] text-[12px] sm:text-[13px]',
               )}
             >
               <b className="text-blue-600">₹99</b> is only a pre-booking fee to reserve your spot for
@@ -46,7 +46,7 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
         </div>
 
         {/* The Split Card */}
-        <div className={cn("w-full relative rounded-xl border border-line-strong overflow-hidden flex shadow-sm", isRail ? "flex-col" : "flex-col sm:flex-row")}>
+        <div className="w-full relative rounded-xl border border-line-strong overflow-hidden flex flex-col shadow-sm sm:flex-row">
           
           {/* Pre-book Basic */}
           <div className="bg-blue-600 text-white p-5 flex-1 flex flex-col items-center justify-center text-center relative z-10">
@@ -85,7 +85,7 @@ export function LaunchOfferCard({ variant = 'full' }: { variant?: 'full' | 'rail
         
 
         {/* Benefits Pills (Grid Layout) */}
-        <div className={cn("w-full mt-5 grid gap-2", isRail ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 sm:gap-3")}>
+        <div className={cn("w-full mt-5 grid gap-2", isRail ? "grid-cols-1 sm:gap-2.5" : "grid-cols-1 sm:grid-cols-2 sm:gap-3")}>
           <BenefitPill text={<>Pre-book <b>₹99</b> unlocks <b>100 + 100 hours free</b></>} badge="Save ₹9k" />
           <BenefitPill text={<>Access to <b>Recruiter Placement Community</b></>} badge="Network" />
           <BenefitPill text={<>Lifetime access to premium <b>VLSI learning library</b></>} badge="Worth ₹1L" />
