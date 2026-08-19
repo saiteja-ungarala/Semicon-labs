@@ -171,9 +171,9 @@ function SubHead({ children }: { children: ReactNode }) {
   );
 }
 
-function SpecTable({ head, rows }: { head: string[]; rows: ReactNode[][] }) {
+function SpecTable({ head, rows, narrow }: { head: string[]; rows: ReactNode[][]; narrow?: boolean }) {
   return (
-    <div className="mx-auto max-w-3xl overflow-x-auto">
+    <div className={cn('mx-auto overflow-x-auto', narrow ? 'max-w-2xl' : 'max-w-3xl')}>
       <table className="w-full border-separate border-spacing-y-2 text-left">
         <thead>
           <tr>
@@ -264,28 +264,28 @@ const INDIVIDUAL_CAPABILITIES: { cap: string; basic: boolean; pro: boolean }[] =
   { cap: 'Tool switching (change EDA vendor)', basic: false, pro: true },
 ];
 
-const PACK_HEAD = ['Pack', 'Hours', 'Base price', 'Validity', 'Data holding grace'];
+const PACK_HEAD = ['No of hours', 'Base price', 'Validity', 'Data holding grace'];
 
-/** [pack, hours, price, validity, grace] */
+/** [hours, price, validity, grace] — the "First 100" pack label was dropped;
+ *  the hour count already identifies the pack. */
 const BASIC_PACKS: string[][] = [
-  ['First 100', '100 hrs', '₹9,000', '2 months', '2 weeks'],
-  ['First 200', '200 hrs', '₹18,000', '4 months', '2 weeks'],
-  ['First 300', '300 hrs', '₹27,000', '6 months', '2 weeks'],
-  ['First 400', '400 hrs', '₹36,000', '8 months', '2 weeks'],
-  ['First 500', '500 hrs', '₹45,000', '10 months', '2 weeks'],
+  ['100 hrs', '₹9,000', '2 months', '2 weeks'],
+  ['200 hrs', '₹18,000', '4 months', '2 weeks'],
+  ['300 hrs', '₹27,000', '6 months', '2 weeks'],
+  ['400 hrs', '₹36,000', '8 months', '2 weeks'],
+  ['500 hrs', '₹45,000', '10 months', '2 weeks'],
 ];
 
 const PRO_PACKS: string[][] = [
-  ['First 100', '100 hrs', '₹10,000', '2 months', '2 weeks'],
-  ['First 200', '200 hrs', '₹20,000', '4 months', '2 weeks'],
-  ['First 300', '300 hrs', '₹30,000', '6 months', '2 weeks'],
-  ['First 400', '400 hrs', '₹40,000', '8 months', '2 weeks'],
-  ['First 500', '500 hrs', '₹50,000', '10 months', '2 weeks'],
+  ['100 hrs', '₹10,000', '2 months', '2 weeks'],
+  ['200 hrs', '₹20,000', '4 months', '2 weeks'],
+  ['300 hrs', '₹30,000', '6 months', '2 weeks'],
+  ['400 hrs', '₹40,000', '8 months', '2 weeks'],
+  ['500 hrs', '₹50,000', '10 months', '2 weeks'],
 ];
 
 const packRows = (packs: string[][]) =>
-  packs.map(([pack, hours, price, validity, grace]) => [
-    <Num>{pack}</Num>,
+  packs.map(([hours, price, validity, grace]) => [
     <Num>{hours}</Num>,
     <Hl>{price}</Hl>,
     <Num>{validity}</Num>,
@@ -303,7 +303,7 @@ function IndividualPanel() {
           name="Basic"
           tag="Standard compute · ₹90/hr"
           price="₹9,000"
-          priceSub="First 100 · 100 hrs · excl. GST"
+          priceSub="100 hrs · excl. GST"
           feats={INDIVIDUAL_CAPABILITIES.map((c) => ({ yes: c.basic, text: <>{c.cap}</> }))}
           cta={{ label: 'Start with Basic', to: `${INDIVIDUAL_REGISTER}basic` }}
         />
@@ -313,17 +313,17 @@ function IndividualPanel() {
           tag="Bigger computing · ₹100/hr"
           badge="Most Popular"
           price="₹10,000"
-          priceSub="First 100 · 100 hrs · excl. GST"
+          priceSub="100 hrs · excl. GST"
           feats={INDIVIDUAL_CAPABILITIES.map((c) => ({ yes: c.pro, text: <>{c.cap}</> }))}
           cta={{ label: 'Start with Pro', to: `${INDIVIDUAL_REGISTER}pro` }}
         />
       </div>
 
-      <SubHead>Basic · ₹90 per hour</SubHead>
-      <SpecTable head={PACK_HEAD} rows={packRows(BASIC_PACKS)} />
+      <SubHead>Basic plan packs</SubHead>
+      <SpecTable narrow head={PACK_HEAD} rows={packRows(BASIC_PACKS)} />
 
-      <SubHead>Pro · ₹100 per hour</SubHead>
-      <SpecTable head={PACK_HEAD} rows={packRows(PRO_PACKS)} />
+      <SubHead>Pro plan packs</SubHead>
+      <SpecTable narrow head={PACK_HEAD} rows={packRows(PRO_PACKS)} />
 
       <Note>
         Base price is calculated at ₹90/hr on Basic and ₹100/hr on Pro. Validity and the data
