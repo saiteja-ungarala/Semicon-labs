@@ -207,6 +207,16 @@ function TierCard({ pro, name, tag, badge, priceWas, price, priceSub, feats, cta
   );
 }
 
+/** Heading that opens a layout column. Identical on both sides of the
+ *  Exclusive offers grid so the cards under them start on the same line. */
+function ColHead({ children }: { children: ReactNode }) {
+  return (
+    <h3 className="mb-5 text-center font-display text-[19px] font-bold text-blue-600 lg:text-left">
+      {children}
+    </h3>
+  );
+}
+
 function SubHead({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
@@ -302,17 +312,24 @@ function ExclusiveOffersPanel() {
         right="Only for First 1000 seats"
       />
       {/* Offer on the left, the regular plans it applies to on the right, so
-          the ₹99 is read against what it actually buys. */}
-      <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)] lg:gap-10">
-        <div className="flex justify-center lg:justify-start">
-          <LaunchOfferCard variant="rail" />
+          the ₹99 is read against what it actually buys.
+
+          Both columns open with the same ColHead and their cards stretch to
+          one grid row, so the offer and the two plans share a top and a
+          bottom edge — the offer used to start 48px higher, end 112px lower
+          and run 1.9x the width of a plan card, which read as one big card
+          next to two small ones. */}
+      <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[minmax(0,460px)_minmax(0,1fr)] xl:gap-10">
+        <div className="flex min-w-0 flex-col">
+          <ColHead>The launch offer</ColHead>
+          <div className="flex flex-1 justify-center lg:justify-start">
+            <LaunchOfferCard variant="rail" />
+          </div>
         </div>
 
-        <div className="min-w-0">
-          <h3 className="mb-5 text-center font-display text-[19px] font-bold text-blue-600 lg:text-left">
-            Regular pricing plans
-          </h3>
-          <div className="grid gap-5 sm:grid-cols-2">
+        <div className="flex min-w-0 flex-col">
+          <ColHead>Regular pricing plans</ColHead>
+          <div className="grid flex-1 gap-5 sm:grid-cols-2">
             <TierCard
               name="Basic"
               tag="Standard compute · ₹90/hr"
@@ -332,11 +349,10 @@ function ExclusiveOffersPanel() {
               cta={{ label: 'Start with Pro', to: `${INDIVIDUAL_REGISTER}pro` }}
             />
           </div>
-          <p className="mt-4 text-center text-[12.5px] text-ink-faint lg:text-left">
-            Full pack pricing — 100 to 500 hours — is on the Individual tab.
-          </p>
         </div>
       </div>
+
+      <Note>Full pack pricing — 100 to 500 hours — is on the Individual tab.</Note>
     </>
   );
 }
@@ -433,6 +449,8 @@ function IndividualPanel() {
   );
 }
 
+const TEAM_PACK_HEAD = ['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. 18% GST'];
+
 function TeamsPanel() {
   return (
     <>
@@ -461,29 +479,39 @@ function TeamsPanel() {
         />
       </div>
 
-      <SubHead>Basic · ₹12,000 per session</SubHead>
-      <SpecTable
-        head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. 18% GST']}
-        rows={[
-          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹12,000</Hl>, <Num>₹14,160</Num>],
-          [<Num>2</Num>, <Num>0%</Num>, <Hl>₹24,000</Hl>, <Num>₹28,320</Num>],
-          [<Num>3</Num>, <Num>10%</Num>, <Hl>₹32,400</Hl>, <Num>₹38,232</Num>],
-          [<Num>4</Num>, <Num>20%</Num>, <Hl>₹38,400</Hl>, <Num>₹45,312</Num>],
-          [<Num>5</Num>, <Num>30%</Num>, <Hl>₹42,000</Hl>, <Num>₹49,560</Num>],
-        ]}
-      />
-
-      <SubHead>Pro · ₹13,500 per session</SubHead>
-      <SpecTable
-        head={['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. 18% GST']}
-        rows={[
-          [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹13,500</Hl>, <Num>₹15,930</Num>],
-          [<Num>2</Num>, <Num>0%</Num>, <Hl>₹27,500</Hl>, <Num>₹32,450</Num>],
-          [<Num>3</Num>, <Num>10%</Num>, <Hl>₹36,450</Hl>, <Num>₹43,011</Num>],
-          [<Num>4</Num>, <Num>20%</Num>, <Hl>₹43,200</Hl>, <Num>₹50,976</Num>],
-          [<Num>5</Num>, <Num>30%</Num>, <Hl>₹47,250</Hl>, <Num>₹55,755</Num>],
-        ]}
-      />
+      {/* Side by side, same as the Individual packs — the Basic and Pro
+          session ladders are read against each other, and stacked they put
+          a whole table between the two rows you want to compare. */}
+      <div className="mx-auto mt-2 grid max-w-6xl gap-x-10 gap-y-0 lg:grid-cols-2">
+        <div className="min-w-0">
+          <SubHead className="w-full">Basic · ₹12,000 per session</SubHead>
+          <SpecTable
+            className="w-full"
+            head={TEAM_PACK_HEAD}
+            rows={[
+              [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹12,000</Hl>, <Num>₹14,160</Num>],
+              [<Num>2</Num>, <Num>0%</Num>, <Hl>₹24,000</Hl>, <Num>₹28,320</Num>],
+              [<Num>3</Num>, <Num>10%</Num>, <Hl>₹32,400</Hl>, <Num>₹38,232</Num>],
+              [<Num>4</Num>, <Num>20%</Num>, <Hl>₹38,400</Hl>, <Num>₹45,312</Num>],
+              [<Num>5</Num>, <Num>30%</Num>, <Hl>₹42,000</Hl>, <Num>₹49,560</Num>],
+            ]}
+          />
+        </div>
+        <div className="min-w-0">
+          <SubHead className="w-full">Pro · ₹13,500 per session</SubHead>
+          <SpecTable
+            className="w-full"
+            head={TEAM_PACK_HEAD}
+            rows={[
+              [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹13,500</Hl>, <Num>₹15,930</Num>],
+              [<Num>2</Num>, <Num>0%</Num>, <Hl>₹27,500</Hl>, <Num>₹32,450</Num>],
+              [<Num>3</Num>, <Num>10%</Num>, <Hl>₹36,450</Hl>, <Num>₹43,011</Num>],
+              [<Num>4</Num>, <Num>20%</Num>, <Hl>₹43,200</Hl>, <Num>₹50,976</Num>],
+              [<Num>5</Num>, <Num>30%</Num>, <Hl>₹47,250</Hl>, <Num>₹55,755</Num>],
+            ]}
+          />
+        </div>
+      </div>
 
       <Note>
         Prices shown are the total for the number of sessions. Maximum discount 30%. GST charged at
