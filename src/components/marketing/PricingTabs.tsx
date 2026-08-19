@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
-import { LaunchOfferCard } from './LaunchOfferCard';
+import { ExclusiveOfferCard } from './ExclusiveOfferCard';
 import { usePlanHref } from '@/lib/checkoutPath';
 import { cn } from '@/lib/cn';
 
@@ -248,7 +248,7 @@ function SpecTable({
         <thead>
           <tr>
             {head.map((h) => (
-              <th key={h} className="px-4 pb-1 font-mono text-[10px] font-bold uppercase tracking-wide text-ink-faint">
+              <th key={h} className="px-2.5 pb-1 font-mono text-[10px] font-bold uppercase tracking-wide text-ink-faint sm:px-4">
                 {h}
               </th>
             ))}
@@ -261,7 +261,7 @@ function SpecTable({
                 <td
                   key={j}
                   className={cn(
-                    'border-y border-line bg-void px-4 py-3.5 text-[13.5px] text-ink transition-colors group-hover:bg-blue-soft/40',
+                    'border-y border-line bg-void px-2.5 py-3.5 text-[13.5px] text-ink transition-colors group-hover:bg-blue-soft/40 sm:px-4',
                     j === 0 && 'rounded-l-xl border-l',
                     j === cells.length - 1 && 'rounded-r-xl border-r',
                   )}
@@ -321,9 +321,9 @@ function ExclusiveOffersPanel() {
           next to two small ones. */}
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[minmax(0,460px)_minmax(0,1fr)] xl:gap-10">
         <div className="flex min-w-0 flex-col">
-          <ColHead>The launch offer</ColHead>
+          <ColHead>Exclusive offer</ColHead>
           <div className="flex flex-1 justify-center lg:justify-start">
-            <LaunchOfferCard variant="rail" />
+            <ExclusiveOfferCard />
           </div>
         </div>
 
@@ -351,8 +351,6 @@ function ExclusiveOffersPanel() {
           </div>
         </div>
       </div>
-
-      <Note>Full pack pricing — 100 to 500 hours — is on the Individual tab.</Note>
     </>
   );
 }
@@ -373,30 +371,25 @@ const INDIVIDUAL_CAPABILITIES: { cap: string; basic: boolean; pro: boolean }[] =
   { cap: 'Tool switching (change EDA vendor)', basic: false, pro: true },
 ];
 
-const PACK_HEAD = ['No of hours', 'Base price', 'Validity', 'Data holding grace'];
+const PACK_HEAD = ['No of hours', 'Basic price', 'Pro price', 'Validity', 'Data holding grace'];
 
-/** [hours, price, validity, grace] — the "First 100" pack label was dropped;
- *  the hour count already identifies the pack. */
-const BASIC_PACKS: string[][] = [
-  ['100 hrs', '₹9,000', '2 months', '2 weeks'],
-  ['200 hrs', '₹18,000', '4 months', '2 weeks'],
-  ['300 hrs', '₹27,000', '6 months', '2 weeks'],
-  ['400 hrs', '₹36,000', '8 months', '2 weeks'],
-  ['500 hrs', '₹45,000', '10 months', '2 weeks'],
+/** [hours, basic, pro, validity, grace]. Validity and the data-holding grace
+ *  are the same on both plans, so one table carries both price columns
+ *  instead of two tables repeating the other three. The "First 100" pack
+ *  label was dropped; the hour count already identifies the pack. */
+const PACKS: string[][] = [
+  ['100 hrs', '₹9,000', '₹10,000', '2 months', '2 weeks'],
+  ['200 hrs', '₹18,000', '₹20,000', '4 months', '2 weeks'],
+  ['300 hrs', '₹27,000', '₹30,000', '6 months', '2 weeks'],
+  ['400 hrs', '₹36,000', '₹40,000', '8 months', '2 weeks'],
+  ['500 hrs', '₹45,000', '₹50,000', '10 months', '2 weeks'],
 ];
 
-const PRO_PACKS: string[][] = [
-  ['100 hrs', '₹10,000', '2 months', '2 weeks'],
-  ['200 hrs', '₹20,000', '4 months', '2 weeks'],
-  ['300 hrs', '₹30,000', '6 months', '2 weeks'],
-  ['400 hrs', '₹40,000', '8 months', '2 weeks'],
-  ['500 hrs', '₹50,000', '10 months', '2 weeks'],
-];
-
-const packRows = (packs: string[][]) =>
-  packs.map(([hours, price, validity, grace]) => [
+const packRows = () =>
+  PACKS.map(([hours, basic, pro, validity, grace]) => [
     <Num>{hours}</Num>,
-    <Hl>{price}</Hl>,
+    <Hl>{basic}</Hl>,
+    <Hl>{pro}</Hl>,
     <Num>{validity}</Num>,
     <Num>{grace}</Num>,
   ]);
@@ -428,18 +421,8 @@ function IndividualPanel() {
         />
       </div>
 
-      {/* Side by side — the two pack tables are read against each other, so
-          stacking them put 5 rows of scrolling between the comparison. */}
-      <div className="mx-auto mt-2 grid max-w-6xl gap-x-10 gap-y-0 lg:grid-cols-2">
-        <div className="min-w-0">
-          <SubHead className="w-full">Basic plan packs</SubHead>
-          <SpecTable className="w-full" head={PACK_HEAD} rows={packRows(BASIC_PACKS)} />
-        </div>
-        <div className="min-w-0">
-          <SubHead className="w-full">Pro plan packs</SubHead>
-          <SpecTable className="w-full" head={PACK_HEAD} rows={packRows(PRO_PACKS)} />
-        </div>
-      </div>
+      <SubHead className="mx-auto max-w-5xl">Plan packs</SubHead>
+      <SpecTable className="mx-auto max-w-5xl" head={PACK_HEAD} rows={packRows()} />
 
       <Note>
         Base price is calculated at ₹90/hr on Basic and ₹100/hr on Pro. Validity and the data
@@ -449,7 +432,35 @@ function IndividualPanel() {
   );
 }
 
-const TEAM_PACK_HEAD = ['Sessions (240 hrs)', 'Discount', 'Price excl. GST', 'Price incl. 18% GST'];
+const TEAM_PACK_HEAD = ['Sessions (240 hrs)', 'Discount', 'Basic price', 'Pro price'];
+
+/** [sessions, discount, basic excl., basic incl., pro excl., pro incl.].
+ *  Sessions and discount are the same on both plans, so the two ladders fold
+ *  into one table with a price column each. */
+const TEAM_PACKS: string[][] = [
+  ['1 · base rate', '0%', '₹12,000', '₹14,160', '₹13,500', '₹15,930'],
+  ['2', '0%', '₹24,000', '₹28,320', '₹27,500', '₹32,450'],
+  ['3', '10%', '₹32,400', '₹38,232', '₹36,450', '₹43,011'],
+  ['4', '20%', '₹38,400', '₹45,312', '₹43,200', '₹50,976'],
+  ['5', '30%', '₹42,000', '₹49,560', '₹47,250', '₹55,755'],
+];
+
+/** excl. GST is the headline figure with the inclusive total under it — that
+ *  keeps both numbers without spending two columns on each plan. */
+const GstPrice = ({ excl, incl }: { excl: string; incl: string }) => (
+  <>
+    <span className="font-mono font-bold text-blue">{excl}</span>
+    <span className="mt-0.5 block font-mono text-[11px] text-ink-faint">{incl} incl. GST</span>
+  </>
+);
+
+const teamPackRows = () =>
+  TEAM_PACKS.map(([sessions, discount, bExcl, bIncl, pExcl, pIncl]) => [
+    <Num>{sessions}</Num>,
+    <Num>{discount}</Num>,
+    <GstPrice excl={bExcl} incl={bIncl} />,
+    <GstPrice excl={pExcl} incl={pIncl} />,
+  ]);
 
 function TeamsPanel() {
   return (
@@ -479,43 +490,12 @@ function TeamsPanel() {
         />
       </div>
 
-      {/* Side by side, same as the Individual packs — the Basic and Pro
-          session ladders are read against each other, and stacked they put
-          a whole table between the two rows you want to compare. */}
-      <div className="mx-auto mt-2 grid max-w-6xl gap-x-10 gap-y-0 lg:grid-cols-2">
-        <div className="min-w-0">
-          <SubHead className="w-full">Basic · ₹12,000 per session</SubHead>
-          <SpecTable
-            className="w-full"
-            head={TEAM_PACK_HEAD}
-            rows={[
-              [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹12,000</Hl>, <Num>₹14,160</Num>],
-              [<Num>2</Num>, <Num>0%</Num>, <Hl>₹24,000</Hl>, <Num>₹28,320</Num>],
-              [<Num>3</Num>, <Num>10%</Num>, <Hl>₹32,400</Hl>, <Num>₹38,232</Num>],
-              [<Num>4</Num>, <Num>20%</Num>, <Hl>₹38,400</Hl>, <Num>₹45,312</Num>],
-              [<Num>5</Num>, <Num>30%</Num>, <Hl>₹42,000</Hl>, <Num>₹49,560</Num>],
-            ]}
-          />
-        </div>
-        <div className="min-w-0">
-          <SubHead className="w-full">Pro · ₹13,500 per session</SubHead>
-          <SpecTable
-            className="w-full"
-            head={TEAM_PACK_HEAD}
-            rows={[
-              [<Num>1 · base rate</Num>, <Num>0%</Num>, <Hl>₹13,500</Hl>, <Num>₹15,930</Num>],
-              [<Num>2</Num>, <Num>0%</Num>, <Hl>₹27,500</Hl>, <Num>₹32,450</Num>],
-              [<Num>3</Num>, <Num>10%</Num>, <Hl>₹36,450</Hl>, <Num>₹43,011</Num>],
-              [<Num>4</Num>, <Num>20%</Num>, <Hl>₹43,200</Hl>, <Num>₹50,976</Num>],
-              [<Num>5</Num>, <Num>30%</Num>, <Hl>₹47,250</Hl>, <Num>₹55,755</Num>],
-            ]}
-          />
-        </div>
-      </div>
+      <SubHead className="mx-auto max-w-4xl">Session packs · Basic ₹12,000 · Pro ₹13,500</SubHead>
+      <SpecTable className="mx-auto max-w-4xl" head={TEAM_PACK_HEAD} rows={teamPackRows()} />
 
       <Note>
-        Prices shown are the total for the number of sessions. Maximum discount 30%. GST charged at
-        18%.
+        Prices shown are the total for the number of sessions, excluding GST; the figure beneath is
+        the same total with 18% GST included. Maximum discount 30%.
       </Note>
     </>
   );

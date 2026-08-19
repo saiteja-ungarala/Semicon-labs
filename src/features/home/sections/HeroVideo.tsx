@@ -36,18 +36,18 @@ interface Film {
 const FILMS: Film[] = [
   {
     id: 'vNIhL9TKd0E',
-    label: 'Platform walkthrough',
-    caption: 'A tour of the labs, the tools and how a challenge is solved end to end.',
+    label: 'Discover Semicon Labs',
+    caption: 'What Semicon Labs is, who it is for and what you walk away with.',
     path: 'semiconlabs.com/labs',
-    cta: 'Watch the walkthrough',
+    cta: 'Watch the introduction',
   },
   {
     // TODO: replace with the client's second video id when it arrives.
     id: 'vNIhL9TKd0E',
-    label: 'Inside a real lab',
-    caption: 'A closer look at an industry-grade lab session running in the browser.',
+    label: 'Platform Walk through',
+    caption: 'A walk through the platform — the labs, the tools and how a challenge is solved.',
     path: 'semiconlabs.com/demo',
-    cta: 'Watch the lab session',
+    cta: 'Watch the walkthrough',
   },
 ];
 
