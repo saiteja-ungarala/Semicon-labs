@@ -207,39 +207,6 @@ function TierCard({ pro, name, tag, badge, priceWas, price, priceSub, feats, cta
   );
 }
 
-/** Heading that opens a layout column. Identical on both sides of the
- *  Exclusive offers grid so the cards under them start on the same line,
- *  and centred so each one sits over the middle of what it labels. */
-const COL_HEAD = "mb-5 text-center font-display text-[19px] font-bold text-blue-600";
-
-function ColHead({ children }: { children: ReactNode }) {
-  return <h3 className={COL_HEAD}>{children}</h3>;
-}
-
-/** The two ways to buy are alternatives, so they are separated rather than
- *  just spaced: a rule down the gap with an "or" sitting on it. It stacks
- *  to a horizontal rule when the row does. */
-function OrDivider() {
-  return (
-    <div className="flex flex-col">
-      {/* Matches ColHead's box so the rule starts level with the cards
-          rather than with the headings above them. */}
-      <div aria-hidden className={cn(COL_HEAD, "hidden opacity-0 lg:block")}>
-        or
-      </div>
-      <div className="relative flex flex-1 items-center justify-center py-1 lg:w-10 lg:py-0">
-        <span
-          aria-hidden
-          className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-line lg:bottom-0 lg:left-1/2 lg:right-auto lg:top-0 lg:h-auto lg:w-px lg:-translate-x-1/2 lg:translate-y-0"
-        />
-        <span className="relative rounded-full border border-line bg-panel px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-ink-faint shadow-sm">
-          or
-        </span>
-      </div>
-    </div>
-  );
-}
-
 function SubHead({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
@@ -326,57 +293,21 @@ function Note({ children }: { children: ReactNode }) {
 
 /* ---------------------------------------------------------------- panels */
 
-/** The ₹99 launch offer — now its own "Exclusive offers" tab. */
+/**
+ * The launch offer tab: one card, stating what the offer contains.
+ *
+ * The ₹99 pre-booking fee, the plan cards and the pay-by date are all gone
+ * from here — this tab is the offer itself, not a way to buy it. The banner
+ * went with them: it read "pre-book today, pay the launch rate later", which
+ * is the same ₹99 concept, and the card carries the seat count on its own
+ * ribbon. Basic and Pro still live on the Individual tab, and the ₹99 flow
+ * still runs on the home page, the individuals page and the domain pages.
+ */
 function ExclusiveOffersPanel() {
   return (
-    <>
-      <Banner
-        left={<><b className="text-blue-600">🔥 Limited launch offer</b> — pre-book today, pay the launch rate later.</>}
-        right="Only for First 1000 seats"
-      />
-      {/* Offer on the left, the regular plans it applies to on the right, so
-          the ₹99 is read against what it actually buys.
-
-          Both columns open with the same ColHead and their cards stretch to
-          one grid row, so the offer and the two plans share a top and a
-          bottom edge — the offer used to start 48px higher, end 112px lower
-          and run 1.9x the width of a plan card, which read as one big card
-          next to two small ones. The middle column is the "or" rule. */}
-      <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,400px)_auto_minmax(0,1fr)] lg:gap-x-5 xl:grid-cols-[minmax(0,460px)_auto_minmax(0,1fr)] xl:gap-x-6">
-        <div className="flex min-w-0 flex-col">
-          <ColHead>Exclusive offer</ColHead>
-          <div className="flex flex-1 justify-center">
-            <ExclusiveOfferCard />
-          </div>
-        </div>
-
-        <OrDivider />
-
-        <div className="flex min-w-0 flex-col">
-          <ColHead>Regular pricing plans</ColHead>
-          <div className="grid flex-1 gap-5 sm:grid-cols-2">
-            <TierCard
-              name="Basic"
-              tag="Standard compute · ₹90/hr"
-              price="₹9,000"
-              priceSub="100 hrs · excl. GST"
-              feats={INDIVIDUAL_CAPABILITIES.map((c) => ({ yes: c.basic, text: <>{c.cap}</> }))}
-              cta={{ label: 'Start with Basic', to: `${INDIVIDUAL_REGISTER}basic` }}
-            />
-            <TierCard
-              pro
-              name="Pro"
-              tag="Bigger computing · ₹100/hr"
-              badge="Most Popular"
-              price="₹10,000"
-              priceSub="100 hrs · excl. GST"
-              feats={INDIVIDUAL_CAPABILITIES.map((c) => ({ yes: c.pro, text: <>{c.cap}</> }))}
-              cta={{ label: 'Start with Pro', to: `${INDIVIDUAL_REGISTER}pro` }}
-            />
-          </div>
-        </div>
-      </div>
-    </>
+    <div className="mt-8">
+      <ExclusiveOfferCard />
+    </div>
   );
 }
 
@@ -424,7 +355,6 @@ const INDIVIDUAL_REGISTER = 'https://vigyan.semiconlabs.com/register?tier=';
 function IndividualPanel() {
   return (
     <>
-      <Banner left={<><b className="text-blue-600">First subscription</b> — ₹90/hr, Pro at ₹100/hr.</>} />
       <div className="mx-auto mt-8 grid max-w-3xl items-start gap-5 md:grid-cols-2">
         <TierCard
           name="Basic"
@@ -459,32 +389,23 @@ function IndividualPanel() {
 
 const TEAM_PACK_HEAD = ['Sessions (240 hrs)', 'Discount', 'Basic price', 'Pro price'];
 
-/** [sessions, discount, basic excl., basic incl., pro excl., pro incl.].
- *  Sessions and discount are the same on both plans, so the two ladders fold
- *  into one table with a price column each. */
+/** [sessions, discount, basic, pro], all excluding GST. Sessions and discount
+ *  are the same on both plans, so the two ladders fold into one table with a
+ *  price column each. Starts at 2 — a team cannot buy a single session, so
+ *  the one-session base rate is stated in the heading, not as a buyable row. */
 const TEAM_PACKS: string[][] = [
-  ['1 · base rate', '0%', '₹12,000', '₹14,160', '₹13,500', '₹15,930'],
-  ['2', '0%', '₹24,000', '₹28,320', '₹27,500', '₹32,450'],
-  ['3', '10%', '₹32,400', '₹38,232', '₹36,450', '₹43,011'],
-  ['4', '20%', '₹38,400', '₹45,312', '₹43,200', '₹50,976'],
-  ['5', '30%', '₹42,000', '₹49,560', '₹47,250', '₹55,755'],
+  ['2', '0%', '₹24,000', '₹27,500'],
+  ['3', '10%', '₹32,400', '₹36,450'],
+  ['4', '20%', '₹38,400', '₹43,200'],
+  ['5', '30%', '₹42,000', '₹47,250'],
 ];
 
-/** excl. GST is the headline figure with the inclusive total under it — that
- *  keeps both numbers without spending two columns on each plan. */
-const GstPrice = ({ excl, incl }: { excl: string; incl: string }) => (
-  <>
-    <span className="font-mono font-bold text-blue">{excl}</span>
-    <span className="mt-0.5 block font-mono text-[11px] text-ink-faint">{incl} incl. GST</span>
-  </>
-);
-
 const teamPackRows = () =>
-  TEAM_PACKS.map(([sessions, discount, bExcl, bIncl, pExcl, pIncl]) => [
+  TEAM_PACKS.map(([sessions, discount, basic, pro]) => [
     <Num>{sessions}</Num>,
     <Num>{discount}</Num>,
-    <GstPrice excl={bExcl} incl={bIncl} />,
-    <GstPrice excl={pExcl} incl={pIncl} />,
+    <Hl>{basic}</Hl>,
+    <Hl>{pro}</Hl>,
   ]);
 
 function TeamsPanel() {
@@ -519,8 +440,7 @@ function TeamsPanel() {
       <SpecTable className="mx-auto max-w-4xl" head={TEAM_PACK_HEAD} rows={teamPackRows()} />
 
       <Note>
-        Prices shown are the total for the number of sessions, excluding GST; the figure beneath is
-        the same total with 18% GST included. Maximum discount 30%.
+        Prices shown are the total for the number of sessions, excluding GST. Maximum discount 30%.
       </Note>
     </>
   );
