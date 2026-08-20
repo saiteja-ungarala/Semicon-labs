@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const MESSAGE = 'Hurry Up !! Limited launch offer — Book your spot today with ₹99, pay the launch rate later. Valid till September 15th, 2026';
+const MESSAGE = 'Hurry up! Launch offer is live now - BUY 100 HOURS. GET 100 HOURS FREE. LIMITED-TIME ONLY!';
 
 /** Top announcement bar — rolling marquee. Always shown: the dismiss control
  *  was removed at the client's request, so there is no way to restore it. */

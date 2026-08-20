@@ -16,9 +16,8 @@ import { cn } from '@/lib/cn';
  * The iframe is mounted only after a click: a facade keeps YouTube's ~1MB
  * player off the initial load.
  *
- * NOTE: the second entry currently points at the same film as the first — the
- * client is sending its link. Swapping `id` (and the label/caption) is the only
- * change needed; everything else is driven off this array.
+ * Both films are driven off the FILMS array — id, label, caption and poster
+ * text. Nothing else needs touching to add or swap one.
  */
 
 interface Film {
@@ -42,8 +41,7 @@ const FILMS: Film[] = [
     cta: 'Watch the introduction',
   },
   {
-    // TODO: replace with the client's second video id when it arrives.
-    id: 'vNIhL9TKd0E',
+    id: '7qRjvRQaLMg',
     label: 'Platform Walk through',
     caption: 'A walk through the platform — the labs, the tools and how a challenge is solved.',
     path: 'semiconlabs.com/demo',
