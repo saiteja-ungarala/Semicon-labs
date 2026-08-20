@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Button } from '@/components/ui/Button';
+import { PreBookDialog } from './PreBookDialog';
 import { cn } from '@/lib/cn';
 
 /**
@@ -15,11 +16,14 @@ import { cn } from '@/lib/cn';
  * The ₹99 flow still runs on the home page, the individuals page and the
  * domain pages via `LaunchOfferCard`; it is only absent from this tab.
  *
- * The CTA is styled but has no destination — the integration point for
- * whoever wires up claiming a seat.
+ * The CTA opens the same capture form the ₹99 card uses, in its "offer"
+ * wording so no fee appears on this tab. Submitting stores the details for
+ * the checkout step the client's team owns.
  */
 
 export function ExclusiveOfferCard() {
+  const [formOpen, setFormOpen] = useState(false);
+
   return (
     <div className="relative mx-auto flex w-full max-w-[820px] flex-col overflow-hidden rounded-2xl border border-line bg-panel shadow-card">
       {/* Top banner */}
@@ -68,9 +72,15 @@ export function ExclusiveOfferCard() {
 
         {/* CTA */}
         <div className="relative mt-6 w-full">
-          <Button variant="primary" arrow className="h-12 w-full text-base">
+          <Button
+            onClick={() => setFormOpen(true)}
+            variant="primary"
+            arrow
+            className="h-12 w-full text-base"
+          >
             Claim this offer
           </Button>
+          <PreBookDialog open={formOpen} onClose={() => setFormOpen(false)} variant="offer" />
         </div>
       </div>
     </div>
