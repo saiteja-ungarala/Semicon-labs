@@ -228,9 +228,8 @@ export function PreBookDialog({
                 come back through this form and need to use the same address. */}
             {offer && (
               <p className="mt-2.5 rounded-lg border border-blue/15 bg-blue-50 px-3 py-2 text-[12px] leading-relaxed text-ink-dim">
-                If you registered for the{' '}
-                <b className="font-semibold text-blue-600">₹99 Pre-Launch Offer</b>, enter the same
-                email verify and continue to the pricing page
+                If you paid <b className="font-semibold text-blue-600">₹99</b> during Pre-Launch, it
+                will be redeemed at your payment page.
               </p>
             )}
           </div>
