@@ -8,13 +8,6 @@ import { cn } from '@/lib/cn';
  * Seat capture, asked for in place rather than by sending the buyer to a login
  * page. We collect the four details, stash them for the checkout step the
  * client's team owns, then hand off to payment.
- *
- * `variant` changes wording only — the fields, validation and stored payload
- * are identical either way:
- *  - "prebook" (default) is the ₹99 flow on the home page, the individuals
- *    page and the domain pages.
- *  - "offer" is the same form opened from the Exclusive offers tab, where the
- *    client asked for the ₹99 not to appear at all.
  */
 
 interface Fields {
@@ -42,16 +35,7 @@ const field = (bad: boolean) =>
     bad ? 'border-danger/60 focus:border-danger' : 'border-line focus:border-blue/60 focus:bg-panel',
   );
 
-export function PreBookDialog({
-  open,
-  onClose,
-  variant = 'prebook',
-}: {
-  open: boolean;
-  onClose: () => void;
-  variant?: 'prebook' | 'offer';
-}) {
-  const offer = variant === 'offer';
+export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
   // The address the link went to. Comparing it against the live field value is
@@ -82,12 +66,7 @@ export function PreBookDialog({
     // enquiry and the buyer is told someone will follow up. THIS is where the
     // payment call goes once a gateway is connected — the collected details
     // are already in `data`.
-    // The plan tag is how the two entry points are told apart downstream.
-    const payload = {
-      ...data,
-      emailVerifyRequested: verifySent,
-      plan: offer ? 'launch-offer' : 'individual-launch',
-    };
+    const payload = { ...data, emailVerifyRequested: verifySent, plan: 'individual-launch' };
     sessionStorage.setItem('sl-prebook', JSON.stringify(payload));
     console.info('Pre-book request:', payload);
     setSending(false);
@@ -95,11 +74,7 @@ export function PreBookDialog({
   });
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      label={offer ? 'Claim the launch offer' : 'Pre-book your seat for ₹99'}
-    >
+    <Modal open={open} onClose={onClose} label="Pre-book your seat for ₹99">
       <div className="overflow-hidden rounded-3xl bg-panel shadow-card">
         {/* Offer header carries the price so the dialog stands on its own */}
         <div className="relative overflow-hidden bg-blue-600 px-7 py-6 text-white sm:px-9">
@@ -112,26 +87,13 @@ export function PreBookDialog({
             Limited launch offer · only 1,000 seats
           </p>
           <div className="relative mt-2 flex flex-wrap items-end gap-x-4 gap-y-1">
-            {offer ? (
-              <>
-                <span className="font-mono text-[40px] font-bold leading-none">200</span>
-                <span className="pb-1 text-[14px] font-semibold text-white/90">
-                  <b>lab hours</b> for the price of 100
-                </span>
-              </>
-            ) : (
-              <>
-                <span className="font-mono text-[40px] font-bold leading-none">₹99</span>
-                <span className="pb-1 text-[14px] font-semibold text-white/90">
-                  unlocks <b>200 lab hours</b> at the price of 100
-                </span>
-              </>
-            )}
+            <span className="font-mono text-[40px] font-bold leading-none">₹99</span>
+            <span className="pb-1 text-[14px] font-semibold text-white/90">
+              unlocks <b>200 lab hours</b> at the price of 100
+            </span>
           </div>
           <p className="relative mt-2 text-[12.5px] text-white/70">
-            {offer
-              ? 'Basic ₹9,000 · Pro ₹10,000 · excl. GST'
-              : 'Fully redeemable on your first purchase.'}
+            Fully redeemable on your first purchase.
           </p>
         </div>
 
@@ -144,10 +106,8 @@ export function PreBookDialog({
             </div>
             <h3 className="mt-5 font-display text-[22px] font-bold text-ink">Your seat is reserved</h3>
             <p className="mx-auto mt-3 max-w-[46ch] text-pretty text-[14px] leading-relaxed text-ink-dim">
-              Thanks — we have your details. Our team will contact you shortly with the payment link to{' '}
-              {offer
-                ? 'confirm your seat and unlock your 200 lab hours.'
-                : 'confirm your ₹99 pre-book and unlock your 200 lab hours.'}
+              Thanks — we have your details. Our team will contact you shortly with the payment link to
+              confirm your ₹99 pre-book and unlock your 200 lab hours.
             </p>
             <Button onClick={onClose} variant="primary" className="mt-7 h-11 px-8">
               Done
@@ -224,14 +184,12 @@ export function PreBookDialog({
                 Verification link sent to {verifiedFor}. Edit the address to send again.
               </span>
             )}
-            {/* Only on the offer entry point: buyers who already paid the ₹99
-                come back through this form and need to use the same address. */}
-            {offer && (
-              <p className="mt-2.5 rounded-lg border border-blue/15 bg-blue-50 px-3 py-2 text-[12px] leading-relaxed text-ink-dim">
-                If you paid <b className="font-semibold text-blue-600">₹99</b> during Pre-Launch, it
-                will be redeemed at your payment page.
-              </p>
-            )}
+            {/* Buyers who already paid the ₹99 come back through this form
+                and need to use the same address. */}
+            <p className="mt-2.5 rounded-lg border border-blue/15 bg-blue-50 px-3 py-2 text-[11px] leading-relaxed text-ink-dim">
+              If you paid <b className="font-semibold text-blue-600">₹99</b> during Pre-Launch, it will
+              be redeemed at your payment page.
+            </p>
           </div>
 
           <label className="block sm:col-span-2">
@@ -247,12 +205,10 @@ export function PreBookDialog({
 
           <div className="sm:col-span-2">
             <Button type="submit" arrow={!sending} disabled={sending} className="h-12 w-full text-[15px]">
-              {sending ? 'Reserving your seat…' : offer ? 'Claim this offer' : 'Pay now — ₹99'}
+              {sending ? 'Reserving your seat…' : 'Pay now — ₹99'}
             </Button>
             <p className="mt-3 text-center text-[12px] text-ink-faint">
-              {offer
-                ? 'We will reach out with the payment link to confirm your seat.'
-                : 'Secure checkout · your seat is held as soon as payment clears.'}
+              Secure checkout · your seat is held as soon as payment clears.
             </p>
           </div>
         </form>

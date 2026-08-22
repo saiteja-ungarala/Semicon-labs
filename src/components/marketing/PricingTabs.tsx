@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
-import { ExclusiveOfferCard } from './ExclusiveOfferCard';
+import { IndividualOffer } from './IndividualOffer';
 import { usePlanHref } from '@/lib/checkoutPath';
 import { cn } from '@/lib/cn';
 
@@ -19,10 +19,9 @@ import { cn } from '@/lib/cn';
  * more power on Pro"), top-up packs and volume discounts.
  */
 
-type TabId = 'exclusive' | 'individual' | 'teams' | 'corporate';
+type TabId = 'individual' | 'teams' | 'corporate';
 
 const TABS: { id: TabId; label: string }[] = [
-  { id: 'exclusive', label: 'Exclusive offers' },
   { id: 'individual', label: 'Individual' },
   { id: 'teams', label: 'Teams' },
   { id: 'corporate', label: 'Corporate' },
@@ -293,40 +292,6 @@ function Note({ children }: { children: ReactNode }) {
 
 /* ---------------------------------------------------------------- panels */
 
-/**
- * The launch offer tab: one card, stating what the offer contains.
- *
- * The ₹99 pre-booking fee, the plan cards and the pay-by date are all gone
- * from here — this tab is the offer itself, not a way to buy it. The banner
- * went with them: it read "pre-book today, pay the launch rate later", which
- * is the same ₹99 concept, and the card carries the seat count on its own
- * ribbon. Basic and Pro still live on the Individual tab, and the ₹99 flow
- * still runs on the home page, the individuals page and the domain pages.
- */
-function ExclusiveOffersPanel() {
-  return (
-    <div className="mt-8">
-      <ExclusiveOfferCard />
-    </div>
-  );
-}
-
-/**
- * Individual first-subscription packs (client sheet, Aug 2026). Same capability
- * story as Teams minus the two rows that only mean anything to a team —
- * dedicated admin accounts and team-wide user tracking.
- */
-const INDIVIDUAL_CAPABILITIES: { cap: string; basic: boolean; pro: boolean }[] = [
-  { cap: 'Standard VM compute', basic: true, pro: true },
-  { cap: 'Standard labs', basic: true, pro: true },
-  { cap: 'Automated practical evaluation', basic: true, pro: true },
-  { cap: 'Ticketing support', basic: true, pro: true },
-  { cap: 'Certification upon completing skills', basic: true, pro: true },
-  { cap: 'Higher VM compute (bigger labs)', basic: false, pro: true },
-  { cap: 'Complex / high-end designs', basic: false, pro: true },
-  { cap: 'Tool switching (change EDA vendor)', basic: false, pro: true },
-];
-
 const PACK_HEAD = ['No of hours', 'Basic price', 'Pro price', 'Validity', 'Data holding grace'];
 
 /** [hours, basic, pro, validity, grace]. Validity and the data-holding grace
@@ -350,31 +315,10 @@ const packRows = () =>
     <Num>{grace}</Num>,
   ]);
 
-const INDIVIDUAL_REGISTER = 'https://vigyan.semiconlabs.com/register?tier=';
-
 function IndividualPanel() {
   return (
     <>
-      <div className="mx-auto mt-8 grid max-w-3xl items-start gap-5 md:grid-cols-2">
-        <TierCard
-          name="Basic"
-          tag="Standard compute · ₹90/hr"
-          price="₹9,000"
-          priceSub="100 hrs · excl. GST"
-          feats={INDIVIDUAL_CAPABILITIES.map((c) => ({ yes: c.basic, text: <>{c.cap}</> }))}
-          cta={{ label: 'Start with Basic', to: `${INDIVIDUAL_REGISTER}basic` }}
-        />
-        <TierCard
-          pro
-          name="Pro"
-          tag="Bigger computing · ₹100/hr"
-          badge="Most Popular"
-          price="₹10,000"
-          priceSub="100 hrs · excl. GST"
-          feats={INDIVIDUAL_CAPABILITIES.map((c) => ({ yes: c.pro, text: <>{c.cap}</> }))}
-          cta={{ label: 'Start with Pro', to: `${INDIVIDUAL_REGISTER}pro` }}
-        />
-      </div>
+      <IndividualOffer />
 
       <SubHead className="mx-auto max-w-5xl">Plan packs</SubHead>
       <SpecTable className="mx-auto max-w-5xl" head={PACK_HEAD} rows={packRows()} />
@@ -489,7 +433,7 @@ export function PricingTabs() {
   // Individual. Unknown or missing values fall back to Individual.
   const [params] = useSearchParams();
   const requested = params.get('plan');
-  const initial = TABS.some((t) => t.id === requested) ? (requested as TabId) : 'exclusive';
+  const initial = TABS.some((t) => t.id === requested) ? (requested as TabId) : 'individual';
   const [tab, setTab] = useState<TabId>(initial);
 
   return (
@@ -524,7 +468,7 @@ export function PricingTabs() {
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
         >
-          {tab === 'exclusive' && <ExclusiveOffersPanel />}
+
           {tab === 'individual' && <IndividualPanel />}
           {tab === 'teams' && <TeamsPanel />}
           {tab === 'corporate' && <CorporatePanel />}
