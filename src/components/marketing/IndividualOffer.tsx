@@ -4,16 +4,14 @@ import { PreBookDialog } from './PreBookDialog';
 import { cn } from '@/lib/cn';
 
 /**
- * The Individual pricing block, built to the client's layout: a ₹499 starter
- * pack on the left, and on the right a launch-offer panel wrapping the Basic
- * and Pro plans.
+ * The Individual pricing block, built to the client's layout: the ₹499 Launch
+ * pad on the left, and on the right a launch-offer panel wrapping the Pro
+ * and Elite plans.
  *
  * The offer ribbon straddles the top edge of the panel so the two plans read as
  * one offer rather than two separate cards, and the starter pack stretches to
  * the same height so both columns finish level.
  */
-
-const REGISTER = 'https://vigyan.semiconlabs.com/register?tier=';
 
 /** Shared by both plans — the offer applies whichever one is bought. */
 const OFFER_BENEFITS = [
@@ -40,10 +38,10 @@ const BASIC_FEATURES = [
   'Certification upon completing skills',
 ];
 
-// Pro is written as a delta on Basic rather than a second full list — that is
+// Elite is written as a delta on Pro rather than a second full list — that is
 // how the client specced it, and it keeps the two cards the same height.
-const PRO_FEATURES = [
-  'Everything in Basic, plus:',
+const ELITE_FEATURES = [
+  'Everything in Pro, plus:',
   'Higher VM compute (bigger labs)',
   'Complex / high-end designs',
   'Tool switching (change EDA vendor)',
@@ -75,23 +73,10 @@ export function IndividualOffer() {
         </ul>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5">
-          <PlanCard
-            name="Basic"
-            rate="₹90"
-            features={BASIC_FEATURES}
-            was="₹18,000"
-            now="₹9,000"
-            to={`${REGISTER}basic`}
-          />
-          <PlanCard
-            pro
-            name="Pro"
-            rate="₹100"
-            features={PRO_FEATURES}
-            was="₹20,000"
-            now="₹10,000"
-            to={`${REGISTER}pro`}
-          />
+          {/* Renamed at the client's direction: the ₹90 tier is "Pro" and the
+              ₹100 tier "Elite". Prices, rates and features are unchanged. */}
+          <PlanCard name="Pro" rate="₹90" features={BASIC_FEATURES} was="₹18,000" now="₹9,000" />
+          <PlanCard elite name="Elite" rate="₹100" features={ELITE_FEATURES} was="₹20,000" now="₹10,000" />
         </div>
       </div>
     </div>
@@ -115,7 +100,7 @@ function Tick({ onDark }: { onDark?: boolean }) {
 }
 
 /**
- * The ₹499 starter pack. This is the offer card for the whole site now — the
+ * The ₹499 VLSI Launch pad. This is the offer card for the whole site now — the
  * home pricing popup, the individuals page and the domain pages all show it
  * where the ₹99 pre-book card used to be.
  *
@@ -137,7 +122,7 @@ export function StarterPackCard() {
           Start here
         </span>
         <h4 className="mt-1.5 text-balance font-display text-[22px] font-bold leading-tight sm:text-[24px]">
-          VLSI Premium Starter Pack
+          VLSI Launch pad
         </h4>
 
         <ul className="mt-5 space-y-3.5">
@@ -167,7 +152,7 @@ export function StarterPackCard() {
           >
             Buy Now
           </Button>
-          <PreBookDialog open={formOpen} onClose={() => setFormOpen(false)} />
+          <PreBookDialog open={formOpen} onClose={() => setFormOpen(false)} variant="starter" />
         </div>
       </div>
     </div>
@@ -184,22 +169,24 @@ function StarterLine({ children }: { children: ReactNode }) {
 }
 
 function PlanCard({
-  pro,
+  elite,
   name,
   rate,
   features,
   was,
   now,
-  to,
 }: {
-  pro?: boolean;
+  elite?: boolean;
   name: string;
   rate: string;
   features: string[];
   was: string;
   now: string;
-  to: string;
 }) {
+  // Buy Now opens the original ₹99 pre-book form — heading, redeemable line
+  // and redemption note intact — rather than jumping to register.
+  const [formOpen, setFormOpen] = useState(false);
+
   return (
     <div className="relative flex flex-col overflow-hidden rounded-2xl border border-blue/40 bg-gradient-to-b from-[#241C7A] via-[#161046] to-[#0B0E24] text-white shadow-glow transition-all duration-300 hover:-translate-y-1">
       <div
@@ -222,9 +209,9 @@ function PlanCard({
               key={f}
               className={cn(
                 'flex items-start gap-2.5 text-[12.5px] leading-snug',
-                // The "everything in Basic" lead-in is a heading for the rest,
+                // The "everything in Pro" lead-in is a heading for the rest,
                 // not a feature of its own.
-                pro && i === 0 ? 'font-semibold text-white' : 'text-white/80',
+                elite && i === 0 ? 'font-semibold text-white' : 'text-white/80',
               )}
             >
               <Tick onDark />
@@ -243,13 +230,14 @@ function PlanCard({
           <div className="mt-1 font-mono text-[34px] font-bold leading-none">{now}</div>
           <div className="mt-1.5 text-[11.5px] text-white/60">100 hours + 100 free hours · excl. GST</div>
           <Button
-            href={to}
+            onClick={() => setFormOpen(true)}
             variant="primary"
             arrow
             className="mt-4 h-11 w-full bg-white text-[15px] text-blue-600 hover:bg-white/90"
           >
             Buy Now
           </Button>
+          <PreBookDialog open={formOpen} onClose={() => setFormOpen(false)} variant="prebook" />
         </div>
       </div>
     </div>
