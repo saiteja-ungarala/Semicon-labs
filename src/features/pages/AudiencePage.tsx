@@ -6,7 +6,7 @@ import { PageHero } from '@/components/marketing/PageHero';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
-import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
+import { StarterPackCard } from '@/components/marketing/IndividualOffer';
 import { FinalCta } from '@/features/home/sections/FinalCta';
 import { audiencePages } from '@/data/audiencePages';
 import { cn } from '@/lib/cn';
@@ -85,12 +85,12 @@ export default function AudiencePage() {
           </div>
 
           {/* Sticky pricing — stays put while they scroll the reasons.
-              Individuals get the ₹99 pre-book offer card; other audiences keep
+              Individuals get the ₹499 starter pack card; other audiences keep
               their plan card. */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
             {page.slug === 'individuals' ? (
               <div className="mx-auto w-full max-w-lg">
-                <LaunchOfferCard variant="full" />
+                <StarterPackCard />
               </div>
             ) : (
             <div className="gradient-border relative overflow-hidden rounded-2xl border border-transparent bg-panel p-7 shadow-card">

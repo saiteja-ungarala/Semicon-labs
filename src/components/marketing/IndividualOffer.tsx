@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Button } from '@/components/ui/Button';
+import { PreBookDialog } from './PreBookDialog';
 import { cn } from '@/lib/cn';
 
 /**
@@ -52,7 +53,7 @@ const PRO_FEATURES = [
 export function IndividualOffer() {
   return (
     <div className="mx-auto mt-12 grid max-w-6xl items-stretch gap-6 lg:grid-cols-[minmax(0,330px)_minmax(0,1fr)] lg:gap-8">
-      <StarterPack />
+      <StarterPackCard />
 
       <div className="relative rounded-3xl border border-blue/20 bg-blue-50 px-4 pb-6 pt-11 sm:px-6 sm:pt-12">
         {/* Straddles the panel edge so it reads as a band over both plans. */}
@@ -113,9 +114,19 @@ function Tick({ onDark }: { onDark?: boolean }) {
   );
 }
 
-function StarterPack() {
+/**
+ * The ₹499 starter pack. This is the offer card for the whole site now — the
+ * home pricing popup, the individuals page and the domain pages all show it
+ * where the ₹99 pre-book card used to be.
+ *
+ * Buy Now opens the capture form rather than jumping straight to register,
+ * so the lead is caught before the handoff.
+ */
+export function StarterPackCard() {
+  const [formOpen, setFormOpen] = useState(false);
+
   return (
-    <div className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-blue/40 bg-gradient-to-b from-[#241C7A] via-[#161046] to-[#0B0E24] text-white shadow-glow transition-all duration-300 hover:-translate-y-1">
+    <div className="relative mx-auto flex h-full w-full max-w-[440px] flex-col overflow-hidden rounded-3xl border border-blue/40 bg-gradient-to-b from-[#241C7A] via-[#161046] to-[#0B0E24] text-white shadow-glow transition-all duration-300 hover:-translate-y-1">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -149,13 +160,14 @@ function StarterPack() {
             <span className="font-mono text-[12px] text-white/60">excl. GST</span>
           </div>
           <Button
-            href={`${REGISTER}starter`}
+            onClick={() => setFormOpen(true)}
             variant="primary"
             arrow
             className="mt-5 h-12 w-full bg-white text-base text-blue-600 hover:bg-white/90"
           >
             Buy Now
           </Button>
+          <PreBookDialog open={formOpen} onClose={() => setFormOpen(false)} />
         </div>
       </div>
     </div>

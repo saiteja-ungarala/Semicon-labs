@@ -15,7 +15,7 @@ import {
   type SkillModule,
   type SkillSummary,
 } from '@/features/curriculum/api';
-import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
+import { StarterPackCard } from '@/components/marketing/IndividualOffer';
 import { OPENINGS_BY_CODE, PAY_BY_CODE, proficiencyLevels, upModules, upSkills, upTestcases } from '@/data/curriculum';
 import { breadcrumbSchema, courseSchema } from '@/lib/seo';
 import { cn } from '@/lib/cn';
@@ -227,13 +227,13 @@ function SkillBlock({
 
 /* --------------------------------------------------- sticky pricing rail */
 
-// The client's ₹99 pre-book offer card rides every domain page (funnel:
-// domain → /pricing → register — the card's CTA is route-aware).
+// The client's ₹499 starter pack card rides every domain page (funnel:
+// domain → the capture form → payment).
 function PricingRail() {
   return (
     <aside className="lg:sticky lg:top-24 lg:self-start">
       <div className="mx-auto w-full max-w-lg">
-                <LaunchOfferCard variant="full" />
+                <StarterPackCard />
               </div>
     </aside>
   );

@@ -5,9 +5,9 @@ import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
 
 /**
- * Seat capture, asked for in place rather than by sending the buyer to a login
- * page. We collect the four details, stash them for the checkout step the
- * client's team owns, then hand off to payment.
+ * ₹499 starter-pack capture, asked for in place rather than by sending the
+ * buyer to a login page. We collect the four details, stash them for the
+ * checkout step the client's team owns, then hand off to payment.
  */
 
 interface Fields {
@@ -66,7 +66,7 @@ export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () =>
     // enquiry and the buyer is told someone will follow up. THIS is where the
     // payment call goes once a gateway is connected — the collected details
     // are already in `data`.
-    const payload = { ...data, emailVerifyRequested: verifySent, plan: 'individual-launch' };
+    const payload = { ...data, emailVerifyRequested: verifySent, plan: 'starter-pack' };
     sessionStorage.setItem('sl-prebook', JSON.stringify(payload));
     console.info('Pre-book request:', payload);
     setSending(false);
@@ -74,7 +74,7 @@ export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () =>
   });
 
   return (
-    <Modal open={open} onClose={onClose} label="Pre-book your seat for ₹99">
+    <Modal open={open} onClose={onClose} label="Buy the VLSI Premium Starter Pack">
       <div className="overflow-hidden rounded-3xl bg-panel shadow-card">
         {/* Offer header carries the price so the dialog stands on its own */}
         <div className="relative overflow-hidden bg-blue-600 px-7 py-6 text-white sm:px-9">
@@ -84,16 +84,16 @@ export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () =>
             style={{ background: 'radial-gradient(120% 90% at 90% -20%, rgba(255,255,255,0.5), transparent 60%)' }}
           />
           <p className="relative font-mono text-[10.5px] font-bold uppercase tracking-[0.18em] text-white/75">
-            Limited launch offer · only 1,000 seats
+            VLSI Premium Starter Pack
           </p>
           <div className="relative mt-2 flex flex-wrap items-end gap-x-4 gap-y-1">
-            <span className="font-mono text-[40px] font-bold leading-none">₹99</span>
+            <span className="font-mono text-[40px] font-bold leading-none">₹499</span>
             <span className="pb-1 text-[14px] font-semibold text-white/90">
-              unlocks <b>200 lab hours</b> at the price of 100
+              for <b>10 lab hours</b> and lifetime premium content
             </span>
           </div>
           <p className="relative mt-2 text-[12.5px] text-white/70">
-            Fully redeemable on your first purchase.
+            1 month validity · excl. GST · free lab data backup for a week after expiry.
           </p>
         </div>
 
@@ -104,10 +104,10 @@ export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () =>
                 <path d="M20 6L9 17l-5-5" />
               </svg>
             </div>
-            <h3 className="mt-5 font-display text-[22px] font-bold text-ink">Your seat is reserved</h3>
+            <h3 className="mt-5 font-display text-[22px] font-bold text-ink">Your pack is reserved</h3>
             <p className="mx-auto mt-3 max-w-[46ch] text-pretty text-[14px] leading-relaxed text-ink-dim">
               Thanks — we have your details. Our team will contact you shortly with the payment link to
-              confirm your ₹99 pre-book and unlock your 200 lab hours.
+              confirm your ₹499 Starter Pack and unlock your 10 lab hours.
             </p>
             <Button onClick={onClose} variant="primary" className="mt-7 h-11 px-8">
               Done
@@ -205,10 +205,10 @@ export function PreBookDialog({ open, onClose }: { open: boolean; onClose: () =>
 
           <div className="sm:col-span-2">
             <Button type="submit" arrow={!sending} disabled={sending} className="h-12 w-full text-[15px]">
-              {sending ? 'Reserving your seat…' : 'Pay now — ₹99'}
+              {sending ? 'Reserving your pack…' : 'Pay now — ₹499'}
             </Button>
             <p className="mt-3 text-center text-[12px] text-ink-faint">
-              Secure checkout · your seat is held as soon as payment clears.
+              Secure checkout · your pack is active as soon as payment clears.
             </p>
           </div>
         </form>

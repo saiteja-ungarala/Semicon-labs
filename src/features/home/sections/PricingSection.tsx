@@ -5,7 +5,7 @@ import { PricingTabs } from '@/components/marketing/PricingTabs';
 /**
  * The full pricing set on the homepage — the same Individual / Teams /
  * Corporate tabs the pricing page shows, so nothing is hidden behind a second
- * click (client direction, Aug 2026). The ₹99 launch offer still leads, since
+ * click (client direction, Aug 2026). The ₹499 starter pack still leads, since
  * it is the Individual tab's own content.
  */
 export function PricingSection() {

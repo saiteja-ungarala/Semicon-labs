@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-mot
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Modal } from '@/components/ui/Modal';
-import { LaunchOfferCard } from '@/components/marketing/LaunchOfferCard';
+import { StarterPackCard } from '@/components/marketing/IndividualOffer';
 
 // The rotating slot after "…the industry's" cycles the real EDA vendor logos,
 // in full colour, with the same slide transition the headlines used.
@@ -233,7 +233,7 @@ export function Hero() {
         </motion.div>
       </Container>
       <Modal open={pricingOpen} onClose={() => setPricingOpen(false)} label="Individual pricing">
-        <LaunchOfferCard variant="full" />
+        <StarterPackCard />
       </Modal>
     </section>
   );
