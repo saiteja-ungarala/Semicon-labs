@@ -9,12 +9,12 @@ import { cn } from '@/lib/cn';
  * login page. We collect the four details, stash them for the checkout step
  * the client's team owns, then hand off to payment.
  *
- * One form, two wordings — fields, validation and storage are identical:
+ * One form, three wordings — fields, validation and storage are identical:
  *  - "starter": the ₹499 VLSI Launch pad pack. No ₹99 appears anywhere and the
  *    submit reads "Continue to the pricing page".
- *  - "prebook": the original ₹99 pre-book, opened from the Pro and Elite plan
- *    cards. Keeps the ₹99 heading, the fully-redeemable line and the
- *    redemption note for buyers who already paid it.
+ *  - "pro" / "elite": the plan the buyer clicked, with that plan's own rate,
+ *    price and savings in the header. These keep the ₹99 redemption note for
+ *    buyers who already paid during pre-launch.
  */
 
 interface Fields {
@@ -23,6 +23,14 @@ interface Fields {
   email: string;
   source: string;
 }
+
+type Variant = 'starter' | 'pro' | 'elite';
+
+/** Header + button copy for the two plan entries; `null` means starter. */
+const PLANS = {
+  pro: { name: 'Pro', rate: '₹90', was: '₹18,000', now: '₹9,000', tag: 'individual-pro' },
+  elite: { name: 'Elite', rate: '₹100', was: '₹20,000', now: '₹10,000', tag: 'individual-elite' },
+} as const;
 
 const SOURCES = [
   'LinkedIn',
@@ -49,9 +57,9 @@ export function PreBookDialog({
 }: {
   open: boolean;
   onClose: () => void;
-  variant?: 'starter' | 'prebook';
+  variant?: Variant;
 }) {
-  const prebook = variant === 'prebook';
+  const plan = variant === 'starter' ? null : PLANS[variant];
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
   // The address the link went to. Comparing it against the live field value is
@@ -85,8 +93,8 @@ export function PreBookDialog({
     const payload = {
       ...data,
       emailVerifyRequested: verifySent,
-      // How the two entry points are told apart downstream.
-      plan: prebook ? 'individual-launch' : 'starter-pack',
+      // How the entry points are told apart downstream.
+      plan: plan ? plan.tag : 'starter-pack',
     };
     sessionStorage.setItem('sl-prebook', JSON.stringify(payload));
     console.info('Pre-book request:', payload);
@@ -98,10 +106,10 @@ export function PreBookDialog({
     <Modal
       open={open}
       onClose={onClose}
-      label={prebook ? 'Pre-book your seat for ₹99' : 'Buy the VLSI Launch pad'}
+      label={plan ? `Buy the ${plan.name} plan` : 'Buy the VLSI Launch pad'}
     >
       <div className="overflow-hidden rounded-3xl bg-panel shadow-card">
-        {/* Offer header carries the price so the dialog stands on its own */}
+        {/* Offer header carries the plan so the dialog stands on its own */}
         <div className="relative overflow-hidden bg-blue-600 px-7 py-6 text-white sm:px-9">
           <div
             aria-hidden
@@ -109,14 +117,16 @@ export function PreBookDialog({
             style={{ background: 'radial-gradient(120% 90% at 90% -20%, rgba(255,255,255,0.5), transparent 60%)' }}
           />
           <p className="relative font-mono text-[10.5px] font-bold uppercase tracking-[0.18em] text-white/75">
-            {prebook ? 'Limited launch offer · only 1,000 seats' : 'VLSI Launch pad'}
+            {plan ? 'Launch offer · Individual plan' : 'VLSI Launch pad'}
           </p>
           <div className="relative mt-2 flex flex-wrap items-end gap-x-4 gap-y-1">
-            {prebook ? (
+            {plan ? (
               <>
-                <span className="font-mono text-[40px] font-bold leading-none">₹99</span>
+                <span className="font-display text-[40px] font-bold italic leading-none">
+                  {plan.name}
+                </span>
                 <span className="pb-1 text-[14px] font-semibold text-white/90">
-                  unlocks <b>200 lab hours</b> at the price of 100
+                  {plan.rate}/hour — <b>200 lab hours</b> for the price of 100
                 </span>
               </>
             ) : (
@@ -129,9 +139,15 @@ export function PreBookDialog({
             )}
           </div>
           <p className="relative mt-2 text-[12.5px] text-white/70">
-            {prebook
-              ? 'Fully redeemable on your first purchase.'
-              : '1 month validity · excl. GST · free lab data backup for a week after expiry.'}
+            {plan ? (
+              <>
+                <s className="text-white/50">{plan.was}</s>{' '}
+                <b className="font-semibold text-white">{plan.now}</b> · 100 hours + 100 free ·
+                excl. GST
+              </>
+            ) : (
+              '1 month validity · excl. GST · free lab data backup for a week after expiry.'
+            )}
           </p>
         </div>
 
@@ -143,12 +159,12 @@ export function PreBookDialog({
               </svg>
             </div>
             <h3 className="mt-5 font-display text-[22px] font-bold text-ink">
-              {prebook ? 'Your seat is reserved' : 'Your pack is reserved'}
+              {plan ? 'Your plan is reserved' : 'Your pack is reserved'}
             </h3>
             <p className="mx-auto mt-3 max-w-[46ch] text-pretty text-[14px] leading-relaxed text-ink-dim">
               Thanks — we have your details. Our team will contact you shortly with the payment link to{' '}
-              {prebook
-                ? 'confirm your ₹99 pre-book and unlock your 200 lab hours.'
+              {plan
+                ? `confirm your ${plan.name} plan and unlock your 200 lab hours.`
                 : 'confirm your ₹499 pack and unlock your 10 lab hours.'}
             </p>
             <Button onClick={onClose} variant="primary" className="mt-7 h-11 px-8">
@@ -226,9 +242,9 @@ export function PreBookDialog({
                 Verification link sent to {verifiedFor}. Edit the address to send again.
               </span>
             )}
-            {/* ₹99 flow only: buyers who already paid come back through this
-                form and need to use the same address. */}
-            {prebook && (
+            {/* Plan flows only: buyers who already paid the ₹99 come back
+                through this form and need to use the same address. */}
+            {plan && (
               <p className="mt-2.5 rounded-lg border border-blue/15 bg-blue-50 px-3 py-2 text-[11px] leading-relaxed text-ink-dim">
                 If you paid <b className="font-semibold text-blue-600">₹99</b> during Pre-Launch, it will
                 be redeemed at your payment page.
@@ -250,16 +266,16 @@ export function PreBookDialog({
           <div className="sm:col-span-2">
             <Button type="submit" arrow={!sending} disabled={sending} className="h-12 w-full text-[15px]">
               {sending
-                ? prebook
-                  ? 'Reserving your seat…'
+                ? plan
+                  ? 'Reserving your plan…'
                   : 'Reserving your pack…'
-                : prebook
-                  ? 'Pay now — ₹99'
+                : plan
+                  ? `Pay now — ${plan.now}`
                   : 'Continue to the pricing page'}
             </Button>
             <p className="mt-3 text-center text-[12px] text-ink-faint">
-              {prebook
-                ? 'Secure checkout · your seat is held as soon as payment clears.'
+              {plan
+                ? 'Secure checkout · your plan is active as soon as payment clears.'
                 : 'Secure checkout · your pack is active as soon as payment clears.'}
             </p>
           </div>

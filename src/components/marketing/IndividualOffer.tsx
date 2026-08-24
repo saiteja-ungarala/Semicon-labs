@@ -183,8 +183,8 @@ function PlanCard({
   was: string;
   now: string;
 }) {
-  // Buy Now opens the original ₹99 pre-book form — heading, redeemable line
-  // and redemption note intact — rather than jumping to register.
+  // Buy Now opens the capture form headed with this plan's own name, rate
+  // and offer price; the ₹99 redemption note rides inside it.
   const [formOpen, setFormOpen] = useState(false);
 
   return (
@@ -237,7 +237,7 @@ function PlanCard({
           >
             Buy Now
           </Button>
-          <PreBookDialog open={formOpen} onClose={() => setFormOpen(false)} variant="prebook" />
+          <PreBookDialog open={formOpen} onClose={() => setFormOpen(false)} variant={elite ? 'elite' : 'pro'} />
         </div>
       </div>
     </div>
