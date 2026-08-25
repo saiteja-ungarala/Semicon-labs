@@ -139,9 +139,11 @@ export function Hero() {
                 VLSI cloud labs
               </span>
             </span>
+            {/* Ends on placements — the client's "highlight placements" note on
+                the hero (Aug 2026 change doc). */}
             <span className="mx-auto mt-5 block max-w-2xl text-[clamp(1.1rem,2vw,1.4rem)] font-medium leading-relaxed text-ink-dim">
-              Solve Real-Time Industry Projects, Master Practical Skills, and Build a Successful
-              VLSI Career
+              Solve Real-Time Industry Projects, Master Practical Skills, and{' '}
+              <span className="font-semibold text-blue">Get Placement-Ready</span>
             </span>
           </motion.h1>
 
