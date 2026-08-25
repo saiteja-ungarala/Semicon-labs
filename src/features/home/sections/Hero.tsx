@@ -129,11 +129,11 @@ export function Hero() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="mx-auto flex max-w-4xl flex-col items-center text-center"
+          className="mx-auto flex max-w-5xl flex-col items-center text-center"
         >
           {/* 1 — The main claim */}
           <motion.h1 variants={item} className="font-display font-extrabold tracking-tight text-ink">
-            <span className="block text-[clamp(2.5rem,5vw,4.2rem)] leading-[1.05]">
+            <span className="block text-balance text-[clamp(2.75rem,6vw,6rem)] leading-[1.02]">
               The world's first{' '}
               <span className="bg-gradient-to-r from-blue via-[#5B4DFF] to-sky bg-clip-text text-transparent">
                 VLSI cloud labs
