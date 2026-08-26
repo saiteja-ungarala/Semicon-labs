@@ -29,7 +29,7 @@ export default function PricingPage() {
             Pricing That Fits <span className="text-gradient">Every VLSI Journey</span>
           </>
         }
-        lede="Basic and Pro run identical labs, tools, and problem sets. Pro just hands you a bigger engine underneath — for the labs that need it."
+
         crumbs={[{ name: 'Home', to: '/' }, { name: 'Pricing' }]}
       />
       <Section>

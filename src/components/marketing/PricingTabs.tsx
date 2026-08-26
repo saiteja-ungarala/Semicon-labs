@@ -331,7 +331,7 @@ function IndividualPanel() {
   );
 }
 
-const TEAM_PACK_HEAD = ['Sessions (240 hrs)', 'Discount', 'Basic price', 'Pro price'];
+const TEAM_PACK_HEAD = ['Sessions (240 hrs)', 'Discount', 'Pro price', 'Elite price'];
 
 /** [sessions, discount, basic, pro], all excluding GST. Sessions and discount
  *  are the same on both plans, so the two ladders fold into one table with a
@@ -361,26 +361,26 @@ function TeamsPanel() {
       />
       <div className="mx-auto mt-8 grid max-w-3xl items-start gap-5 md:grid-cols-2">
         <TierCard
-          name="Basic"
+          name="Pro"
           tag="Standard compute · per session"
           price="₹12,000"
           priceSub="per session · excl. GST"
           feats={TEAM_CAPABILITIES.map((c) => ({ yes: c.basic, text: <>{c.cap}</> }))}
-          cta={{ label: 'Start a Basic team' }}
+          cta={{ label: 'Start a Pro team' }}
         />
         <TierCard
           pro
-          name="Pro"
+          name="Elite"
           tag="Bigger computing · bigger design"
           badge="Most Popular"
           price="₹13,500"
           priceSub="per session · excl. GST"
           feats={TEAM_CAPABILITIES.map((c) => ({ yes: c.pro, text: <>{c.cap}</> }))}
-          cta={{ label: 'Start a Pro team' }}
+          cta={{ label: 'Start an Elite team' }}
         />
       </div>
 
-      <SubHead className="mx-auto max-w-4xl">Session packs · Basic ₹12,000 · Pro ₹13,500</SubHead>
+      <SubHead className="mx-auto max-w-4xl">Session packs · Pro ₹12,000 · Elite ₹13,500</SubHead>
       <SpecTable className="mx-auto max-w-4xl" head={TEAM_PACK_HEAD} rows={teamPackRows()} />
 
       <Note>

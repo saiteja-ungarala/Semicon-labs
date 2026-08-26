@@ -133,7 +133,7 @@ export function Hero() {
         >
           {/* 1 — The main claim */}
           <motion.h1 variants={item} className="font-display font-extrabold tracking-tight text-ink">
-            <span className="block text-balance text-[clamp(2.75rem,6vw,6rem)] leading-[1.02]">
+            <span className="block text-balance text-[clamp(2.25rem,4vw,4.5rem)] leading-[1.02]">
               The world's first{' '}
               <span className="bg-gradient-to-r from-blue via-[#5B4DFF] to-sky bg-clip-text text-transparent">
                 VLSI cloud labs
