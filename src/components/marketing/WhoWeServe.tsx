@@ -16,6 +16,7 @@ const ART: Record<string, { photo: string; position: string; kind: 'die' | 'clus
   individuals: { photo: '/images/chips/chip-macro.jpg', position: '50% 45%', kind: 'die', seats: '1 engineer' },
   teams: { photo: '/images/chips/chip-neon.jpg', position: '50% 50%', kind: 'cluster', seats: 'min 2 seats' },
   corporates: { photo: '/images/chips/chip-violet.jpg', position: '50% 72%', kind: 'wafer', seats: 'min 10 licenses' },
+  'launch-pad': { photo: '/images/chips/chip-board.jpg', position: '50% 50%', kind: 'die', seats: 'new to VLSI? start here' },
 };
 
 /**
@@ -34,7 +35,7 @@ interface WhoWeServeProps {
 export function WhoWeServe({ detailed = false }: WhoWeServeProps) {
   return (
     <>
-      <RevealGroup className="grid gap-5 lg:grid-cols-3 lg:items-stretch lg:gap-6" stagger={0.12}>
+      <RevealGroup className="grid gap-5 md:grid-cols-2 lg:items-stretch lg:gap-6" stagger={0.12}>
         {audiences.map((a, i) => {
           const art = ART[a.slug] ?? ART.individuals;
           return (
@@ -124,7 +125,7 @@ export function WhoWeServe({ detailed = false }: WhoWeServeProps) {
       </RevealGroup>
 
       {/* Drafting-style dimension rule: the headcount ladder, stated once in the open */}
-      <div aria-hidden className="mt-5 hidden lg:grid lg:grid-cols-3 lg:gap-6">
+      <div aria-hidden className="mt-5 hidden lg:grid lg:grid-cols-2 lg:gap-6">
         {audiences.map((a) => (
           <div key={a.slug} className="flex items-center gap-2">
             <span className="h-3 w-px bg-line-strong" />

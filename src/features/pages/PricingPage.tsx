@@ -3,8 +3,8 @@ import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { PricingTabs } from '@/components/marketing/PricingTabs';
 import { ComparisonTable } from '@/components/marketing/ComparisonTable';
-import { FaqAccordion } from '@/components/marketing/FaqAccordion';
 import { Reveal } from '@/components/motion/Reveal';
+import { FaqAccordion } from '@/components/marketing/FaqAccordion';
 import { faqs } from '@/data/marketing';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo';
 
@@ -32,10 +32,10 @@ export default function PricingPage() {
 
         crumbs={[{ name: 'Home', to: '/' }, { name: 'Pricing' }]}
       />
-      <Section>
-        <Reveal>
-          <PricingTabs />
-        </Reveal>
+      {/* No reveal here: the plans are the reason for the page, and
+          animating them in left the section blank on arrival. */}
+      <Section id="plans">
+        <PricingTabs />
       </Section>
 
       <Section alt>

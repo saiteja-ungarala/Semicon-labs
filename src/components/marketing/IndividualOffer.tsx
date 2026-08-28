@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { PreBookDialog } from './PreBookDialog';
 import { cn } from '@/lib/cn';
@@ -125,21 +125,26 @@ export function StarterPackCard() {
           VLSI Launch pad
         </h4>
 
-        <ul className="mt-5 space-y-3.5">
-          <StarterLine>
-            <b className="font-semibold text-white">10 Lab Hours</b> — 1 month validity
-          </StarterLine>
-          <StarterLine>
-            Free VLSI Premium Content with lifetime access —{' '}
-            <b className="font-semibold text-[#A79BFF]">worth ₹1 lakh</b>
-          </StarterLine>
-          <StarterLine>
-            Free lab data backup for <b className="font-semibold text-[#A79BFF]">1 week</b> after lab
-            expiry
-          </StarterLine>
+        <ul className="mt-5 space-y-3">
+          <StarterLine
+            title="10 VLSI Lab Hours — 1 Month Validity"
+            detail="Practice, explore & gain hands-on experience"
+          />
+          <StarterLine
+            title="Free Premium VLSI Content — Lifetime Validity"
+            detail="Covered from Basics to Advanced Core Topics, with Self-Assessment"
+          />
+          <StarterLine
+            title="Industry EDA Tools"
+            detail="Access Cadence / Synopsys / Siemens tools"
+          />
+          <StarterLine
+            title="Free 1-Week Lab Data Backup"
+            detail="Your work stays backed up for 7 days after lab expiry"
+          />
         </ul>
 
-        <div className="mt-auto pt-8">
+        <div className="mt-auto pt-6">
           <div className="flex items-baseline gap-2.5">
             <span className="font-mono text-[38px] font-bold leading-none">₹499</span>
             <span className="font-mono text-[12px] text-white/60">excl. GST</span>
@@ -159,11 +164,15 @@ export function StarterPackCard() {
   );
 }
 
-function StarterLine({ children }: { children: ReactNode }) {
+/** A claim over a lighter detail line, matching the plan cards beside it. */
+function StarterLine({ title, detail }: { title: string; detail?: string }) {
   return (
-    <li className="flex items-start gap-2.5 text-[13.5px] leading-snug text-white/80">
+    <li className="flex items-start gap-2.5">
       <Tick onDark />
-      <span>{children}</span>
+      <span className="text-[13px] leading-snug">
+        <b className="block font-semibold text-white">{title}</b>
+        {detail && <span className="mt-0.5 block text-white/60">{detail}</span>}
+      </span>
     </li>
   );
 }

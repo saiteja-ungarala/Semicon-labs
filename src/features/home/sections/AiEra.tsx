@@ -10,25 +10,15 @@ import { Card } from '@/components/ui/Card';
 export function AiEra() {
   return (
     <Section alt>
-      <div className="grid gap-12 lg:grid-cols-[1fr_400px] lg:items-center lg:gap-16">
+      <div className="grid gap-10 lg:grid-cols-[1fr_400px] lg:items-center lg:gap-16">
         <Reveal>
           <p className="eyebrow text-blue">build the skills ai can't replace</p>
-          <h2 className="mt-4 text-display-md">
+          <h2 className="mt-4 text-balance text-display-lg">
             AI can generate solutions.
             <br />
             <span className="text-gradient">Engineers must decide whether they're right.</span>
           </h2>
-          <p className="mt-6 text-pretty text-ink-dim leading-relaxed">
-            AI can generate scripts, suggest fixes, and automate execution. But engineering judgment
-            remains irreplaceable. Engineers still need to ask the right questions, analyze failures,
-            validate results, evaluate trade-offs, and make critical design decisions.
-          </p>
-          <p className="mt-4 text-pretty text-ink-dim leading-relaxed">
-            The future belongs to engineers who can effectively combine technical expertise with AI
-            capabilities. At Semicon Labs, along with industry-grade VLSI workflows, we help you build
-            these skills and prepare for real-world challenges through AI-powered mock interviews
-            designed to improve interview readiness and placement confidence.
-          </p>
+          {/* The list beside it makes the argument; the claim stands alone. */}
         </Reveal>
 
         <Reveal direction="left">

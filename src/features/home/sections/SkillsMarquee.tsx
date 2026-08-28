@@ -81,7 +81,7 @@ export function SkillsMarquee() {
                   src={r.src}
                   alt={r.name}
                   loading="lazy"
-                  className={`${r.square ? LOGO_BOX_SQUARE : LOGO_BOX} opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0`}
+                  className={`${r.square ? LOGO_BOX_SQUARE : LOGO_BOX} transition hover:scale-105`}
                 />
               ) : (
                 <span className="whitespace-nowrap font-display text-[22px] font-extrabold tracking-tight text-ink/45">
