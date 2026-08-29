@@ -266,8 +266,9 @@ function SpecTable({
   );
 }
 
-/** Basic vs Pro capabilities from the client's sheet. Shared rows first so the
- *  ticks read as a block and the three Pro-only rows land together at the end. */
+/** Drives the Pro card only: the ticks read as a block, then the three rows
+ *  Pro does not carry land together at the end as dashes. Elite has its own
+ *  list below, so the `pro` flag stays as the record of the tier split. */
 const TEAM_CAPABILITIES: { cap: string; basic: boolean; pro: boolean }[] = [
   { cap: 'Standard VM compute', basic: true, pro: true },
   { cap: 'Standard labs', basic: true, pro: true },
@@ -279,6 +280,20 @@ const TEAM_CAPABILITIES: { cap: string; basic: boolean; pro: boolean }[] = [
   { cap: 'Higher VM compute (bigger labs)', basic: false, pro: true },
   { cap: 'Complex / high-end designs', basic: false, pro: true },
   { cap: 'Tool switching (change EDA vendor)', basic: false, pro: true },
+];
+
+/** Elite is spelled out on its own instead of as ticks against the Pro rows.
+ *  It sells higher compute, so carrying "standard VM compute / standard labs"
+ *  beside it would contradict the tier — every line here is included. */
+const TEAM_ELITE_CAPABILITIES: string[] = [
+  'Higher VM compute (bigger labs)',
+  'Dedicated Admin and Manager accounts',
+  'Automated practical evaluation',
+  'Ticketing support',
+  'Team users tracking',
+  'Certification upon completing skills',
+  'Complex / High-end designs',
+  'Tool switching (change EDA vendor)',
 ];
 
 const Hl = ({ children }: { children: ReactNode }) => (
@@ -359,7 +374,9 @@ function TeamsPanel() {
         left={<><b className="text-blue-600">1 session</b> = 1 user seat × 1 month × 240 lab hours. Minimum 2 sessions.</>}
         right="Max 30% discount"
       />
-      <div className="mx-auto mt-8 grid max-w-3xl items-start gap-5 md:grid-cols-2">
+      {/* stretch, not items-start: the two lists are different lengths now,
+           and the ul's flex-1 drops both CTAs onto the same line. */}
+      <div className="mx-auto mt-8 grid max-w-3xl items-stretch gap-5 md:grid-cols-2">
         <TierCard
           name="Pro"
           tag="Standard compute · per session"
@@ -375,7 +392,7 @@ function TeamsPanel() {
           badge="Most Popular"
           price="₹13,500"
           priceSub="per session · excl. GST"
-          feats={TEAM_CAPABILITIES.map((c) => ({ yes: c.pro, text: <>{c.cap}</> }))}
+          feats={TEAM_ELITE_CAPABILITIES.map((cap) => ({ yes: true, text: <>{cap}</> }))}
           cta={{ label: 'Start an Elite team' }}
         />
       </div>
