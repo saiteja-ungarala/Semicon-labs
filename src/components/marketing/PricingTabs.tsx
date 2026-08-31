@@ -286,7 +286,7 @@ const TEAM_CAPABILITIES: { cap: string; basic: boolean; pro: boolean }[] = [
  *  It sells higher compute, so carrying "standard VM compute / standard labs"
  *  beside it would contradict the tier — every line here is included. */
 const TEAM_ELITE_CAPABILITIES: string[] = [
-  'Higher VM compute',
+  'Higher VM compute (bigger labs)',
   'Advanced Labs',
   'Dedicated Admin and Manager accounts',
   'Automated practical evaluation',
