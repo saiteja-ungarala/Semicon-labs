@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Modal } from '@/components/ui/Modal';
@@ -23,47 +24,31 @@ const TOOL_LOGOS = [
   { name: 'Siemens', src: '/logos/hero-siemens.png', h: 'h-9' },
 ];
 
-const SEATS_CLAIMED = 639;
-const SEATS_TOTAL = 1000;
-
-/** Launch registrations bar — count ticks up and the track fills on view. */
-function RegistrationsBar() {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-40px' });
-  const [count, setCount] = useState(reduce ? SEATS_CLAIMED : 0);
-
-  useEffect(() => {
-    if (!inView || reduce) return;
-    const start = performance.now();
-    const dur = 1300;
-    let raf: number;
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / dur);
-      setCount(Math.round(SEATS_CLAIMED * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, reduce]);
-
+/** The launch-registrations bar became the ₹499 offer: two chips — the
+ *  Launch Pad name and its price — both landing on the pricing cards. */
+function LaunchPadOffer() {
   return (
-    <div ref={ref} className="w-full flex-1 sm:min-w-[240px]">
-      <div className="flex items-center justify-between gap-3 whitespace-nowrap font-mono text-[11.5px] text-ink-dim">
-        <span>Launch registrations</span>
-        <span>
-          <b className="text-blue">{count}</b> / {SEATS_TOTAL.toLocaleString('en-IN')} claimed
+    <Link
+      to="/pricing#plans"
+      aria-label="VLSI Launch Pad — ₹499 one-time. See the pricing card."
+      className="group w-full flex-1 sm:min-w-[240px]"
+    >
+      <div className="flex flex-wrap items-center justify-center gap-2.5 sm:justify-start">
+        <span className="rounded-full border border-line-strong bg-void/60 px-4 py-1.5 font-display text-[13.5px] font-bold text-ink">
+          VLSI Launch Pad
+        </span>
+        <span className="rounded-full bg-blue px-4 py-1.5 font-mono text-[13px] font-bold text-white shadow-sm transition group-hover:bg-blue-600">
+          ₹499 · one-time
         </span>
       </div>
-      <div className="mt-2 h-2 overflow-hidden rounded-full bg-line">
-        <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-blue-600 via-blue to-sky"
-          initial={{ width: reduce ? `${(SEATS_CLAIMED / SEATS_TOTAL) * 100}%` : '0%' }}
-          animate={inView ? { width: `${(SEATS_CLAIMED / SEATS_TOTAL) * 100}%` } : undefined}
-          transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
-        />
-      </div>
-    </div>
+      <p className="mt-2.5 text-center font-mono text-[11px] text-ink-dim sm:text-left">
+        10 Lab Hours · Premium VLSI Content ·{' '}
+        <span className="whitespace-nowrap">
+          EDA Tools
+          <span className="ml-1 inline-block text-blue transition group-hover:translate-x-0.5">→</span>
+        </span>
+      </p>
+    </Link>
   );
 }
 
@@ -189,7 +174,7 @@ export function Hero() {
             </Button>
           </motion.div>
 
-          {/* 5 — One designed strip closes the hero: real tools + live seat count */}
+          {/* 5 — One designed strip closes the hero: real tools + the ₹499 offer */}
           <motion.div variants={item} className="relative z-20 mt-10 w-full">
             <motion.div
               animate={reduce ? {} : { y: [0, -6, 0] }}
@@ -228,7 +213,7 @@ export function Hero() {
                   </div>
                 </div>
                 <div aria-hidden className="hidden h-14 w-px shrink-0 bg-line sm:block" />
-                <RegistrationsBar />
+                <LaunchPadOffer />
               </div>
             </motion.div>
           </motion.div>
