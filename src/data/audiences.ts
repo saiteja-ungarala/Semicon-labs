@@ -27,8 +27,8 @@ export const audiences: Audience[] = [
     summary:
       'For all ECE & EEE graduates and VLSI aspirants. Explore VLSI workflows, access premium PD & DV learning content, and get 10 hours of hands-on lab experience for just ₹499.',
     points: [
-      'Complete VLSI Learning Content for PD & DV — Covering Basics to Advanced Core Topics with Self-Assessment',
       '10 Hours VLSI Lab Access — Practice, explore and experience real VLSI workflows',
+      'Access to complete VLSI Learning Content for PD & DV — Covering Basics to Advanced Core Topics with Self-Assessment',
       'Industry EDA Tools — Cadence, Synopsys & Siemens',
       '7-Day Lab Data Backup — Your work remains backed up for 1 week after lab expiry',
     ],
