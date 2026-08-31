@@ -38,7 +38,7 @@ function LaunchPadOffer() {
           VLSI Launch Pad
         </span>
         <span className="rounded-full bg-blue px-4 py-1.5 font-mono text-[13px] font-bold text-white shadow-sm transition group-hover:bg-blue-600">
-          @ ₹499 · one-time
+          @ ₹499
         </span>
       </div>
       <p className="mt-2.5 text-center font-mono text-[11px] text-ink-dim sm:text-left">
