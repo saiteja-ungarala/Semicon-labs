@@ -277,7 +277,6 @@ const TEAM_CAPABILITIES: { cap: string; basic: boolean; pro: boolean }[] = [
   { cap: 'Ticketing support', basic: true, pro: true },
   { cap: 'Team users tracking', basic: true, pro: true },
   { cap: 'Certification upon completing skills', basic: true, pro: true },
-  { cap: 'Higher VM compute (bigger labs)', basic: false, pro: true },
   { cap: 'Complex / high-end designs', basic: false, pro: true },
   { cap: 'Tool switching (change EDA vendor)', basic: false, pro: true },
 ];
