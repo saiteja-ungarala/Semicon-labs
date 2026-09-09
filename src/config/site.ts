@@ -17,6 +17,8 @@ export const site = {
   twitter: '@semiconlabs',
   logos: {
     color: '/images/color-logo.png', // full vertical lockup (SL + wordmark)
+    /** 1200x630 social card. Vertical logos crop badly in link previews. */
+    ogCard: '/images/og-card.png',
     white: '/images/white-logo.png',
     black: '/images/black-logo.png',
     mark: '/images/logo-mark.png', // SL monogram only

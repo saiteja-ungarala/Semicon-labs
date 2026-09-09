@@ -4,6 +4,7 @@ import { UrgencyBar } from './UrgencyBar';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { ScrollManager } from './ScrollManager';
+import { Analytics } from '@/components/seo/Analytics';
 import { RouteFallback } from '@/components/feedback/RouteFallback';
 import { useSessionBootstrap } from '@/features/auth/useSessionBootstrap';
 
@@ -16,6 +17,7 @@ export function RootLayout() {
   return (
     <>
       <ScrollManager />
+      <Analytics />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-blue focus:px-4 focus:py-2 focus:text-white"

@@ -25,7 +25,7 @@ export function Seo({
   title,
   description = site.description,
   path = '/',
-  image = site.logos.color,
+  image = site.logos.ogCard,
   type = 'website',
   noindex = false,
   schemas = [],
