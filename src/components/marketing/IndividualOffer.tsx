@@ -57,12 +57,7 @@ export function IndividualOffer() {
         {/* Straddles the panel edge so it reads as a band over both plans. */}
         <div className="absolute left-1/2 top-0 w-[min(94%,560px)] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-gradient-to-r from-[#241C7A] via-blue to-[#4436F0] px-5 py-3 text-center shadow-glow">
           <span className="block font-display text-[13.5px] font-bold leading-tight text-white sm:text-[15.5px]">
-            Launch Offer — Buy 100 hours &amp; Get 100 Hours Free
-          </span>
-          {/* The offer was extended; the date sits under the claim so the band
-              stays one readable line on phones. */}
-          <span className="mt-1 block font-mono text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/75 sm:text-[11.5px]">
-            You asked, we extended — now till September 30
+            You asked, we extended! Our 100 hours +100 Free Lab Hours Offer is now extended till September 30.
           </span>
         </div>
 

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 const MESSAGE =
-  'Launch Offer — Buy 100 hours & Get 100 Hours Free - You asked, we extended! Our 100+100 Lab Hours Offer is now extended till September 30.';
+  'You asked, we extended! Our 100 hours +100 Free Lab Hours Offer is now extended till September 30.';
 
 /** Top announcement bar — rolling marquee. Always shown: the dismiss control
  *  was removed at the client's request, so there is no way to restore it. */
