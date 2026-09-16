@@ -34,18 +34,18 @@ interface Film {
 
 const FILMS: Film[] = [
   {
-    id: 'vNIhL9TKd0E',
-    label: 'Discover Semicon Labs',
-    caption: 'What Semicon Labs is, who it is for and what you walk away with.',
-    path: 'semiconlabs.com/labs',
-    cta: 'Watch the introduction',
-  },
-  {
     id: '7qRjvRQaLMg',
     label: 'Platform Walk through',
     caption: 'A walk through the platform — the labs, the tools and how a challenge is solved.',
     path: 'semiconlabs.com/demo',
     cta: 'Watch the walkthrough',
+  },
+  {
+    id: 'vNIhL9TKd0E',
+    label: 'Discover Semicon Labs',
+    caption: 'What Semicon Labs is, who it is for and what you walk away with.',
+    path: 'semiconlabs.com/labs',
+    cta: 'Watch the introduction',
   },
 ];
 
