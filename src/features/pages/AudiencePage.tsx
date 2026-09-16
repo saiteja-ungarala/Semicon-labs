@@ -9,6 +9,7 @@ import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import { StarterPackCard } from '@/components/marketing/IndividualOffer';
 import { FinalCta } from '@/features/home/sections/FinalCta';
 import { audiencePages } from '@/data/audiencePages';
+import { audienceSeo } from '@/data/pageSeo';
 import { cn } from '@/lib/cn';
 import { breadcrumbSchema } from '@/lib/seo';
 
@@ -27,8 +28,8 @@ export default function AudiencePage() {
   return (
     <>
       <Seo
-        title={`${page.name} — Who We Serve`}
-        description={page.lede}
+        title={audienceSeo[page.slug]?.title ?? `${page.name} — Who We Serve`}
+        description={audienceSeo[page.slug]?.description ?? page.lede}
         path={path}
         schemas={[
           breadcrumbSchema([

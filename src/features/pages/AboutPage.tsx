@@ -1,4 +1,5 @@
 import { Seo } from '@/components/seo/Seo';
+import { pageSeo } from '@/data/pageSeo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Reveal, RevealGroup, RevealItem } from '@/components/motion/Reveal';
@@ -28,8 +29,7 @@ export default function AboutPage() {
   return (
     <>
       <Seo
-        title="About"
-        description="Semicon Labs bridges the gap between knowing a flow and knowing how to solve a problem — building the world's most comprehensive collection of real semiconductor engineering challenges."
+        {...pageSeo["/about"]}
         path="/about"
         schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }])]}
       />

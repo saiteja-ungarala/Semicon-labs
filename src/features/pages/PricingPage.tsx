@@ -1,4 +1,5 @@
 import { Seo } from '@/components/seo/Seo';
+import { pageSeo } from '@/data/pageSeo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { PricingTabs } from '@/components/marketing/PricingTabs';
@@ -14,8 +15,7 @@ export default function PricingPage() {
   return (
     <>
       <Seo
-        title="Pricing"
-        description="Simple, founding-learner pricing for Semicon Labs. Start free, upgrade to Specialist or Career when you're ready. 7-day money-back guarantee on every paid plan."
+        {...pageSeo["/pricing"]}
         path="/pricing"
         schemas={[
           breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Pricing', path: '/pricing' }]),

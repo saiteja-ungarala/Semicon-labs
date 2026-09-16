@@ -14,10 +14,14 @@
       rel="stylesheet"
     />
 
-    <title>Semicon Labs — Learn Semiconductor Engineering by Solving Real Project Problems</title>
+    <!-- data-rh hands these to react-helmet-async, which then REPLACES them
+         per route. Without it Helmet cannot adopt the tag, so it appends a
+         second one and every page keeps serving this description. -->
+    <title data-rh="true">VLSI Cloud Labs for Physical Design &amp; DV — Semicon Labs</title>
     <meta
       name="description"
-      content="Semicon Labs is an execution-first semiconductor learning platform. Solve real engineering challenges in Physical Design and Design Verification — investigate, fix, and validate, just like on the job."
+      data-rh="true"
+      content="Solve real Physical Design and Design Verification projects on Cadence, Synopsys and Siemens tools in your browser. Start with 10 lab hours at ₹499."
     />
     <!-- Static social-preview tags. React overwrites these per route via
          <Seo>, but link crawlers (WhatsApp, LinkedIn, Twitter) do not run

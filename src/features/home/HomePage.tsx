@@ -1,4 +1,5 @@
 import { Seo } from '@/components/seo/Seo';
+import { pageSeo } from '@/data/pageSeo';
 import {
   organizationSchema,
   websiteSchema,
@@ -25,6 +26,7 @@ export function HomePage() {
   return (
     <>
       <Seo
+        {...pageSeo['/']}
         path="/"
         schemas={[
           organizationSchema(),

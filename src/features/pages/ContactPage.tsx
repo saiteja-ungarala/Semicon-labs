@@ -1,4 +1,5 @@
 import { Seo } from '@/components/seo/Seo';
+import { pageSeo } from '@/data/pageSeo';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Section } from '@/components/ui/Section';
 import { CorporateEnquiryForm } from '@/components/marketing/CorporateEnquiryForm';
@@ -13,8 +14,7 @@ export default function ContactPage() {
   return (
     <>
       <Seo
-        title="Contact"
-        description="Get in touch with the Semicon Labs team — questions about labs, plans, partnerships, or anything else."
+        {...pageSeo["/contact"]}
         path="/contact"
         schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }])]}
       />

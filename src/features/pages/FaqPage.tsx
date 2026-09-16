@@ -1,4 +1,5 @@
 import { Seo } from '@/components/seo/Seo';
+import { pageSeo } from '@/data/pageSeo';
 import { Section } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { FaqAccordion } from '@/components/marketing/FaqAccordion';
@@ -18,8 +19,7 @@ export default function FaqPage() {
   return (
     <>
       <Seo
-        title="Frequently Asked Questions"
-        description="Answers about how Semicon Labs works — challenges, validation, domains, modules, billing, and the roadmap toward a full learning platform."
+        {...pageSeo["/faq"]}
         path="/faq"
         schemas={[
           breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'FAQ', path: '/faq' }]),

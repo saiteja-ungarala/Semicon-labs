@@ -7,10 +7,10 @@
 export const site = {
   name: 'Semicon Labs',
   legalName: 'Semicon Labs',
-  tagline: 'Learn Semiconductor Engineering by Solving Real Project Problems',
+  tagline: 'VLSI Cloud Labs for Physical Design & Design Verification',
   shortTagline: 'The platform for engineering thinking, not command memorization.',
   description:
-    'Semicon Labs is an execution-first semiconductor learning platform. Solve real engineering challenges in Physical Design and Design Verification — investigate, fix, and validate, just like on the job.',
+    'Solve real Physical Design and Design Verification projects on Cadence, Synopsys and Siemens tools in your browser. Start with 10 lab hours at ₹499.',
   url: (import.meta.env.VITE_SITE_URL as string) || 'https://semiconlabs.com',
   locale: 'en_US',
   email: 'hello@semiconlabs.com',

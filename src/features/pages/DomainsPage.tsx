@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Seo } from '@/components/seo/Seo';
+import { pageSeo } from '@/data/pageSeo';
 import { Section } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Badge } from '@/components/ui/Badge';
@@ -153,8 +154,7 @@ export default function DomainsPage() {
   return (
     <>
       <Seo
-        title="Engineering Domains"
-        description="Physical Design, Design Verification and Analog Layout — real project challenges on industry EDA tools, structured Domain → Skill → Module → Real world scenario."
+        {...pageSeo["/domains"]}
         path="/domains"
         schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Domains', path: '/domains' }])]}
       />

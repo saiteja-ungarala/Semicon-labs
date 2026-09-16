@@ -1,4 +1,5 @@
 import { Seo } from '@/components/seo/Seo';
+import { pageSeo } from '@/data/pageSeo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Button } from '@/components/ui/Button';
@@ -24,8 +25,7 @@ export default function CareersPage() {
   return (
     <>
       <Seo
-        title="Careers"
-        description="Join the team building the platform that develops real semiconductor engineering judgment. Remote-first roles across curriculum and product."
+        {...pageSeo["/careers"]}
         path="/careers"
         schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers' }])]}
       />

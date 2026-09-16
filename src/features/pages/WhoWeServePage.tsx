@@ -1,4 +1,5 @@
 import { Seo } from '@/components/seo/Seo';
+import { pageSeo } from '@/data/pageSeo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { WhoWeServe } from '@/components/marketing/WhoWeServe';
@@ -11,8 +12,7 @@ export default function WhoWeServePage() {
   return (
     <>
       <Seo
-        title="Who We Serve"
-        description="Semicon Labs serves students and freshers, working engineers, training teams, and enterprises — with a plan for every stage of a semiconductor career."
+        {...pageSeo["/who-we-serve"]}
         path="/who-we-serve"
         schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Who We Serve', path: '/who-we-serve' }])]}
       />

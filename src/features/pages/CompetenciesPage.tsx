@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Seo } from '@/components/seo/Seo';
+import { pageSeo } from '@/data/pageSeo';
 import { Section } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
@@ -49,8 +50,7 @@ export default function CompetenciesPage() {
   return (
     <>
       <Seo
-        title="Modules"
-        description="Browse every Semicon Labs module across Physical Design and Design Verification — the specific capabilities you'll demonstrate through real engineering challenges."
+        {...pageSeo["/competencies"]}
         path="/competencies"
         schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Modules', path: '/competencies' }])]}
       />

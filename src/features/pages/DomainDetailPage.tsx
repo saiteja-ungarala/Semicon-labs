@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Seo } from '@/components/seo/Seo';
+import { domainSeo } from '@/data/pageSeo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Badge } from '@/components/ui/Badge';
@@ -276,8 +277,8 @@ export default function DomainDetailPage() {
   return (
     <>
       <Seo
-        title={`${domain.name} — ${domain.tagline}`}
-        description={domain.description}
+        title={domainSeo[domain.slug]?.title ?? `${domain.name} — ${domain.tagline}`}
+        description={domainSeo[domain.slug]?.description ?? domain.description}
         path={path}
         schemas={[
           breadcrumbSchema([
