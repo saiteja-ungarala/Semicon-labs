@@ -18,11 +18,17 @@ import { useDomains, type DomainSummary } from '@/features/curriculum/api';
  * proof-heavy cards (live catalog counts + client-approved claims).
  */
 
+const VENDOR_LOGOS = [
+  { name: 'Cadence', src: '/logos/hero-cadence.png', h: 'h-3.5' },
+  { name: 'Synopsys', src: '/logos/hero-synopsys.png', h: 'h-3.5' },
+  { name: 'Siemens', src: '/logos/hero-siemens.png', h: 'h-4' },
+];
+
 const claimRows = (d: DomainSummary) => [
   { label: 'Skill tracks', value: `${upSkills(d.stats.skills)}` },
   { label: 'Modules', value: `${upModules(d.stats.modules)}` },
   { label: 'Real world scenarios', value: `${upTestcases(d.stats.testcases)}+` },
-  { label: 'Supported by', value: 'Cadence · Synopsys · Siemens' },
+  { label: 'Supported by', value: 'Cadence · Synopsys · Siemens', logos: true },
   { label: 'Avg. industry pay', value: PAY_BY_CODE[d.code] ?? '₹9 LPA' },
   { label: 'Active openings', value: OPENINGS_BY_CODE[d.code] ?? '3,000+' },
 ];
@@ -73,6 +79,15 @@ function HomeDomainCard({ domain }: { domain: DomainSummary }) {
             style={{ transitionDelay: `${i * 45}ms` }}
           >
             <span className="font-mono text-[10.5px] uppercase tracking-wider text-ink-faint">{row.label}</span>
+            {row.logos ? (
+              // The vendor names read stronger as marks than as a text list,
+              // and the row keeps the same height either way.
+              <span className="flex shrink-0 items-center gap-2.5">
+                {VENDOR_LOGOS.map((v) => (
+                  <img key={v.name} src={v.src} alt={v.name} className={`${v.h} w-auto object-contain`} loading="lazy" />
+                ))}
+              </span>
+            ) : (
             <span
               className={
                 row.label === 'Real world scenarios'
@@ -82,6 +97,7 @@ function HomeDomainCard({ domain }: { domain: DomainSummary }) {
             >
               {row.value}
             </span>
+            )}
           </li>
         ))}
       </ul>
@@ -105,9 +121,9 @@ export function Domains() {
         eyebrow="the skills companies are hiring for — right now"
         title={
           <>
-            Industry Challenges That
+            VLSI Current Hiring
             <br className="hidden sm:block" />{' '}
-            <span className="text-gradient">Prepare You for Placements</span>
+            <span className="text-gradient">1 Lakh+</span>
           </>
         }
       />

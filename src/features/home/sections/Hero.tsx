@@ -8,10 +8,12 @@ import { StarterPackCard } from '@/components/marketing/IndividualOffer';
 
 // The rotating slot after "…the industry's" cycles the real EDA vendor logos,
 // in full colour, with the same slide transition the headlines used.
-const ROTATING_WORDS = [
-  'leading tools.',
-  'best practices.',
-  'standard flows.',
+// The slot after "Get Placed at" cycles recruiter logos rather than words:
+// the names carry more weight than any phrase we could write there.
+const PLACEMENT_LOGOS = [
+  { name: 'AMD', src: '/logos/trim/amd.png', h: 'h-6 sm:h-7' },
+  { name: 'Qualcomm', src: '/logos/trim/qualcomm.png', h: 'h-5 sm:h-6' },
+  { name: 'Intel', src: '/logos/trim/intel.png', h: 'h-6 sm:h-7' },
 ];
 
 const BACKGROUND_WORDS = [
@@ -60,7 +62,7 @@ export function Hero() {
   useEffect(() => {
     if (reduce) return;
     const i = setInterval(() => {
-      setHeadlineIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+      setHeadlineIndex((prev) => (prev + 1) % PLACEMENT_LOGOS.length);
     }, 2500);
     return () => clearInterval(i);
   }, [reduce]);
@@ -118,7 +120,7 @@ export function Hero() {
         >
           {/* 1 — The main claim */}
           <motion.h1 variants={item} className="font-display font-extrabold tracking-tight text-ink">
-            <span className="block text-balance text-[clamp(2.25rem,4vw,4.5rem)] leading-[1.02]">
+            <span className="block text-balance text-[clamp(2.75rem,5.4vw,6rem)] leading-[1.02]">
               The world's first{' '}
               <span className="bg-gradient-to-r from-blue via-[#5B4DFF] to-sky bg-clip-text text-transparent">
                 VLSI cloud labs
@@ -137,21 +139,21 @@ export function Hero() {
             variants={item}
             className="mt-8 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-3 text-[16px] text-ink-dim"
           >
-            <span>Solve real chip problems with the industry's</span>
-            {/* popLayout (not "wait") so the outgoing word leaves while the next
+            <span className="text-[18px] font-semibold text-ink">Get Placed at</span>
+            {/* popLayout (not "wait") so the outgoing logo leaves while the next
                 one arrives — with "wait" there is a visibly empty gap. */}
-            <span className="relative inline-flex h-[2em] min-w-[170px] items-center justify-center overflow-hidden rounded-full bg-blue-50/80 border border-blue-100 shadow-sm px-4" aria-live="polite">
+            <span className="relative inline-flex h-[2.6em] min-w-[150px] items-center justify-center overflow-hidden rounded-full bg-blue-50/80 border border-blue-100 shadow-sm px-5" aria-live="polite">
               <AnimatePresence mode="popLayout" initial={false}>
-                <motion.span
+                <motion.img
                   key={headlineIndex}
+                  src={PLACEMENT_LOGOS[headlineIndex].src}
+                  alt={PLACEMENT_LOGOS[headlineIndex].name}
                   initial={reduce ? { opacity: 0 } : { y: '1.1em', opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={reduce ? { opacity: 0 } : { y: '-1.1em', opacity: 0 }}
                   transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute flex items-center font-bold text-blue-600 whitespace-nowrap"
-                >
-                  {ROTATING_WORDS[headlineIndex]}
-                </motion.span>
+                  className={`absolute w-auto max-w-[120px] object-contain ${PLACEMENT_LOGOS[headlineIndex].h}`}
+                />
               </AnimatePresence>
             </span>
           </motion.div>
@@ -162,7 +164,7 @@ export function Hero() {
             className="relative z-20 mt-8 flex w-full max-w-sm flex-col items-center justify-center gap-3.5 sm:max-w-none sm:flex-row"
           >
             <Button to="/domains" size="lg" arrow className="h-12 w-full px-8 text-[15px] shadow-glow sm:w-auto">
-              Explore Skills
+              Explore now
             </Button>
             <Button
               size="lg"
@@ -189,7 +191,8 @@ export function Hero() {
                   <div className="h-3 w-3 rounded-full bg-green-400" />
                 </div>
                 <div className="flex-1 text-center font-mono text-[10px] uppercase tracking-widest text-ink-faint">
-                  Cloud Lab Instance — Active
+                  Get hands on experience with{' '}
+                  <span className="font-bold text-blue">VLSI Launch Pad</span>
                 </div>
                 <div className="w-10" /> {/* Spacer for flex balance */}
               </div>

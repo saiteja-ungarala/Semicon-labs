@@ -45,9 +45,9 @@ export function HomePage() {
       <SkillsMarquee />
 
       <PlatformModules />
+      <IitPrograms />
       <WhySemicon />
       <AiEra />
-      <IitPrograms />
       <Domains />
       <HowItWorks />
       <PricingSection />

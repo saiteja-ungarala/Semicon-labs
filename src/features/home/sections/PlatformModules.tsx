@@ -6,7 +6,7 @@ import { RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import { cn } from '@/lib/cn';
 
 /**
- * "Everything your VLSI Career needs. That no one ever provided till now" —
+ * "These Gaps Are Standing Between You and Your Placement" —
  * the eight launch benefits as icon tiles. The toggle flips the grid into the
  * "without Semicon Labs" world: everything greys out, scatters, and each tile
  * shows the handwritten alternative you'd be stuck with.
@@ -62,9 +62,9 @@ export function PlatformModules() {
         eyebrow="miss semicon labs, miss every benefit."
         title={
           <>
-            Everything your VLSI Career needs.
+            These Gaps Are Standing Between You and Your Placement
             <br className="hidden sm:block" />{' '}
-            <span className="text-gradient">That no one ever provided till now.</span>
+            <span className="text-gradient">Everything Your VLSI Career Needs to Get Ahead of the Competition.</span>
           </>
         }
         right={

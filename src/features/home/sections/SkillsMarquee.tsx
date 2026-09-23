@@ -56,8 +56,10 @@ export function SkillsMarquee() {
         </div>
         
         <h2 className="font-display text-[22px] font-bold leading-snug tracking-tight text-ink sm:text-[28px] md:text-[34px]">
-          Master the required skills, become placement-ready through AI mock interviews,{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-sky">and unlock our exclusive Placement Community.</span>
+          Not Another VLSI Course.{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-sky">
+            A Placement Pipeline with Mock Interviews &amp; Direct Access to the Placement Community.
+          </span>
         </h2>
       </div>
       <div
