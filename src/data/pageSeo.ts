@@ -73,9 +73,9 @@ export const audienceSeo: Record<string, PageSeo> = {
       'For ECE and EEE graduates new to VLSI: ₹499 gets 10 hours of cloud lab time on Cadence, Synopsys and Siemens tools, plus lifetime PD and DV content.',
   },
   individuals: {
-    title: 'VLSI Cloud Labs for Freshers & Engineers',
+    title: 'VLSI Trained Fresher? Get Interview-Ready',
     description:
-      'Freshers chasing a first VLSI role and engineers going deeper - guided PD and DV challenges on real Cadence, Synopsys and Siemens tools in your browser.',
+      'You learned VLSI but interviews test what you can do. Practise on broken designs with real Cadence, Synopsys and Siemens tools - from Rs 499.',
   },
   teams: {
     title: 'VLSI Training for Teams - Cloud EDA Labs',

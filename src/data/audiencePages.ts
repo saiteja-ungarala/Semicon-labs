@@ -52,10 +52,10 @@ export interface AudiencePage {
 export const audiencePages: AudiencePage[] = [
   {
     slug: 'individuals',
-    name: 'Individuals',
+    name: 'VLSI Trained Fresher',
     heroArt: '/images/audiences/individuals.png',
-    eyebrow: 'who we serve · individuals',
-    title: 'Individuals',
+    eyebrow: 'who we serve · vlsi trained fresher',
+    title: 'VLSI Trained Fresher',
     lede:
       "Whether you're a VLSI-trained fresher aiming for your first placement or a working professional looking to upskill — Semicon Labs helps you build industry-ready expertise through real VLSI labs, EDA tools, practical workflows, and AI-powered mock interviews designed for placement readiness.",
     sectionEyebrow: 'more than industry tools',

@@ -37,7 +37,7 @@ export const audiences: Audience[] = [
   {
     slug: 'individuals',
     icon: 'individual',
-    title: 'Individuals',
+    title: 'VLSI Trained Fresher',
     planLabel: 'Individual plan',
     summary:
       'VLSI Trained Freshers preparing for a first semiconductor role, and working engineers going deeper. Build real project experience on the exact Modules live projects demand.',
@@ -46,7 +46,7 @@ export const audiences: Audience[] = [
       'Independent & expert-level challenges as you progress',
       'Verified module certificates you can point to',
     ],
-    cta: { label: 'VLSI Trained Freshers & Working Professionals', to: '/who-we-serve/individuals' },
+    cta: { label: 'For VLSI Trained Freshers', to: '/who-we-serve/individuals' },
   },
   {
     slug: 'teams',

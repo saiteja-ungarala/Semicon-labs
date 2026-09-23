@@ -12,6 +12,7 @@ import { audiencePages } from '@/data/audiencePages';
 import { audienceSeo } from '@/data/pageSeo';
 import { cn } from '@/lib/cn';
 import { breadcrumbSchema } from '@/lib/seo';
+import FresherPage from './FresherPage';
 
 /**
  * Dedicated audience page (Individuals / Teams / Corporates): numbered
@@ -20,6 +21,8 @@ import { breadcrumbSchema } from '@/lib/seo';
  */
 export default function AudiencePage() {
   const { audience } = useParams();
+  // Individuals has its own layout (see FresherPage); this generic one serves the rest.
+  if (audience === 'individuals') return <FresherPage />;
   const page = audiencePages.find((p) => p.slug === audience);
   if (!page) return <Navigate to="/who-we-serve" replace />;
 
