@@ -1,0 +1,52 @@
+{
+  "projectId": "8360fca2-cfa9-4adf-a65c-b11f076bae63",
+  "shape": "package",
+  "pkg": "@semiconlabs/web",
+  "globalName": "SemiconLabs",
+  "srcDir": "src",
+  "tsconfig": "tsconfig.app.json",
+  "buildCmd": "node .design-sync/build-css.mjs",
+  "cssEntry": ".design-sync/.cache/styles.css",
+  "provider": {
+    "component": "RouterShell"
+  },
+  "componentSrcMap": {
+    "Badge": "src/components/ui/Badge.tsx",
+    "Button": "src/components/ui/Button.tsx",
+    "Card": "src/components/ui/Card.tsx",
+    "Container": "src/components/ui/Container.tsx",
+    "Logo": null,
+    "Modal": "src/components/ui/Modal.tsx",
+    "Section": "src/components/ui/Section.tsx",
+    "SectionHead": "src/components/ui/Section.tsx",
+    "TextField": "src/components/ui/TextField.tsx",
+    "PageHero": "src/components/marketing/PageHero.tsx",
+    "IndividualOffer": "src/components/marketing/IndividualOffer.tsx",
+    "StarterPackCard": "src/components/marketing/IndividualOffer.tsx",
+    "CorporateEnquiryForm": "src/components/marketing/CorporateEnquiryForm.tsx",
+    "DomainCard": "src/components/marketing/DomainCard.tsx",
+    "ToolBadge": "src/components/curriculum/CurriculumBits.tsx",
+    "LabTypeBadge": "src/components/curriculum/CurriculumBits.tsx",
+    "DifficultyDots": "src/components/curriculum/CurriculumBits.tsx",
+    "LabMixBar": "src/components/curriculum/CurriculumBits.tsx",
+    "StatChip": "src/components/curriculum/CurriculumBits.tsx",
+    "Reveal": "src/components/motion/Reveal.tsx",
+    "RouterShell": null
+  },
+  "overrides": {
+    "Modal": {
+      "cardMode": "single",
+      "viewport": "900x620"
+    },
+    "IndividualOffer": {
+      "cardMode": "column"
+    },
+    "CorporateEnquiryForm": {
+      "cardMode": "column"
+    },
+    "PageHero": {
+      "cardMode": "column"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}
