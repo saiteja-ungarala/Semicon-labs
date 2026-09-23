@@ -1,96 +1,122 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Section } from '@/components/ui/Section';
+import { Section, SectionHead } from '@/components/ui/Section';
+import { Reveal } from '@/components/motion/Reveal';
 import { testimonials } from '@/data/marketing';
 
-/** Five-star row with half-star support, drawn from the review's rating. */
-function Stars({ rating }: { rating: number }) {
+/**
+ * The review wall. This used to rotate one quote at a time on a six-second
+ * timer, which meant eight of the nine reviews were never seen — the proof
+ * was there and the page spent it one line at a time. Showing them all at
+ * once is what makes a testimonial section persuasive.
+ *
+ * Laid out in CSS columns rather than a grid: the quotes vary a lot in
+ * length, and columns let a short card sit under a long one instead of
+ * leaving every row as tall as its tallest card.
+ */
+
+/** Reviewers give an employer or an institute, never a logo. Matching on the
+ *  role keeps the data file free of presentation detail. */
+const CRESTS: { match: RegExp; src: string; alt: string; h: string }[] = [
+  { match: /IIT/i, src: '/logos/iit-kharagpur.png', alt: 'IIT Kharagpur', h: 'h-8' },
+  { match: /NVIDIA/i, src: '/logos/trim/nvidia.png', alt: 'NVIDIA', h: 'h-4' },
+  { match: /Intel/i, src: '/logos/trim/intel.png', alt: 'Intel', h: 'h-5' },
+];
+const crestFor = (role: string) => CRESTS.find((c) => c.match.test(role));
+
+/** Neutral stand-in: we have no reviewer photos, and inventing faces for real
+ *  quotes would misrepresent them. */
+function Avatar({ name }: { name: string }) {
   return (
-    <div
-      className="flex items-center justify-center gap-1"
-      role="img"
-      aria-label={`Rated ${rating} out of 5`}
+    <span
+      aria-hidden
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 ring-1 ring-blue/15"
+      title={name}
     >
+      <svg viewBox="0 0 24 24" className="h-5 w-5 text-blue/45" fill="currentColor">
+        <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z" />
+      </svg>
+    </span>
+  );
+}
+
+function Stars({ rating }: { rating: number }) {
+  const key = String(rating).replace('.', '_');
+  return (
+    <div className="flex items-center gap-0.5" role="img" aria-label={`Rated ${rating} out of 5`}>
       {[1, 2, 3, 4, 5].map((i) => {
         const fill = Math.max(0, Math.min(1, rating - i + 1));
         return (
-          <svg key={i} viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
+          <svg key={i} viewBox="0 0 24 24" className="h-3.5 w-3.5" aria-hidden>
             <defs>
-              <linearGradient id={`star-${i}-${String(rating).replace('.', '_')}`}>
+              <linearGradient id={`t-star-${i}-${key}`}>
                 <stop offset={`${fill * 100}%`} stopColor="#F5A623" />
                 <stop offset={`${fill * 100}%`} stopColor="#E6E7F4" />
               </linearGradient>
             </defs>
             <path
               d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4 6.2 20.5l1.1-6.5L2.6 9.4l6.5-.9L12 2.6Z"
-              fill={`url(#star-${i}-${String(rating).replace('.', '_')})`}
+              fill={`url(#t-star-${i}-${key})`}
             />
           </svg>
         );
       })}
-      <span className="ml-1.5 font-mono text-[11.5px] font-bold text-ink-dim">{rating.toFixed(1)}</span>
+      <span className="ml-1.5 font-mono text-[10.5px] font-bold text-ink-faint">{rating.toFixed(1)}</span>
     </div>
   );
 }
 
 export function Testimonials() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 6000); // Rotate every 6 seconds
-    return () => clearInterval(timer);
-  }, []);
+  const average = testimonials.reduce((a, t) => a + t.rating, 0) / testimonials.length;
 
   return (
-    <Section alt className="overflow-hidden bg-void/5 py-24 sm:py-32">
-      <div className="mx-auto max-w-4xl px-6 text-center">
-        {/* Massive quote mark icon */}
-        <div className="mb-8 flex justify-center opacity-20">
-          <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" className="text-blue-500">
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-          </svg>
-        </div>
+    <Section alt id="reviews" className="overflow-hidden">
+      <SectionHead
+        eyebrow="what learners say"
+        title={
+          <>
+            Reviewed by the engineers
+            <br className="hidden sm:block" />{' '}
+            <span className="text-gradient">who trained here</span>
+          </>
+        }
+      />
 
-        <div className="relative h-[280px] sm:h-[220px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.6, ease: 'easeInOut' }}
-              className="absolute inset-0 flex flex-col items-center justify-center"
-            >
-              <h2 className="text-pretty text-2xl font-medium leading-relaxed text-ink sm:text-3xl lg:text-4xl">
-                {testimonials[currentIndex].quote}
-              </h2>
-              
-              <div className="mt-10 flex items-center justify-center gap-6">
-                <div className="text-right">
-                  <Stars rating={testimonials[currentIndex].rating} />
-                  <div className="mt-2 font-semibold text-ink">{testimonials[currentIndex].name}</div>
-                  <div className="font-mono text-xs text-ink-dim">{testimonials[currentIndex].role}</div>
-                </div>
-                
-                {testimonials[currentIndex].logo === 'google' && (
-                  <>
-                    <div className="h-8 w-px bg-line" />
-                    <div className="flex font-display text-2xl font-bold tracking-tight">
-                      <span className="text-blue-500">G</span>
-                      <span className="text-red-500">o</span>
-                      <span className="text-yellow-500">o</span>
-                      <span className="text-blue-500">g</span>
-                      <span className="text-green-500">l</span>
-                      <span className="text-red-500">e</span>
-                    </div>
-                  </>
-                )}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+      <div className="mb-10 flex items-center justify-center gap-3">
+        <Stars rating={average} />
+        <span className="text-[13px] text-ink-dim">
+          from <b className="font-semibold text-ink">{testimonials.length}</b> verified learners
+        </span>
+      </div>
+
+      {/* columns, not grid — see the note at the top of the file */}
+      <div className="mx-auto max-w-6xl gap-5 [column-fill:_balance] sm:columns-2 lg:columns-3">
+        {testimonials.map((t, i) => {
+          const crest = crestFor(t.role);
+          return (
+            <Reveal key={t.name + i} delay={(i % 3) * 0.06}>
+              <figure className="mb-5 break-inside-avoid rounded-2xl border border-line bg-panel p-6 shadow-card transition-shadow duration-300 hover:shadow-card-hover">
+                <Stars rating={t.rating} />
+                <blockquote className="mt-3.5 text-pretty text-[14.5px] leading-relaxed text-ink-dim">
+                  “{t.quote}”
+                </blockquote>
+                <figcaption className="mt-5 flex items-center gap-3 border-t border-line pt-4">
+                  <Avatar name={t.name} />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[14px] font-semibold text-ink">{t.name}</span>
+                    <span className="block truncate font-mono text-[11px] text-ink-faint">{t.role}</span>
+                  </span>
+                  {crest && (
+                    <img
+                      src={crest.src}
+                      alt={crest.alt}
+                      loading="lazy"
+                      className={`${crest.h} w-auto shrink-0 object-contain`}
+                    />
+                  )}
+                </figcaption>
+              </figure>
+            </Reveal>
+          );
+        })}
       </div>
     </Section>
   );

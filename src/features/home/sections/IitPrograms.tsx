@@ -5,8 +5,8 @@ import { Reveal } from '@/components/motion/Reveal';
 /**
  * "Powering IIT Certifications & M.Tech Programs" — the institutional proof
  * band that sits directly above the domains. The supporting art is an
- * inline-SVG certification seal whose ring draws itself on scroll, so the
- * section carries a visual without depending on any institute's logo.
+ * inline-SVG certification seal whose ring draws itself on scroll, with the
+ * institute crest set inside it.
  */
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -114,6 +114,14 @@ export function IitPrograms() {
               style={{ background: 'radial-gradient(circle, rgba(46,30,224,0.16), transparent 65%)' }}
             />
             <CertificationSeal />
+            {/* The crest sits inside the drawn seal rather than beside it, so
+                the ring animation frames it instead of competing with it. */}
+            <img
+              src="/logos/iit-kharagpur.png"
+              alt="IIT Kharagpur"
+              loading="lazy"
+              className="absolute h-[44%] w-auto object-contain"
+            />
           </div>
         </Reveal>
       </div>

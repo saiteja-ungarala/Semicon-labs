@@ -73,7 +73,6 @@ export interface Testimonial {
   name: string;
   role: string;
   rating: number;
-  logo?: 'google' | 'none'; // Defines which logo to render in the UI
 }
 
 export const testimonials: Testimonial[] = [
