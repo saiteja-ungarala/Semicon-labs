@@ -26,7 +26,7 @@ export const pageSeo: Record<string, PageSeo> = {
   '/pricing': {
     title: 'VLSI Training and Lab Pricing from ₹499',
     description:
-      '₹499 VLSI Launch Pad gets you 10 cloud lab hours on Cadence, Synopsys and Siemens tools. Individual hour packs, Teams from ₹12,000 per session.',
+      '₹499 VLSI Launch Pad gets you 10 cloud lab hours on Cadence, Synopsys and Siemens tools. Individual hour packs, Corporates from ₹12,000 per session.',
   },
   '/domains': {
     title: 'VLSI Domains: Physical Design & Verification',
@@ -34,9 +34,9 @@ export const pageSeo: Record<string, PageSeo> = {
       'Physical Design and Design Verification labs are open now. Analog Layout coming soon. Practice real VLSI scenarios on Cadence, Synopsys and Siemens tools.',
   },
   '/who-we-serve': {
-    title: 'VLSI Plans for Freshers, Teams & Corporates',
+    title: 'VLSI Plans for Freshers, Corporates & Enterprise',
     description:
-      'New to VLSI? Start with the ₹499 Launch Pad and 10 cloud lab hours. Or pick an individual, team or corporate plan for Physical Design and Verification.',
+      'New to VLSI? Start with the ₹499 Launch Pad and 10 cloud lab hours. Or pick an individual, corporate or enterprise plan for Physical Design and Verification.',
   },
   '/competencies': {
     title: 'VLSI Modules: Physical Design & Verification',
@@ -78,12 +78,12 @@ export const audienceSeo: Record<string, PageSeo> = {
       'You learned VLSI but interviews test what you can do. Practise on broken designs with real Cadence, Synopsys and Siemens tools - from Rs 499.',
   },
   teams: {
-    title: 'VLSI Training for Teams - Cloud EDA Labs',
+    title: 'VLSI Training for Corporates - Cloud EDA Labs',
     description:
-      'Train your team on browser-based Cadence, Synopsys and Siemens labs. Team plans start at ₹12,000 per session, minimum 2 sessions, shared progress.',
+      'Train your team on browser-based Cadence, Synopsys and Siemens labs. Corporate plans start at ₹12,000 per session, minimum 2 sessions, shared progress.',
   },
   corporates: {
-    title: 'Corporate VLSI Training - Cloud EDA Labs',
+    title: 'Enterprise VLSI Training - Cloud EDA Labs',
     description:
       'Give your engineers browser-based VLSI labs on real Cadence, Synopsys and Siemens tools - no license servers. 10+ licenses, admin roles, usage reporting.',
   },

@@ -51,8 +51,8 @@ export const audiences: Audience[] = [
   {
     slug: 'teams',
     icon: 'team',
-    title: 'Teams',
-    planLabel: 'Team plan · 2+ seats',
+    title: 'Corporates',
+    planLabel: 'Corporate plan · 2+ seats',
     summary:
       'Training a group of engineers together. Give your whole cohort the same hands-on, validated challenge experience with shared progress tracking.',
     points: [
@@ -60,19 +60,19 @@ export const audiences: Audience[] = [
       'Every PD & DV module included',
       'Onboarding built for training cohorts',
     ],
-    cta: { label: 'For Teams', to: '/who-we-serve/teams' },
+    cta: { label: 'For Corporates', to: '/who-we-serve/teams' },
   },
   {
     slug: 'corporates',
     icon: 'enterprise',
-    title: 'Corporates',
-    planLabel: 'Corporate · 10+ licenses',
+    title: 'Enterprise',
+    planLabel: 'Enterprise · 10+ licenses',
     summary:
       'Building semiconductor capability at scale — org-wide or across a department. Custom rollout, admin controls, and reporting to match your programme.',
     points: [
       'Admin roles & usage reporting',
       'Custom rollout and billing terms',
     ],
-    cta: { label: 'For Corporates', to: '/who-we-serve/corporates' },
+    cta: { label: 'For Enterprise', to: '/who-we-serve/corporates' },
   },
 ];

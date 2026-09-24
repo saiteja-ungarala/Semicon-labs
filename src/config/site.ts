@@ -62,8 +62,8 @@ export const primaryNav: NavItem[] = [
     to: '/who-we-serve',
     children: [
       { label: 'VLSI Trained Fresher', to: '/who-we-serve/individuals', description: 'Trained in VLSI, not yet placed' },
-      { label: 'Teams', to: '/who-we-serve/teams', description: 'Fast-growing VLSI teams · min 2' },
-      { label: 'Corporates', to: '/who-we-serve/corporates', description: 'Org-wide enablement · min 10 licenses' },
+      { label: 'Corporates', to: '/who-we-serve/teams', description: 'Fast-growing VLSI teams · min 2' },
+      { label: 'Enterprise', to: '/who-we-serve/corporates', description: 'Org-wide enablement · min 10 licenses' },
     ],
   },
   {

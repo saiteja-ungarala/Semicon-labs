@@ -23,8 +23,8 @@ type TabId = 'individual' | 'teams' | 'corporate';
 
 const TABS: { id: TabId; label: string }[] = [
   { id: 'individual', label: 'Individual' },
-  { id: 'teams', label: 'Teams' },
-  { id: 'corporate', label: 'Corporate' },
+  { id: 'teams', label: 'Corporates' },
+  { id: 'corporate', label: 'Enterprise' },
 ];
 
 /* ---------------------------------------------------------------- pieces */
@@ -418,7 +418,7 @@ function CorporatePanel() {
         />
         <h3 className="font-display text-[26px] font-bold text-ink">Priced for your headcount, not a price list.</h3>
         <p className="mx-auto mt-3 max-w-md text-[14.5px] text-ink-dim">
-          Corporate plans run on license volume and contract length — a quick chat with sales gets you a
+          Enterprise plans run on license volume and contract length — a quick chat with sales gets you a
           sharper number than any page can.
         </p>
         {/* /contact is now the same enquiry form, so send them straight there. */}

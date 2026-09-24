@@ -100,13 +100,13 @@ export const audiencePages: AudiencePage[] = [
   },
   {
     slug: 'teams',
-    name: 'Teams',
+    name: 'Corporates',
     heroArt: '/images/audiences/teams.png',
-    eyebrow: 'who we serve · teams',
-    title: 'Teams',
+    eyebrow: 'who we serve · corporates',
+    title: 'Corporates',
     lede:
       'Designed for fast-growing VLSI teams that need flexibility and real execution capability. Browser-based Cadence, Synopsys and Siemens labs, real-time practical progress, and access that expands as project demands evolve.',
-    sectionEyebrow: 'why teams choose semicon labs',
+    sectionEyebrow: 'why corporates choose semicon labs',
     sectionTitle: 'Built to keep your engineering team in motion.',
     sectionLede:
       'Eight ways Semicon Labs removes friction, accelerates execution, and turns your team into a high-velocity semiconductor workforce.',
@@ -146,7 +146,7 @@ export const audiencePages: AudiencePage[] = [
     ],
     // Numbers mirror the Teams tab on /pricing exactly — update both together.
     pricing: {
-      name: 'Team Plans',
+      name: 'Corporate Plans',
       price: '₹12,000',
       priceNote: 'per session · excl. GST',
       popular: true,
@@ -166,13 +166,13 @@ export const audiencePages: AudiencePage[] = [
   },
   {
     slug: 'corporates',
-    name: 'Corporates',
+    name: 'Enterprise',
     heroArt: '/images/audiences/corporates.png',
-    eyebrow: 'who we serve · corporates',
-    title: 'Corporates',
+    eyebrow: 'who we serve · enterprise',
+    title: 'Enterprise',
     lede:
       'Empower your entire semiconductor organization through one unified platform built for practical VLSI execution — enterprise rollout, enterprise visibility, enterprise economics.',
-    sectionEyebrow: 'why corporates choose semicon labs',
+    sectionEyebrow: 'why enterprises choose semicon labs',
     sectionTitle: 'Workforce capability, provable at scale.',
     sectionLede:
       'From fresher ramp-up to org-wide benchmarking — the platform your L&D and engineering leadership can both stand behind.',
@@ -207,7 +207,7 @@ export const audiencePages: AudiencePage[] = [
       },
     ],
     pricing: {
-      name: 'Corporate Plan',
+      name: 'Enterprise Plan',
       price: 'Custom',
       priceNote: '10+ users · tailored rollout',
       features: [

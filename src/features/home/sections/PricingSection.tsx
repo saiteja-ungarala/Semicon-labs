@@ -19,7 +19,7 @@ export function PricingSection() {
             Everything you need to <span className="text-gradient">break into VLSI.</span>
           </>
         }
-        lede="Individual, team and corporate plans — the same labs and tools throughout, priced for how you learn."
+        lede="Individual, corporate and enterprise plans — the same labs and tools throughout, priced for how you learn."
       />
       <Reveal>
         <div className="mt-8">

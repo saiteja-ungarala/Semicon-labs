@@ -33,7 +33,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     id: 'team',
-    name: 'Team',
+    name: 'Corporate',
     priceMonthly: 9000,
     cadence: 'session',
     featured: true,
@@ -50,7 +50,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     id: 'corporate',
-    name: 'Corporate',
+    name: 'Enterprise',
     priceMonthly: 0,
     cadence: 'session',
     tagline: '10+ license minimum',
