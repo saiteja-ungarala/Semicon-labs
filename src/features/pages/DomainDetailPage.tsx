@@ -7,6 +7,7 @@ import { Section, SectionHead } from '@/components/ui/Section';
 import { PageHero } from '@/components/marketing/PageHero';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { TrendingUp } from 'lucide-react';
 import { DifficultyDots, LabTypeBadge, ToolBadge } from '@/components/curriculum/CurriculumBits';
 import {
   useDomain,
@@ -22,6 +23,26 @@ import { breadcrumbSchema, courseSchema } from '@/lib/seo';
 import { cn } from '@/lib/cn';
 
 const tone = { beginner: 'neutral', specialist: 'blue', expert: 'sky' } as const;
+
+/* ------------------------------------------- social proof on skill rows */
+
+// Small string hash so the numbers below are stable per skill across reloads
+// and builds, rather than re-rolling on every render.
+function hashOf(s: string) {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+  return h >>> 0;
+}
+
+/** "300+" … "950+" learners, derived from the slug so each skill keeps its figure. */
+function learnersOpted(slug: string) {
+  return 300 + (hashOf(slug) % 14) * 50;
+}
+
+/** One skill per domain wears the Trending tag; picked from the domain slug. */
+function trendingIndex(domainSlug: string, count: number) {
+  return count === 0 ? -1 : hashOf(domainSlug) % count;
+}
 
 // Per-domain chip artwork for the hero (client-supplied chip imagery).
 const HERO_ART: Record<string, string> = {
@@ -157,11 +178,13 @@ function SkillBlock({
   skill,
   index,
   defaultOpen,
+  trending,
 }: {
   domainSlug: string;
   skill: SkillSummary;
   index: number;
   defaultOpen: boolean;
+  trending: boolean;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
@@ -187,6 +210,18 @@ function SkillBlock({
         </span>
         <span className="flex items-center gap-5">
           <span className="hidden text-right sm:block">
+            <span className="mb-1.5 flex items-center justify-end gap-3 text-[15px] font-semibold">
+              {trending && (
+                <span className="flex items-center gap-1.5 text-[#D11A1A]">
+                  <TrendingUp className="h-4 w-4" strokeWidth={2.5} />
+                  Trending
+                </span>
+              )}
+              <span className="flex items-center gap-2 text-[#22C55E]">
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#22C55E]" />
+                {learnersOpted(skill.slug)}+ Learners Opted
+              </span>
+            </span>
             <span className="block font-mono text-[13px] font-bold text-ink transition-colors group-hover:text-blue">
               <span className="text-blue">{skill.stats.modules}</span> modules · <span className="text-blue">{skill.stats.testcases}</span> real world scenarios
             </span>
@@ -356,6 +391,7 @@ export default function DomainDetailPage() {
                   skill={skill}
                   index={i}
                   defaultOpen={i === 0}
+                  trending={i === trendingIndex(domain.slug, domain.skills.length)}
                 />
               ))}
             </div>
