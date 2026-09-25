@@ -383,7 +383,7 @@ function TeamsPanel() {
           price="₹12,000"
           priceSub="per session · excl. GST"
           feats={TEAM_CAPABILITIES.map((c) => ({ yes: c.basic, text: <>{c.cap}</> }))}
-          cta={{ label: 'Start a Pro team' }}
+          cta={{ label: 'Get Started with Pro' }}
         />
         <TierCard
           pro
@@ -393,7 +393,7 @@ function TeamsPanel() {
           price="₹13,500"
           priceSub="per session · excl. GST"
           feats={TEAM_ELITE_CAPABILITIES.map((cap) => ({ yes: true, text: <>{cap}</> }))}
-          cta={{ label: 'Start an Elite team' }}
+          cta={{ label: 'Get Started with Elite' }}
         />
       </div>
 
