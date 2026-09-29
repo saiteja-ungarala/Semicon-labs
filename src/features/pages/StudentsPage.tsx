@@ -127,33 +127,15 @@ export default function StudentsPage() {
               </div>
             </div>
 
-            {/* Right Hero Visual: Full Image replacing the whole comparison section */}
+            {/* Right Hero Visual: Real Students Experience Image */}
             <div className="lg:col-span-6">
-              <div className="relative overflow-hidden rounded-3xl border border-line bg-panel p-2.5 shadow-2xl transition-all duration-500 hover:shadow-card-hover">
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-[#0B0E24]">
+              <div className="relative overflow-hidden rounded-[2rem] border border-line bg-panel p-2 shadow-2xl transition-all duration-500 hover:shadow-card-hover">
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.5rem]">
                   <img
-                    src="/images/chips/chip-board.jpg"
-                    alt="Real Semiconductor EDA Tool & Cloud Lab Practice"
+                    src="/images/audiences/students-hero.jpg"
+                    alt="Engineering student practicing real semiconductor design workflows"
                     className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0B0E24]/85 via-transparent to-transparent" />
-
-                  {/* Floating Status Glass Overlay */}
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-white/20 bg-[#0B0E24]/90 px-4 py-3 backdrop-blur-md">
-                    <div className="flex items-center gap-2.5">
-                      <span className="relative flex h-2.5 w-2.5">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
-                      </span>
-                      <div>
-                        <p className="font-mono text-xs font-bold text-white">Cloud EDA Workstation</p>
-                        <p className="font-mono text-[10.5px] text-white/70">Cadence · Synopsys · Siemens</p>
-                      </div>
-                    </div>
-                    <span className="rounded-full bg-blue/30 px-2.5 py-1 font-mono text-[10.5px] font-bold text-blue-200 border border-blue-400/30">
-                      Live Labs
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -188,14 +170,13 @@ export default function StudentsPage() {
               {/* Card 1: Without Real Design Experience */}
               <div className="flex flex-col justify-between rounded-3xl border border-line bg-panel p-5 sm:p-6 shadow-card">
                 <div>
-                  {/* Image Space */}
-                  <div className="aspect-[16/10] w-full rounded-2xl border-2 border-dashed border-line bg-void-2 flex flex-col items-center justify-center p-3 text-center mb-5">
-                    <span className="font-mono text-[11px] font-bold text-ink-faint">
-                      [Image Space]
-                    </span>
-                    <span className="mt-1 text-[11px] text-ink-faint">
-                      Graduate facing theoretical doubts
-                    </span>
+                  {/* Real Photo: Graduate facing theoretical doubts */}
+                  <div className="relative aspect-[16/11] w-full overflow-hidden rounded-2xl border border-line/60 mb-5 bg-void-2">
+                    <img
+                      src="/images/audiences/students-path-without.jpg"
+                      alt="Graduate facing theoretical doubts"
+                      className="h-full w-full object-cover"
+                    />
                   </div>
 
                   <div className="flex items-center gap-2 mb-3">
@@ -226,14 +207,13 @@ export default function StudentsPage() {
               {/* Card 2: With Semicon Labs Experience */}
               <div className="flex flex-col justify-between rounded-3xl border-2 border-blue/40 bg-gradient-to-b from-blue-50/50 to-panel p-5 sm:p-6 shadow-card">
                 <div>
-                  {/* Image Space */}
-                  <div className="aspect-[16/10] w-full rounded-2xl border-2 border-dashed border-blue/30 bg-blue-50/50 flex flex-col items-center justify-center p-3 text-center mb-5">
-                    <span className="font-mono text-[11px] font-bold text-blue">
-                      [Image Space]
-                    </span>
-                    <span className="mt-1 text-[11px] text-blue/70">
-                      Engineer with verified design practice
-                    </span>
+                  {/* Real Photo: Engineer with verified design practice */}
+                  <div className="relative aspect-[16/11] w-full overflow-hidden rounded-2xl border border-blue/20 mb-5 bg-blue-50/30">
+                    <img
+                      src="/images/audiences/students-path-with.jpg"
+                      alt="Engineer with verified design practice"
+                      className="h-full w-full object-cover"
+                    />
                   </div>
 
                   <div className="flex items-center gap-2 mb-3">
@@ -359,21 +339,14 @@ export default function StudentsPage() {
               </div>
             </div>
 
-            {/* Silicon Die / Chip Hardware Artwork */}
+            {/* Silicon Die in Hand Artwork */}
             <div className="lg:col-span-5">
-              <div className="aspect-[4/3] w-full rounded-3xl border-2 border-white/20 bg-white/5 flex flex-col items-center justify-center p-6 text-center overflow-hidden relative">
+              <div className="relative aspect-[16/11] w-full overflow-hidden rounded-3xl border border-white/20 bg-white/5 shadow-2xl">
                 <img
-                  src="/images/chips/chip-socket.jpg"
-                  alt="Ideas · Designs · Chips · Careers"
-                  className="absolute inset-0 h-full w-full object-cover opacity-80"
+                  src="/images/audiences/students-chip-glow.jpg"
+                  alt="Future of Semiconductor Engineering - Silicon Die in Hand"
+                  className="h-full w-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0E24] via-transparent to-transparent" />
-                <span className="relative z-10 font-mono text-xs font-bold text-white/90">
-                  Silicon Die & Chip Hardware
-                </span>
-                <span className="relative z-10 mt-1 text-xs text-white/60">
-                  Ideas · Designs · Chips · Careers
-                </span>
               </div>
             </div>
           </div>

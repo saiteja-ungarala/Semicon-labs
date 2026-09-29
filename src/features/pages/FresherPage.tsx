@@ -142,8 +142,8 @@ export default function FresherPage() {
           </>
         }
         lede="You know the concepts. You've completed the course. But interviews test what you can actually do."
-        image="/images/audiences/fresher-hero.jpg"
-        imageAlt="VLSI engineer at a desk debugging waveforms in an EDA tool"
+        image="/images/audiences/fresher-hero-main.jpg"
+        imageAlt="VLSI engineering graduate pondering the gap between theory and practical interviews"
         crumbs={[
           { name: 'Home', to: '/' },
           { name: 'Who We Serve', to: '/who-we-serve' },
@@ -429,12 +429,14 @@ export default function FresherPage() {
               Start Your Launchpad
             </Button>
           </Reveal>
-          <img
-            src="/images/chips/chip-neon.jpg"
-            alt=""
-            loading="lazy"
-            className="h-[190px] w-full max-w-[300px] shrink-0 rounded-2xl object-cover shadow-glow ring-1 ring-white/10"
-          />
+          <div className="relative aspect-[16/11] w-full max-w-[360px] shrink-0 overflow-hidden rounded-2xl border border-white/20 shadow-2xl">
+            <img
+              src="/images/audiences/fresher-bottom.jpg"
+              alt="Hands-on debugging and problem solving in cloud EDA labs"
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </Container>
       </section>
 

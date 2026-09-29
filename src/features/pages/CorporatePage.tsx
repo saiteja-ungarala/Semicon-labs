@@ -162,15 +162,14 @@ export default function CorporatePage() {
               </div>
             </div>
 
-            {/* Right Hero Image Space */}
+            {/* Right Hero Image */}
             <div className="lg:col-span-6">
-              <div className="aspect-[4/3] w-full rounded-3xl border-2 border-dashed border-white/20 bg-white/5 flex flex-col items-center justify-center p-6 text-center">
-                <span className="font-mono text-xs font-bold text-white/70">
-                  [Image Space]
-                </span>
-                <span className="mt-1 text-xs text-white/40">
-                  Engineering team collaborating around multi-monitor EDA workstations
-                </span>
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/20 bg-white/5 shadow-2xl">
+                <img
+                  src="/images/audiences/corporate-hero.jpg"
+                  alt="Engineering team collaborating on semiconductor SoC design and EDA tools"
+                  className="h-full w-full object-cover"
+                />
               </div>
             </div>
           </div>
@@ -266,15 +265,14 @@ export default function CorporatePage() {
         />
 
         <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
-          {/* Left Side: Mockup Image Placeholder */}
+          {/* Left Side: Real Lab Simulation Image */}
           <div className="lg:col-span-7">
-            <div className="aspect-[16/10] w-full rounded-3xl border-2 border-dashed border-line bg-void-2 flex flex-col items-center justify-center p-6 text-center">
-              <span className="font-mono text-xs font-bold text-ink">
-                [Dashboard Interface Space]
-              </span>
-              <span className="mt-1 text-xs text-ink-dim max-w-sm">
-                Team Access Dashboard: User Roster (Akhil R, Priya S, Vikram K), Progress Analytics, and Lab Assignments
-              </span>
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-3xl border border-line bg-panel shadow-card">
+              <img
+                src="/images/audiences/corporate-lab.jpg"
+                alt="Engineer working on EDA waveform and circuit layout simulation in cloud lab"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
 
@@ -422,15 +420,14 @@ export default function CorporatePage() {
               </div>
             </div>
 
-            {/* Hardware / Cleanroom Image Space */}
+            {/* Team Mentoring & Problem Solving Image */}
             <div className="lg:col-span-5">
-              <div className="aspect-[4/3] w-full rounded-3xl border-2 border-dashed border-white/20 bg-white/5 flex flex-col items-center justify-center p-6 text-center">
-                <span className="font-mono text-xs font-bold text-white/60">
-                  [Image Space]
-                </span>
-                <span className="mt-1 text-xs text-white/40">
-                  Wafer Probe / Silicon Inspection Equipment in cleanroom
-                </span>
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/20 bg-white/5 shadow-2xl">
+                <img
+                  src="/images/audiences/corporate-bottom.jpg"
+                  alt="Senior engineer mentoring corporate engineering team on semiconductor architecture"
+                  className="h-full w-full object-cover"
+                />
               </div>
             </div>
           </div>
