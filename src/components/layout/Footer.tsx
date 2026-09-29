@@ -11,7 +11,10 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:grid-cols-[1.5fr_repeat(3,1fr)]">
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
             <Logo />
-            <p className="mt-4 max-w-xs text-pretty text-sm text-ink-faint">
+            <p className="mt-2 text-xs text-ink-dim">
+              Semicon Labs is a brand owned and operated by Sumedha Design Systems Private Limited.
+            </p>
+            <p className="mt-3 max-w-xs text-pretty text-sm text-ink-faint">
               The platform for learning semiconductor engineering through real project problems —
               Physical Design and Design Verification.
             </p>

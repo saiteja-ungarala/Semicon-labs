@@ -17,6 +17,20 @@ export interface Audience {
 
 export const audiences: Audience[] = [
   {
+    slug: 'students',
+    icon: 'individual',
+    title: 'Students',
+    planLabel: 'Student track',
+    summary:
+      'For ECE, EEE and E&I students. Bridge the gap between classroom theory and real semiconductor chip design on Cadence, Synopsys and Siemens tools.',
+    points: [
+      'Experience real design workflows before graduation',
+      'Learn on production Cadence, Synopsys & Siemens tools',
+      'Build a project portfolio that proves practical ability',
+    ],
+    cta: { label: 'For College Students', to: '/who-we-serve/students' },
+  },
+  {
     // Entry point for people with no VLSI background yet. Unlike the other
     // three this has no audience page of its own — it sells a single ₹499
     // pack, so the CTA goes straight to the plan cards on /pricing.

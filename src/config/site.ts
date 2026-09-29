@@ -61,6 +61,7 @@ export const primaryNav: NavItem[] = [
     label: 'Who We Serve',
     to: '/who-we-serve',
     children: [
+      { label: 'Students', to: '/who-we-serve/students', description: 'ECE / EEE / E&I engineering students' },
       { label: 'VLSI Trained Fresher', to: '/who-we-serve/individuals', description: 'Trained in VLSI, not yet placed' },
       { label: 'Corporates', to: '/who-we-serve/teams', description: 'Fast-growing VLSI teams · min 2' },
       { label: 'Enterprise', to: '/who-we-serve/corporates', description: 'Org-wide enablement · min 10 licenses' },

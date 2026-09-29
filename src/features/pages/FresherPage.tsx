@@ -1,4 +1,4 @@
-import { BookOpen, CheckCircle2, Cpu, FolderOpen, Users } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { Seo } from '@/components/seo/Seo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
@@ -28,20 +28,79 @@ const INTERVIEW_CHECKS = [
   'Can you explain what you did?',
 ];
 
-const ROLES = [
-  'ASIC Design Engineer',
-  'Physical Design Engineer',
-  'STA Engineer',
-  'Verification Engineer',
-  'DFT Engineer',
-  'PD / Implementation Engineer',
+const DOMAIN_ROLES = [
+  {
+    domain: 'Physical Design',
+    code: 'PD',
+    slug: 'physical-design',
+    pipeline: 'Synthesis · PnR · CTS · STA · PV',
+    tagline: 'Turn netlists into timing-clean, manufacturable silicon.',
+    roles: [
+      'ASIC Physical Design Engineer',
+      'STA & Timing Closure Engineer',
+      'PnR / Implementation Engineer',
+      'Physical Verification (DRC/LVS) Engineer',
+      'DFT & Testability Engineer',
+      'Power & IR-Drop Analysis Engineer',
+    ],
+  },
+  {
+    domain: 'Design Verification',
+    code: 'DV',
+    slug: 'design-verification',
+    pipeline: 'Verilog · SystemVerilog · UVM · Coverage',
+    tagline: 'Validate complex architectures against real corner cases.',
+    roles: [
+      'Design Verification (DV) Engineer',
+      'UVM / SystemVerilog Testbench Engineer',
+      'ASIC Functional Verification Engineer',
+      'SoC Subsystem Verification Engineer',
+      'Formal Verification Engineer',
+      'Emulation & Validation Engineer',
+    ],
+  },
+  {
+    domain: 'Analog Layout',
+    code: 'AL',
+    slug: 'analog-layout',
+    pipeline: 'Custom IC · Matching · Signoff',
+    tagline: 'Hand-craft precision circuits that digital flows cannot automate.',
+    roles: [
+      'Analog Layout Design Engineer',
+      'Custom IC Mask Designer',
+      'Memory / SRAM Layout Engineer',
+      'High-Speed / RF Layout Engineer',
+      'IO & ESD Layout Specialist',
+      'FinFET / Advanced Node Layout Engineer',
+    ],
+  },
 ];
 
 const HELPS = [
-  { icon: FolderOpen, title: 'Scenario-based problems with solutions', tag: 'Real Problems' },
-  { icon: Cpu, title: 'Hands-on practice with industry tools', tag: 'Industry EDA Tools' },
-  { icon: BookOpen, title: 'Structured VLSI library', tag: 'Guided → Independent' },
-  { icon: Users, title: 'Access to placement community', tag: 'Validated Solves' },
+  {
+    image: '/icons/practice-problems.png',
+    title: 'Scenario-based problems with solutions',
+    tag: 'Real Problems',
+    description: 'Diagnose failing blocks, timing violations, and design bugs just like in real tapeout projects.',
+  },
+  {
+    image: '/icons/practice-tools.png',
+    title: 'Hands-on practice with industry tools',
+    tag: 'Industry EDA Tools',
+    description: 'Run production EDA tool flows from Cadence, Synopsys, and Siemens right in your browser cloud lab.',
+  },
+  {
+    image: '/icons/practice-library.png',
+    title: 'Structured VLSI library',
+    tag: 'Guided → Independent',
+    description: 'Progress seamlessly from step-by-step guided challenges to independent expert-level test cases.',
+  },
+  {
+    image: '/icons/practice-community.png',
+    title: 'Access to placement community',
+    tag: 'Validated Solves',
+    description: 'Build a verified portfolio of solved challenges that semiconductor recruiters recognise and trust.',
+  },
 ];
 
 const STEPS = [
@@ -109,29 +168,124 @@ export default function FresherPage() {
           }
           lede="Knowing the flow is one thing. Debugging a failing design is another."
         />
-        <div className="grid gap-8 md:grid-cols-3 md:gap-6">
-          <ul className="space-y-3.5">
-            {INTERVIEW_CHECKS.map((q) => (
-              <li key={q} className="flex items-start gap-3 text-[15px] font-medium text-ink">
-                <CheckCircle2 aria-hidden className="mt-0.5 h-[18px] w-[18px] shrink-0 text-blue" strokeWidth={2.4} />
-                {q}
-              </li>
-            ))}
-          </ul>
 
-          <div className="flex min-h-[180px] flex-col justify-center rounded-2xl border border-line bg-blue-50 px-6 py-6">
-            <span aria-hidden className="font-display text-4xl leading-none text-blue/30">“</span>
-            <p className="mt-2 text-[17px] font-semibold leading-snug text-ink">What have you actually worked on?</p>
-            <p className="mt-2 text-[13px] text-ink-faint">A question every candidate hears.</p>
+        {/* Top Part: Questions & Deciding Quote */}
+        <div className="grid gap-6 lg:grid-cols-12 lg:items-stretch">
+          {/* Checklist card */}
+          <div className="flex flex-col justify-center rounded-3xl border border-line bg-panel p-6 sm:p-8 shadow-card lg:col-span-7">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-blue" />
+              <p className="font-mono text-xs font-bold uppercase tracking-wider text-blue">
+                What Technical Interviewers Test
+              </p>
+            </div>
+            <p className="mt-2 text-sm text-ink-dim">
+              Interviews don't just ask for tool commands. They evaluate your live diagnostic judgment:
+            </p>
+            <ul className="mt-5 space-y-3.5">
+              {INTERVIEW_CHECKS.map((q) => (
+                <li key={q} className="flex items-center gap-3 text-[15px] font-semibold text-ink">
+                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-blue-50 text-blue">
+                    <CheckCircle2 aria-hidden className="h-4 w-4" strokeWidth={2.5} />
+                  </span>
+                  <span>{q}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <ul className="space-y-2.5 border-l-2 border-line pl-6 text-[15px] font-medium text-ink-dim">
-            <li className="font-display text-base font-bold text-ink">Physical Design</li>
-            {ROLES.map((r) => (
-              <li key={r}>{r}</li>
+          {/* Quote Card */}
+          <div className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-blue/20 bg-gradient-to-br from-blue-50/90 via-blue-50/30 to-panel p-6 sm:p-8 shadow-card lg:col-span-5">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -right-2 -top-4 select-none font-display text-8xl font-black leading-none text-blue/10"
+            >
+              “
+            </span>
+            <div className="relative">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-blue/10 px-3 py-1 font-mono text-[11px] font-bold text-blue uppercase tracking-wider">
+                The Core Question
+              </span>
+              <p className="mt-4 font-display text-xl font-bold leading-snug text-ink sm:text-2xl">
+                “What have you actually worked on?”
+              </p>
+              <p className="mt-2.5 text-sm leading-relaxed text-ink-dim">
+                A question every candidate hears in technical rounds. Knowing the theory gets you into the room; proving you have resolved failing designs gets you the job.
+              </p>
+            </div>
+            <div className="relative mt-6 border-t border-line/70 pt-4 text-[12.5px] font-medium text-ink-faint">
+              Interviewers probe whether you have resolved violations on real EDA tools or just memorised workflows.
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Part: 3 Domains and Specific Job Roles */}
+        <div className="mt-12">
+          <div className="mb-6 flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
+            <div>
+              <p className="eyebrow">target career tracks</p>
+              <h3 className="mt-1 font-display text-2xl font-bold text-ink sm:text-[26px]">
+                Job Roles You Become Ready For Across 3 Domains
+              </h3>
+            </div>
+            <p className="text-xs text-ink-faint sm:text-right">
+              Explore the exact roles hiring in each semiconductor domain
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {DOMAIN_ROLES.map((d) => (
+              <div
+                key={d.slug}
+                className="group relative flex flex-col justify-between rounded-3xl border border-line bg-panel p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-blue/40 hover:shadow-card-hover"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="inline-flex items-center rounded-lg bg-blue-50 px-2.5 py-1 font-mono text-xs font-bold text-blue">
+                      {d.code}
+                    </span>
+                    <span className="font-mono text-[10.5px] uppercase tracking-wider text-ink-faint">
+                      Domain Track
+                    </span>
+                  </div>
+
+                  <h4 className="mt-3.5 font-display text-lg font-bold text-ink group-hover:text-blue transition-colors">
+                    {d.domain}
+                  </h4>
+                  <p className="mt-1 font-mono text-[11px] font-medium text-ink-dim">
+                    {d.pipeline}
+                  </p>
+                  <p className="mt-2 text-[12.5px] leading-relaxed text-ink-faint">
+                    {d.tagline}
+                  </p>
+
+                  <div className="mt-5 border-t border-line pt-4">
+                    <p className="mb-3 font-mono text-[11px] font-bold uppercase tracking-wider text-ink">
+                      Target Job Roles:
+                    </p>
+                    <ul className="space-y-2">
+                      {d.roles.map((role) => (
+                        <li key={role} className="flex items-start gap-2.5 text-[13.5px] font-medium text-ink-dim">
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue" />
+                          <span>{role}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="mt-6 border-t border-line pt-4">
+                  <a
+                    href={`/domains/${d.slug}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue hover:gap-2.5 transition-all"
+                  >
+                    <span>View {d.domain} curriculum</span>
+                    <span aria-hidden>→</span>
+                  </a>
+                </div>
+              </div>
             ))}
-            <li className="text-ink-faint">And more…</li>
-          </ul>
+          </div>
         </div>
       </Section>
 
@@ -149,15 +303,20 @@ export default function FresherPage() {
           lede="Semicon Labs gives you what your course couldn't."
         />
         <RevealGroup stagger={0.06}>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {HELPS.map(({ icon: Icon, title, tag }) => (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {HELPS.map(({ image, title, tag, description }) => (
               <RevealItem key={title}>
-                <div className="flex h-full flex-col rounded-2xl border border-line bg-panel p-5 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-blue/30 hover:shadow-card-hover">
-                  <span className="grid h-[42px] w-[42px] place-items-center rounded-xl bg-blue-soft text-blue">
-                    <Icon className="h-5 w-5" strokeWidth={2} />
-                  </span>
-                  <h3 className="mt-3 text-base font-bold leading-snug text-ink">{title}</h3>
-                  <p className="mt-1.5 text-sm text-ink-dim">{tag}</p>
+                <div className="group flex h-full flex-col justify-between rounded-3xl border border-line bg-panel p-6 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-blue/40 hover:shadow-card-hover">
+                  <div>
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50/70 p-2.5 border border-blue-100 transition-transform duration-300 group-hover:scale-105">
+                      <img src={image} alt={title} className="h-full w-full object-contain" />
+                    </div>
+                    <span className="mt-4 block font-mono text-[11px] font-bold uppercase tracking-wider text-blue">
+                      {tag}
+                    </span>
+                    <h3 className="mt-2 text-base font-bold leading-snug text-ink">{title}</h3>
+                    <p className="mt-2 text-[13.5px] leading-relaxed text-ink-dim">{description}</p>
+                  </div>
                 </div>
               </RevealItem>
             ))}
@@ -170,7 +329,7 @@ export default function FresherPage() {
         <SectionHead
           eyebrow="the framework your job needs"
           title="From Problem to Proof."
-          lede="Not another lecture. A problem to solve."
+          lede="Not another course. A problem to solve."
         />
         <div className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
           {/* Dashed rail behind the step numbers — desktop only, where the four sit in a row. */}

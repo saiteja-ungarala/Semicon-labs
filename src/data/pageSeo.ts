@@ -67,6 +67,11 @@ export const pageSeo: Record<string, PageSeo> = {
 
 /** Audience pages, keyed by the slug in /who-we-serve/:audience. */
 export const audienceSeo: Record<string, PageSeo> = {
+  students: {
+    title: 'VLSI Labs for ECE, EEE & E&I Students',
+    description:
+      'Bridge the gap between college lectures and real chip design. Work on hands-on VLSI workflows on Cadence, Synopsys and Siemens tools.',
+  },
   'launch-pad': {
     title: 'VLSI Launch Pad - 10 Lab Hours for ₹499',
     description:

@@ -13,16 +13,17 @@ import { audienceSeo } from '@/data/pageSeo';
 import { cn } from '@/lib/cn';
 import { breadcrumbSchema } from '@/lib/seo';
 import FresherPage from './FresherPage';
+import StudentsPage from './StudentsPage';
+import CorporatePage from './CorporatePage';
 
 /**
- * Dedicated audience page (Individuals / Teams / Corporates): numbered
- * value-props on the left, an attention-holding sticky pricing card on the
- * right — same pattern as the domain pages so the site reads as one system.
+ * Dedicated audience page (Students / Individuals / Teams / Corporates).
  */
 export default function AudiencePage() {
   const { audience } = useParams();
-  // Individuals has its own layout (see FresherPage); this generic one serves the rest.
+  if (audience === 'students') return <StudentsPage />;
   if (audience === 'individuals') return <FresherPage />;
+  if (audience === 'teams' || audience === 'corporate') return <CorporatePage />;
   const page = audiencePages.find((p) => p.slug === audience);
   if (!page) return <Navigate to="/who-we-serve" replace />;
 
