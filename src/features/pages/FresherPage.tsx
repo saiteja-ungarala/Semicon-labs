@@ -302,40 +302,52 @@ export default function FresherPage() {
         </div>
       </Section>
 
-      {/* ---- How Semicon Labs helps ---- */}
-      <Section alt>
-        <SectionHead
-          eyebrow="how semicon labs helps"
-          title={
-            <>
-              You Don't Need Another Course.
-              <br />
-              You Need Practice.
-            </>
-          }
-          lede="Semicon Labs gives you what your course couldn't."
-        />
-        <RevealGroup stagger={0.06}>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {HELPS.map(({ image, title, tag, description }) => (
-              <RevealItem key={title}>
-                <div className="group flex h-full flex-col justify-between rounded-3xl border border-line bg-panel p-6 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-blue/40 hover:shadow-card-hover">
-                  <div>
-                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50/70 p-2.5 border border-blue-100 transition-transform duration-300 group-hover:scale-105">
-                      <img src={image} alt={title} className="h-full w-full object-contain" />
-                    </div>
-                    <span className="mt-4 block font-mono text-[11px] font-bold uppercase tracking-wider text-blue">
-                      {tag}
-                    </span>
-                    <h3 className="mt-2 text-base font-bold leading-snug text-ink">{title}</h3>
-                    <p className="mt-2 text-[13.5px] leading-relaxed text-ink-dim">{description}</p>
-                  </div>
-                </div>
-              </RevealItem>
-            ))}
+      {/* ---- How Semicon Labs helps (DARK BLUE BACKGROUND STRIP LIKE CORPORATES & STUDENTS) ---- */}
+      <section
+        className="py-16 text-white sm:py-20"
+        style={{
+          background: 'linear-gradient(180deg, #0A0D22 0%, #0F1433 100%)',
+        }}
+      >
+        <Container>
+          <div className="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+            <div className="min-w-0 max-w-3xl flex-1">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-blue-200">
+                how semicon labs helps
+              </p>
+              <h2 className="mt-3 font-display text-[30px] font-bold leading-tight sm:text-[38px] text-white">
+                You Don't Need Another Course.
+                <br />
+                <span className="text-blue-300">You Need Practice.</span>
+              </h2>
+            </div>
+            <p className="shrink-0 text-base text-white/70 md:w-64 md:text-right">
+              Semicon Labs gives you what your course couldn't.
+            </p>
           </div>
-        </RevealGroup>
-      </Section>
+
+          <RevealGroup stagger={0.06}>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {HELPS.map(({ image, title, tag, description }) => (
+                <RevealItem key={title}>
+                  <div className="group flex h-full flex-col justify-between rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-400/40 hover:bg-white/[0.08]">
+                    <div>
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 p-2.5 border border-white/15 transition-transform duration-300 group-hover:scale-105">
+                        <img src={image} alt={title} className="h-full w-full object-contain" />
+                      </div>
+                      <span className="mt-4 block font-mono text-[11px] font-bold uppercase tracking-wider text-blue-300">
+                        {tag}
+                      </span>
+                      <h3 className="mt-2 text-base font-bold leading-snug text-white">{title}</h3>
+                      <p className="mt-2 text-[13.5px] leading-relaxed text-white/70">{description}</p>
+                    </div>
+                  </div>
+                </RevealItem>
+              ))}
+            </div>
+          </RevealGroup>
+        </Container>
+      </section>
 
       {/* ---- The framework: problem → proof ---- */}
       <Section>
