@@ -1,4 +1,5 @@
-import { CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { CheckCircle2, Play } from 'lucide-react';
 import { Seo } from '@/components/seo/Seo';
 import { Section, SectionHead } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
@@ -6,6 +7,7 @@ import { PageHero } from '@/components/marketing/PageHero';
 import { Button } from '@/components/ui/Button';
 import { Reveal, RevealGroup, RevealItem } from '@/components/motion/Reveal';
 import { StarterPackCard } from '@/components/marketing/IndividualOffer';
+import { WalkthroughModal } from '@/components/marketing/WalkthroughModal';
 import { audiencePages } from '@/data/audiencePages';
 import { audienceSeo } from '@/data/pageSeo';
 import { breadcrumbSchema } from '@/lib/seo';
@@ -111,6 +113,7 @@ const STEPS = [
 ];
 
 export default function FresherPage() {
+  const [walkthroughOpen, setWalkthroughOpen] = useState(false);
   const page = audiencePages.find((p) => p.slug === 'individuals')!;
   const path = `/who-we-serve/${page.slug}`;
 
@@ -151,6 +154,16 @@ export default function FresherPage() {
           <Button to="/pricing#plans" arrow>
             Start Practising at ₹499
           </Button>
+          <button
+            type="button"
+            onClick={() => setWalkthroughOpen(true)}
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-ink-dim transition hover:text-blue"
+          >
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-blue-50 text-blue border border-blue-100">
+              <Play className="h-3.5 w-3.5 fill-current ml-0.5" />
+            </span>
+            <span>See 1 min preview</span>
+          </button>
         </div>
         <p className="mt-4 text-[13px] text-ink-faint">Real problems. Industry tools. Interview confidence.</p>
       </PageHero>
@@ -412,6 +425,11 @@ export default function FresherPage() {
           />
         </Container>
       </section>
+
+      <WalkthroughModal
+        open={walkthroughOpen}
+        onClose={() => setWalkthroughOpen(false)}
+      />
     </>
   );
 }
